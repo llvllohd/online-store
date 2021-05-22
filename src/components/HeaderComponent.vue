@@ -45,46 +45,46 @@
 
   <!-- Sidebar -->
 
-  <transition
+  <!-- <transition
     enter-active-class="animate__animated animate__slideInLeft"
     leave-active-class="animate__animated animate__slideOutLeft"
+  > -->
+  <div
+    v-if="isToggle"
+    class="sidebar-custom-height bg-gray-600 w-3/6 fixed sm:hidden"
   >
-    <div
-      v-if="isToggle"
-      class="sidebar-custom-height bg-gray-600 h-full w-3/6 fixed sm:hidden"
-    >
-      <div class="h-1/3 flex flex-col items-center justify-evenly">
-        <!-- Image -->
-        <div class="w-20 h-20">
-          <img
-            class="rounded-full mx-auto my-auto"
-            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            alt=""
-          />
-        </div>
-        <!-- Name -->
-        <div class="title relative flex">
-          <h5 class=" text-white text-lg font-bold my-auto">My Project</h5>
-        </div>
+    <div class="h-1/3 flex flex-col items-center justify-evenly">
+      <!-- Image -->
+      <div class="w-20 h-20">
+        <img
+          class="rounded-full mx-auto my-auto"
+          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+          alt=""
+        />
       </div>
-
-      <!-- Nav Items -->
-      <ul class="w-full h-2/3 flex flex-col justify-start items-center pt-5">
-        <li
-          v-for="item in navigation"
-          :key="item.name"
-          class="nav text-white text-lg font-bold flex w-full items-center justify-center"
-        >
-          <div
-            @click="gotoLinks(item.path)"
-            class="w-full p-2 flex items-center justify-center border-b-2"
-          >
-            {{ item.name }}
-          </div>
-        </li>
-      </ul>
+      <!-- Name -->
+      <div class="title relative flex">
+        <h5 class=" text-white text-lg font-bold my-auto">My Project</h5>
+      </div>
     </div>
-  </transition>
+
+    <!-- Nav Items -->
+    <ul class="w-full h-2/3 flex flex-col justify-start items-center pt-5">
+      <li
+        v-for="item in navigation"
+        :key="item.name"
+        class="nav text-white text-lg font-bold flex w-full items-center justify-center"
+      >
+        <div
+          @click="gotoLinks(item.path)"
+          class="w-full p-2 flex items-center justify-center border-b-2"
+        >
+          {{ item.name }}
+        </div>
+      </li>
+    </ul>
+  </div>
+  <!-- </transition> -->
 </template>
 
 <script>
