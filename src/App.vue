@@ -1,26 +1,29 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <header-component></header-component>
+
+  <router-view v-slot="{ Component }">
+    <transition
+      mode="out-in"
+      enter-active-class="animate__animated animate__lightSpeedInLeft"
+      leave-active-class="animate__animated animate__lightSpeedOutRight"
+    >
+      <component :is="Component" />
+    </transition>
+  </router-view>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HeaderComponent from "./components/HeaderComponent.vue";
+import {} from "vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
-</script>
+    HeaderComponent,
+  },
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+  setup() {
+    return {};
+  },
+};
+</script>
