@@ -1,15 +1,10 @@
 <template>
   <header-component></header-component>
 
-  <router-view v-slot="{ Component }">
-    <transition
-      mode="out-in"
-      enter-active-class="animate__animated animate__lightSpeedInLeft"
-      leave-active-class="animate__animated animate__lightSpeedOutRight"
-    >
+  <router-view> </router-view>
+  <!-- <transition>
       <component :is="Component" />
-    </transition>
-  </router-view>
+    </transition> -->
 </template>
 
 <script>
@@ -18,9 +13,7 @@ import {} from "vue";
 
 export default {
   name: "App",
-  components: {
-    HeaderComponent,
-  },
+  components: { HeaderComponent },
 
   setup() {
     return {};

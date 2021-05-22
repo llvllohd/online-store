@@ -1,8 +1,6 @@
 <template>
   <!-- Header -->
-  <nav
-    class="w-full h-16 sm:relative bg-gray-900 flex flex-row items-center px-3"
-  >
+  <nav class="w-full h-16 relative bg-gray-900 flex flex-row items-center px-3">
     <!-- Hamburger -->
     <div
       class="relative w-10 h-10 ring-1 ring-white rounded cursor-pointer flex items-center justify-center sm:hidden transition duration-500 ease-in-out"
@@ -53,11 +51,11 @@
   >
     <div
       v-if="isToggle"
-      class="sidebar-custom-height bg-gray-600 h-full w-2/3 fixed "
+      class="sidebar-custom-height bg-gray-600 h-full w-3/6 fixed sm:hidden"
     >
       <div class="h-1/3 flex flex-col items-center justify-evenly">
         <!-- Image -->
-        <div class="w-24 h-24">
+        <div class="w-20 h-20">
           <img
             class="rounded-full mx-auto my-auto"
             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -65,27 +63,24 @@
           />
         </div>
         <!-- Name -->
-        <div class="title relative flex mx-5">
+        <div class="title relative flex">
           <h5 class=" text-white text-lg font-bold my-auto">My Project</h5>
         </div>
       </div>
 
       <!-- Nav Items -->
-      <ul
-        class="w-full h-2/3 flex flex-col justify-start items-center cursor-pointer pt-5"
-      >
+      <ul class="w-full h-2/3 flex flex-col justify-start items-center pt-5">
         <li
           v-for="item in navigation"
           :key="item.name"
           class="nav text-white text-lg font-bold flex w-full items-center justify-center"
         >
-          <router-link
-            :to="item.path"
-            @click="isToggle = false"
+          <div
+            @click="gotoLinks(item.path)"
             class="w-full p-2 flex items-center justify-center border-b-2"
           >
             {{ item.name }}
-          </router-link>
+          </div>
         </li>
       </ul>
     </div>
@@ -94,6 +89,7 @@
 
 <script>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import vClickOutside from "click-outside-vue3";
 const navigation = [
   { name: "Home", path: "/", current: true },
@@ -109,6 +105,8 @@ export default {
     clickOutside: vClickOutside.directive,
   },
   setup() {
+    const router = useRouter();
+
     let isToggle = ref(false);
 
     let toggleMenu = () => {
@@ -121,7 +119,13 @@ export default {
     let clickOutside = () => {
       isToggle.value = false;
     };
-    return { isToggle, toggleMenu, clickOutside, navigation };
+
+    let gotoLinks = (links) => {
+      isToggle.value = false;
+      router.push(links);
+    };
+
+    return { isToggle, toggleMenu, clickOutside, navigation, gotoLinks };
   },
 };
 </script>
@@ -135,7 +139,7 @@ export default {
   color: #ffb400;
 }
 
-/* .router-link-active::before {
+.router-link-active::before {
   content: "";
   height: 15px;
   width: 15px;
@@ -155,7 +159,11 @@ export default {
   right: -3px;
   border-bottom: 3px solid #ffb400;
   border-right: 3px solid #ffb400;
-} */
+}
+
+.paddingDiv:focus {
+  outline: unset;
+}
 
 .title::before {
   content: "";

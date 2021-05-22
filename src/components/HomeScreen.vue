@@ -1,5 +1,4 @@
 <template>
-
   <div class="flex items-center justify-center sidebar-custom-height">
     <div class="w-1/3 h-1/3 bg-red-400 flex items-center justify-center">
       <h3>I am Home</h3>
@@ -13,5 +12,3 @@
   transition: all 0.5s ease-in-out;
 }
 </style>
-
-
