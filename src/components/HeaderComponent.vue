@@ -53,7 +53,7 @@
     v-if="isToggle"
     class="sidebar-custom-height bg-gray-600 w-3/6 fixed sm:hidden"
   >
-    <div class="h-1/3 flex flex-col items-center justify-evenly">
+    <div class="h-48 flex flex-col items-center justify-evenly">
       <!-- Image -->
       <div class="w-20 h-20">
         <img
@@ -69,7 +69,9 @@
     </div>
 
     <!-- Nav Items -->
-    <ul class="w-full h-2/3 flex flex-col justify-start items-center pt-5">
+    <ul
+      class="w-full h-56 flex flex-col justify-start items-center pt-5 bg-black"
+    >
       <li
         v-for="item in navigation"
         :key="item.name"
