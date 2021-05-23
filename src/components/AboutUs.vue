@@ -1,6 +1,6 @@
 <template>
-  <div class="h-screen bg-green-400 flex flex-col items-center justify-center">
-    <div class="top flex flex-col items-center justify-center mt-5">
+  <div class="min-h-screen bg-green-400 flex flex-col items-center justify-center">
+    <div class="top h-full flex flex-col items-center justify-center mt-5">
       <h3>I am About Us</h3>
       <h3>I am About Us</h3>
       <h3>I am About Us</h3>
