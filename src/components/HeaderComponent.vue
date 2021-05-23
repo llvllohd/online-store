@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, onBeforeMount, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import vClickOutside from "click-outside-vue3";
 const navigation = [
@@ -125,6 +125,11 @@ export default {
       isToggle.value = false;
       router.push(links);
     };
+
+    
+    onBeforeMount(() => {});
+
+    onMounted(() => {});
 
     return { isToggle, toggleMenu, clickOutside, navigation, gotoLinks };
   },
