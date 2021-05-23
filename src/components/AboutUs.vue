@@ -1,17 +1,19 @@
 <template>
   <div
-    class="sidebar-custom-height bg-green-400 flex items-center justify-center"
+    class="sidebar-custom-height bg-green-400 flex flex-col items-center justify-center"
   >
+    <div class="flex items-center justify-center">
+      <h3>I am About Us</h3>
+    </div>
     <div class="flex items-center justify-center">
       <h3>I am About Us</h3>
     </div>
   </div>
 </template>
 
-<style scoped>
+<style>
 .sidebar-custom-height {
-  /* height: calc(100vh - theme("spacing.32")); */
-  height: calc(100vh - 4rem);
-  transition: all 0.5s ease-in-out;
+  min-height: calc(100vh - theme("spacing.16"));
+  /* transition: all 0.5s ease-in-out; */
 }
 </style>

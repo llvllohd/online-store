@@ -50,7 +50,7 @@
   >
     <div
       v-if="isToggle"
-      class="sidebar-custom-height bg-gray-600 w-3/6 fixed sm:hidden"
+      class="sidebar-custom-height bg-gray-900 w-3/6 fixed sm:hidden"
     >
       <div class="h-40 flex flex-col items-center justify-center space-y-2">
         <!-- Image -->
@@ -68,7 +68,7 @@
       </div>
 
       <!-- Nav Items -->
-      <ul class="w-full h-56 flex flex-col justify-start items-center pt-5">
+      <ul class="w-full h-full flex flex-col justify-start items-center pt-5">
         <li
           v-for="item in navigation"
           :key="item.name"
@@ -78,7 +78,7 @@
             exact
             :to="item.path"
             @click="gotoLinks(item.path)"
-            class="w-full p-2 flex items-center justify-center border-b-2 outline-none"
+            class="w-full p-2 flex items-center justify-center border-b-2"
           >
             {{ item.name }}
           </router-link>
@@ -126,7 +126,6 @@ export default {
       router.push(links);
     };
 
-    
     onBeforeMount(() => {});
 
     onMounted(() => {});
@@ -143,6 +142,7 @@ export default {
 
 .router-link-active {
   color: #ffb400;
+  /* border-left: 2px solid #ffb400; */
 }
 
 .nav-lg.router-link-active::before {
