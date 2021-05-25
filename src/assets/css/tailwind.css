@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .top {
+    margin-top: calc(theme("spacing.16"));
+  }
+}
