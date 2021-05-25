@@ -14,9 +14,5 @@ import {} from "vue";
 export default {
   name: "App",
   components: { HeaderComponent },
-
-  setup() {
-    return {};
-  },
 };
 </script>

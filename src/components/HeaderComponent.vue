@@ -5,8 +5,7 @@
     <div
       class="relative w-10 h-10 ring-1 ring-white rounded cursor-pointer flex items-center justify-center sm:hidden transition duration-500 ease-in-out"
       :class="isToggle ? 'open' : ''"
-      @click="toggleMenu"
-      v-click-outside="clickOutside"
+      @click.stop="toggleMenu"
     >
       <div
         class="menu-btn__line bg-white rounded w-8 h-1 flex items-center justify-center duration-500 transition ease-in-out"
@@ -50,11 +49,11 @@
   >
     <div
       v-if="isToggle"
-      class="sidebar-custom-height bg-gray-900 w-3/6 fixed sm:hidden"
+      class="side-menu sidebar-custom-height bg-gray-900 w-3/6 fixed sm:hidden"
     >
       <div class="h-40 flex flex-col items-center justify-center space-y-2">
         <!-- Image -->
-        <div class="w-20 h-20">
+        <div class="side-menu w-20 h-20 bg-yellow-500">
           <img
             class="rounded-full mx-auto my-auto"
             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -62,7 +61,7 @@
           />
         </div>
         <!-- Name -->
-        <div class="title relative flex">
+        <div class="side-menu title relative flex">
           <h5 class=" text-white text-lg font-bold my-auto">My Project</h5>
         </div>
       </div>
@@ -89,9 +88,8 @@
 </template>
 
 <script>
-import { ref, onBeforeMount, onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
-import vClickOutside from "click-outside-vue3";
 const navigation = [
   { name: "Home", path: "/", current: true },
   { name: "Categories", path: "categories", current: true },
@@ -101,10 +99,6 @@ const navigation = [
 
 export default {
   name: "Navigation",
-  components: {},
-  directives: {
-    clickOutside: vClickOutside.directive,
-  },
   setup() {
     const router = useRouter();
 
@@ -117,8 +111,14 @@ export default {
         isToggle.value = false;
       }
     };
-    let clickOutside = () => {
-      isToggle.value = false;
+
+    let clickAway = (el) => {
+      if (
+        !el.target.parentElement.classList.contains("side-menu") &&
+        !el.target.classList.contains("side-menu")
+      ) {
+        isToggle.value = false;
+      }
     };
 
     let gotoLinks = (links) => {
@@ -126,11 +126,15 @@ export default {
       router.push(links);
     };
 
-    onBeforeMount(() => {});
+    onMounted(() => {
+      document.addEventListener("click", clickAway);
+    });
 
-    onMounted(() => {});
+    onBeforeUnmount(() => {
+      document.removeEventListener("click", clickAway);
+    });
 
-    return { isToggle, toggleMenu, clickOutside, navigation, gotoLinks };
+    return { isToggle, toggleMenu, navigation, gotoLinks };
   },
 };
 </script>
@@ -142,7 +146,6 @@ export default {
 
 .router-link-active {
   color: #ffb400;
-  /* border-left: 2px solid #ffb400; */
 }
 
 .nav-lg.router-link-active::before {
@@ -204,6 +207,7 @@ export default {
 .menu-btn__line::before {
   transform: translateY(-11px);
 }
+
 .menu-btn__line::after {
   transform: translateY(11px);
 }
@@ -211,9 +215,11 @@ export default {
 .open .menu-btn__line {
   background: transparent;
 }
+
 .open .menu-btn__line::before {
   transform: rotate(45deg);
 }
+
 .open .menu-btn__line::after {
   transform: rotate(-45deg);
 }
