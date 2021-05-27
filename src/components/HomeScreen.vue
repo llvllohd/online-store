@@ -5,7 +5,7 @@
         class="w-full h-1/3 bg-cover bg-center flex sm:hidden"
         :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"
       ></div>
-      <div class="w-full h-2/3">
+      <div class="w-full">
         <carousel
           :items-to-show="4"
           :autoplay="5000"
@@ -26,6 +26,110 @@
             <!-- <pagination /> -->
           </template>
         </carousel>
+      </div>
+
+      <div class="items flex items-center justify-between flex-wrap p-3">
+
+        <div class="card h-44 w-40 shadow-lg rounded-t-lg relative mb-3">
+          <div class="image">
+            <img
+              src="../assets/images/cap-one.jpg"
+              class="rounded-t-lg h-30 w-full"
+              alt=""
+            />
+          </div>
+          <div class="item-name">
+            <h5 class="font-medium text-sm">
+              Crochet Cap
+            </h5>
+          </div>
+          <div class="Pice">
+            <h5 class="font-medium text-sm">
+              Rs. 100
+            </h5>
+          </div>
+          <button
+            class="rounded w-full bg-blue-500 hover:bg-blue-700 py-1 font-medium text-sm text-white absolute bottom-0"
+          >
+            Add to Cart
+          </button>
+        </div>
+
+        <div class="card h-44 w-40 shadow-lg rounded-t-lg relative mb-3">
+          <div class="image">
+            <img
+              src="../assets/images/cap-one.jpg"
+              class="rounded-t-lg h-30 w-full"
+              alt=""
+            />
+          </div>
+          <div class="item-name">
+            <h5 class="font-medium text-sm">
+              Crochet Cap
+            </h5>
+          </div>
+          <div class="Pice">
+            <h5 class="font-medium text-sm">
+              Rs. 100
+            </h5>
+          </div>
+          <button
+            class="rounded w-full bg-blue-500 hover:bg-blue-700 py-1 font-medium text-sm text-white absolute bottom-0"
+          >
+            Add to Cart
+          </button>
+        </div>
+
+        <div class="card h-44 w-40 shadow-lg rounded-t-lg relative mb-3">
+          <div class="image">
+            <img
+              src="../assets/images/cap-one.jpg"
+              class="rounded-t-lg h-30 w-full"
+              alt=""
+            />
+          </div>
+          <div class="item-name">
+            <h5 class="font-medium text-sm">
+              Crochet Cap
+            </h5>
+          </div>
+          <div class="Pice">
+            <h5 class="font-medium text-sm">
+              Rs. 100
+            </h5>
+          </div>
+          <button
+            class="rounded w-full bg-blue-500 hover:bg-blue-700 py-1 font-medium text-sm text-white absolute bottom-0"
+          >
+            Add to Cart
+          </button>
+        </div>
+
+        <div class="card h-44 w-40 shadow-lg rounded-t-lg relative mb-3">
+          <div class="image">
+            <img
+              src="../assets/images/cap-one.jpg"
+              class="rounded-t-lg h-30 w-full"
+              alt=""
+            />
+          </div>
+          <div class="item-name">
+            <h5 class="font-medium text-sm">
+              Crochet Cap
+            </h5>
+          </div>
+          <div class="Pice">
+            <h5 class="font-medium text-sm">
+              Rs. 100
+            </h5>
+          </div>
+          <button
+            class="rounded w-full bg-blue-500 hover:bg-blue-700 py-1 font-medium text-sm text-white absolute bottom-0"
+          >
+            Add to Cart
+          </button>
+        </div>
+
       </div>
     </div>
 

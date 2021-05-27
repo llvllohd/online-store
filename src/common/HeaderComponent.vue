@@ -49,7 +49,7 @@
   >
     <div
       v-if="isToggle"
-      class="side-menu sidebar-custom-height bg-gray-900 w-3/6 fixed sm:hidden"
+      class="side-menu sidebar-custom-height bg-gray-900 w-3/6 fixed sm:hidden z-50"
     >
       <div class="h-40 flex flex-col items-center justify-center space-y-2">
         <!-- Image -->
