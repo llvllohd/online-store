@@ -6,4 +6,7 @@
   .top {
     margin-top: calc(theme("spacing.16"));
   }
+  .h-no-header {
+    height: calc(100vh - theme("spacing.16"));
+  }
 }

@@ -1,2 +1,2 @@
 (window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["Categories"],{e2c9:function(e,t,c){"use strict";c.r(t);var n=c("7a23"),s={class:"flex items-center justify-center"},i=Object(n["i"])("div",{class:"top bg-yellow-400 flex items-center justify-center text-center mt-7"},[Object(n["i"])("h3",null,"I am Categories")],-1);function r(e,t){return Object(n["t"])(),Object(n["e"])("div",s,[i])}const o={};o.render=r;t["default"]=o}}]);
-//# sourceMappingURL=Categories.500fe178.js.map
+//# sourceMappingURL=Categories.51790481.js.map
