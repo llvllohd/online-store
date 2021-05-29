@@ -1,6 +1,8 @@
 <template>
   <!-- Header -->
-  <nav class="w-full h-16 fixed bg-gray-900 flex flex-row items-center px-3">
+  <nav
+    class="w-full h-16 fixed bg-gray-900 flex flex-row items-center px-3 z-50"
+  >
     <!-- Hamburger -->
     <div
       class="relative w-10 h-10 ring-1 ring-white rounded cursor-pointer flex items-center justify-center sm:hidden transition duration-500 ease-in-out"
