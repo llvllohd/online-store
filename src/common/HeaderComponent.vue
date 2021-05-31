@@ -2,6 +2,7 @@
   <!-- Header -->
   <nav
     class="w-full h-16 fixed bg-gray-900 flex flex-row items-center px-3 z-50"
+    id="header"
   >
     <!-- Hamburger -->
     <div
@@ -78,8 +79,13 @@
           <router-link
             exact
             :to="item.path"
-            @click="gotoLinks(item.path)"
-            class="w-full p-2 flex items-center justify-center border-b-2"
+            @click="gotoLinks(item)"
+            class="w-full p-2 flex items-center justify-center"
+            :class="[
+              selected_nav_name === item.name
+                ? 'border-r-4 border-yellow-400'
+                : '',
+            ]"
           >
             {{ item.name }}
           </router-link>
@@ -94,7 +100,7 @@ import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
 const navigation = [
   { name: "Home", path: "/", current: true },
-  { name: "Categories", path: "categories", current: true },
+  { name: "Categories", path: "categories", current: false },
   { name: "About", path: "/about", current: false },
   { name: "Settings", path: "settings", current: false },
 ];
@@ -105,6 +111,7 @@ export default {
     const router = useRouter();
 
     let isToggle = ref(false);
+    let selected_nav_name = ref("");
 
     let toggleMenu = () => {
       if (!isToggle.value) {
@@ -123,9 +130,10 @@ export default {
       }
     };
 
-    let gotoLinks = (links) => {
+    let gotoLinks = (item) => {
       isToggle.value = false;
-      router.push(links);
+      router.push(item.path);
+      selected_nav_name.value = item.name;
     };
 
     onMounted(() => {
@@ -136,7 +144,7 @@ export default {
       document.removeEventListener("click", clickAway);
     });
 
-    return { isToggle, toggleMenu, navigation, gotoLinks };
+    return { isToggle, toggleMenu, navigation, gotoLinks, selected_nav_name };
   },
 };
 </script>
@@ -230,5 +238,19 @@ export default {
   height: calc(100vh - theme("spacing.16"));
   margin-top: calc(theme("spacing.16"));
   transition: all 0.5s ease-in-out;
+}
+
+@media (max-width: 598px) {
+  .nav:hover {
+    color: #ffb400;
+    background-color: rgba(31, 41, 55);
+  }
+
+  .router-link-active {
+    color: #ffb400;
+    background-color: rgba(31, 41, 55);
+    border-right-width: 4px;
+    border-right-color: #ffb400;
+  }
 }
 </style>
