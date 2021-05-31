@@ -7,7 +7,7 @@
         :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"
       ></div>
       <div
-        class="w-full z-10 pt-3 pb-3 transition duration-1000 bg-white"
+        class="w-full z-10 pt-3 pb-3 transition duration-1000 bg-red-600"
         id="carousel"
         :style="isFixed ? 'position:fixed;top:4rem' : ''"
       >
@@ -59,8 +59,7 @@
               <div class="image">
                 <img
                   :src="require(`../assets/images/${item.image}`)"
-                  class="rounded-t-lg h-32
-            w-full"
+                  class="rounded-t-lg h-32 w-full"
                   alt=""
                 />
               </div>
@@ -399,10 +398,10 @@ export default {
     let onScroll = () => {
       let carousel = document.getElementById("carousel");
       let section = document.getElementById("section");
-      if (carousel.getBoundingClientRect().top < 61) {
+      if (carousel.getBoundingClientRect().top < 64) {
         isFixed.value = true;
       }
-      if (section.getBoundingClientRect().top > 123) {
+      if (section.getBoundingClientRect().top > 130) {
         isFixed.value = false;
       }
     };
