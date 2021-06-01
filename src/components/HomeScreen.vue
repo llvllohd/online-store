@@ -7,11 +7,12 @@
         :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"
       ></div>
       <div
-        class="w-full z-10 pt-3 pb-3 transition duration-1000 bg-red-600"
+        class="w-full z-10 pt-3 pb-3 transition duration-1000 bg-white"
         id="carousel"
         :style="isFixed ? 'position:fixed;top:4rem' : ''"
       >
         <carousel
+          class="cursor-pointer"
           :items-to-show="4"
           :autoplay="5000"
           :wrap-around="true"
@@ -19,8 +20,9 @@
         >
           <slide v-for="category in categories" :key="category.id">
             <div
-              @click="getItems(category)"
-              class="carousel__item flex w-full items-center justify-center rounded-lg h-8 font-bold text-xs bg-gray-900 cursor-pointer"
+              @click.prevent="getItemsForMobile(category)"
+              @touchend.prevent="getItemsForMobile(category)"
+              class="carousel__item flex w-full focus:outline-none items-center justify-center rounded-lg h-8 font-bold text-xs bg-gray-900 cursor-pointer"
             >
               {{ category.name }}
             </div>
@@ -74,7 +76,7 @@
                 </div>
               </div>
               <button
-                class="rounded w-full bg-gray-900 hover:bg-gray-800 hover:outline-none py-1 font-medium text-sm text-white absolute bottom-0"
+                class="rounded w-full bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none py-1 font-medium text-sm text-white absolute bottom-0"
               >
                 Add to Cart
               </button>
@@ -89,8 +91,12 @@
     <!-- Desktop Device -->
     <div class="w-full hidden sm:flex">
       <div class="top h-no-header w-1/2 flex flex-col">
-        <div class="carousel">
+        <div
+          class="w-1/2 z-10 pt-3 pb-3 transition duration-1000 bg-white fixed"
+          id="carousel-lg"
+        >
           <carousel
+            class="cursor-pointer"
             :items-to-show="5"
             :autoplay="5000"
             :wrap-around="true"
@@ -98,8 +104,9 @@
           >
             <slide v-for="category in categories" :key="category.id">
               <div
-                @click.prevent="getItems(category)"
-                class="carousel__item flex w-full items-center justify-center rounded-lg h-8 font-bold text-base bg-gray-900"
+                @click="getItemsForDesktop(category)"
+                @touchend="getItemsForDesktop(category)"
+                class="carousel__item flex w-full items-center justify-center rounded-lg h-8 font-bold text-xs bg-gray-900"
               >
                 {{ category.name }}
               </div>
@@ -112,36 +119,51 @@
           </carousel>
         </div>
 
-        <!-- <div class="items flex items-center justify-between flex-wrap p-3">
+        <section class="transition duration-1000 mt-16" id="section-lg">
           <div
-            class="card w-48 shadow-lg rounded-lg relative mb-3"
-            v-for="item in items"
-            :key="item.id"
+            class="flex flex-col min-h-screen"
+            :id="'lg-' + category.name"
+            v-for="category in categories"
+            :key="category.name"
           >
-            <div class="image">
-              <img
-                :src="require(`../assets/images/${item.image}`)"
-                class="rounded-t-lg h-32 w-full"
-                alt=""
-              />
+            <div class="category-name pl-3 pt-3 text-2xl font-bold">
+              {{ category.name }}
             </div>
+
             <div
-              class="details h-14 flex flex-col items-start justify-around px-2 mb-7"
+              class="items flex flex-row items-center justify-between flex-wrap p-3 "
             >
-              <div class="item-name">
-                <h5 class="font-medium text-sm">{{ item.name }}</h5>
-              </div>
-              <div class="Pice">
-                <h5 class="font-medium text-sm">{{ item.price }}</h5>
+              <div
+                class="card w-48 shadow-lg rounded-lg relative mb-3"
+                v-for="item in category.items"
+                :key="item.id"
+              >
+                <div class="image">
+                  <img
+                    :src="require(`../assets/images/${item.image}`)"
+                    class="rounded-t-lg h-32 w-full"
+                    alt=""
+                  />
+                </div>
+                <div
+                  class="details h-14 flex flex-col items-start justify-around px-2 mb-7"
+                >
+                  <div class="item-name">
+                    <h5 class="font-medium text-sm">{{ item.name }}</h5>
+                  </div>
+                  <div class="Pice">
+                    <h5 class="font-medium text-sm">{{ item.price }}</h5>
+                  </div>
+                </div>
+                <button
+                  class="rounded w-full bg-gray-900 hover:bg-gray-800 hover:outline-none py-1 font-medium text-sm text-white absolute bottom-0"
+                >
+                  Add to Cart
+                </button>
               </div>
             </div>
-            <button
-              class="rounded w-full bg-gray-900 hover:bg-gray-800 hover:outline-none py-1 font-medium text-sm text-white absolute bottom-0"
-            >
-              Add to Cart
-            </button>
           </div>
-        </div> -->
+        </section>
       </div>
 
       <div class="top h-no-header w-1/2 fixed right-0">
@@ -387,10 +409,17 @@ export default {
   },
   setup() {
     let isFixed = ref(false);
-    let getItems = (item) => {
-      let itemsSection = document.getElementById(item.name);
+    let getItemsForMobile = (item) => {
       let header = document.getElementById("header");
       let carousel = document.getElementById("carousel");
+      let itemsSection = document.getElementById(item.name);
+      let offsetHeight = header.offsetHeight + carousel.offsetHeight;
+      window.scrollTo(0, itemsSection.offsetTop - offsetHeight);
+    };
+    let getItemsForDesktop = (item) => {
+      let header = document.getElementById("header");
+      let carousel = document.getElementById("carousel-lg");
+      let itemsSection = document.getElementById("lg-" + item.name);
       let offsetHeight = header.offsetHeight + carousel.offsetHeight;
       window.scrollTo(0, itemsSection.offsetTop - offsetHeight);
     };
@@ -414,7 +443,13 @@ export default {
       document.removeEventListener("scroll", onScroll);
     });
 
-    return { isFixed, backgroundImage, getItems, categories };
+    return {
+      isFixed,
+      backgroundImage,
+      getItemsForMobile,
+      getItemsForDesktop,
+      categories,
+    };
   },
 };
 </script>
