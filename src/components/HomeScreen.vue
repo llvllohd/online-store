@@ -12,17 +12,21 @@
         :style="isFixed ? 'position:fixed;top:4rem' : ''"
       >
         <carousel
-          class="cursor-pointer"
+          class="cursor-pointer "
           :items-to-show="4"
           :autoplay="5000"
           :wrap-around="true"
           :transition="1500"
         >
-          <slide v-for="category in categories" :key="category.id">
+          <slide
+            v-for="category in categories"
+            :key="category.id"
+            class="focus:outline-none"
+          >
             <div
               @click.prevent="getItemsForMobile(category)"
-              @touchend.prevent="getItemsForMobile(category)"
-              class="carousel__item flex w-full focus:outline-none items-center justify-center rounded-lg h-8 font-bold text-xs bg-gray-900 cursor-pointer"
+              @touchstart.prevent="getItemsForMobile(category)"
+              class="carousel__item flex w-full items-center justify-center rounded-lg h-8 font-bold text-xs bg-gray-900 cursor-pointer"
             >
               {{ category.name }}
             </div>
@@ -41,7 +45,7 @@
         id="section"
       >
         <div
-          class="flex flex-col"
+          class="flex flex-col min-h-screen"
           :id="category.name"
           v-for="category in categories"
           :key="category.name"
