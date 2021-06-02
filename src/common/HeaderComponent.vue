@@ -70,24 +70,28 @@
       </div>
 
       <!-- Nav Items -->
-      <ul class="w-full h-full flex flex-col justify-start items-center pt-5">
+      <ul class="w-full h-full flex flex-col justify-start items-center pt-11">
         <li
           v-for="item in navigation"
           :key="item.name"
-          class="nav text-white text-lg font-bold flex w-full items-center justify-center"
+          class="nav text-white font-bold flex w-full items-center justify-center"
         >
           <router-link
             exact
             :to="item.path"
             @click="gotoLinks(item)"
             class="w-full p-2 flex items-center justify-center"
-            :class="[
-              selected_nav_name === item.name
-                ? 'border-r-4 border-yellow-400'
-                : '',
-            ]"
           >
-            {{ item.name }}
+            <div class="flex items-center justify-center w-1/4">
+              <span class="text-lg">
+                <fa :icon="['fa', item.icon]"> </fa>
+              </span>
+            </div>
+            <div class="flex items-center w-2/4">
+              <span class="text-lg">
+                {{ item.name }}
+              </span>
+            </div>
           </router-link>
         </li>
       </ul>
@@ -99,10 +103,10 @@
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
 const navigation = [
-  { name: "Home", path: "/", current: true },
-  { name: "Categories", path: "categories", current: false },
-  { name: "About", path: "/about", current: false },
-  { name: "Settings", path: "settings", current: false },
+  { name: "Home", icon: "home", path: "/", current: true },
+  { name: "About", icon: "info", path: "about", current: false },
+  { name: "Settings", icon: "cog", path: "settings", current: false },
+  { name: "Login", icon: "sign-in-alt", path: "login", current: false },
 ];
 
 export default {
@@ -165,6 +169,7 @@ export default {
   position: absolute;
   top: 4px;
   left: -2px;
+  border-radius: 3px;
   border-top: 3px solid #ffb400;
   border-left: 3px solid #ffb400;
 }
@@ -176,6 +181,7 @@ export default {
   position: absolute;
   bottom: 3px;
   right: -3px;
+  border-radius: 3px;
   border-bottom: 3px solid #ffb400;
   border-right: 3px solid #ffb400;
 }
@@ -244,6 +250,8 @@ export default {
   .nav:hover {
     color: #ffb400;
     background-color: rgba(31, 41, 55);
+    border-right-width: 4px;
+    border-right-color: #ffb400;
   }
 
   .router-link-active {

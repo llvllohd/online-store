@@ -13,7 +13,7 @@
       >
         <carousel
           class="cursor-pointer "
-          :items-to-show="4"
+          :items-to-show="3.5"
           :autoplay="5000"
           :wrap-around="true"
           :transition="1500"
@@ -26,7 +26,12 @@
             <div
               @click.prevent="getItemsForMobile(category)"
               @touchstart.prevent="getItemsForMobile(category)"
-              class="carousel__item flex w-full items-center justify-center rounded-lg h-8 font-bold text-xs bg-gray-900 cursor-pointer"
+              class="carousel__item tracking-wider flex w-full items-center justify-center rounded-lg h-8 font-bold text-white text-xs bg-gray-900 cursor-pointer"
+              :class="
+                category_name == category.name
+                  ? 'text-yellow-400 uppercase'
+                  : ''
+              "
             >
               {{ category.name }}
             </div>
@@ -50,8 +55,10 @@
           v-for="category in categories"
           :key="category.name"
         >
-          <div class="category-name pl-3 pt-3 text-2xl font-bold">
-            {{ category.name }}
+          <div class="flex items-center justify-center p-3 text-2xl font-bold">
+            <h4 class="category-name relative uppercase">
+              {{ category.name }}
+            </h4>
           </div>
 
           <div
@@ -105,12 +112,18 @@
             :autoplay="5000"
             :wrap-around="true"
             :transition="1500"
+            :breakpoints="breakpoints"
           >
             <slide v-for="category in categories" :key="category.id">
               <div
                 @click="getItemsForDesktop(category)"
                 @touchend="getItemsForDesktop(category)"
-                class="carousel__item flex w-full items-center justify-center rounded-lg h-8 font-bold text-xs bg-gray-900"
+                class="carousel__item tracking-wider flex w-full items-center justify-center rounded-lg h-8 font-bold text-sm text-white  bg-gray-900"
+                :class="
+                  category_name == category.name
+                    ? 'text-yellow-400 uppercase'
+                    : ''
+                "
               >
                 {{ category.name }}
               </div>
@@ -130,8 +143,12 @@
             v-for="category in categories"
             :key="category.name"
           >
-            <div class="category-name pl-3 pt-3 text-2xl font-bold">
-              {{ category.name }}
+            <div
+              class="flex items-center justify-center p-3 text-2xl font-bold"
+            >
+              <h4 class="category-name relative uppercase">
+                {{ category.name }}
+              </h4>
             </div>
 
             <div
@@ -413,19 +430,50 @@ export default {
   },
   setup() {
     let isFixed = ref(false);
+    let category_name = ref("");
+
+    let breakpoints = ref({
+      640: {
+        itemsToShow: 3,
+        snapAlign: "center",
+      },
+      768: {
+        itemsToShow: 4,
+        snapAlign: "center",
+      },
+      // 1024 and up
+      1024: {
+        itemsToShow: 5,
+        snapAlign: "center",
+      },
+    });
+
     let getItemsForMobile = (item) => {
       let header = document.getElementById("header");
       let carousel = document.getElementById("carousel");
       let itemsSection = document.getElementById(item.name);
       let offsetHeight = header.offsetHeight + carousel.offsetHeight;
       window.scrollTo(0, itemsSection.offsetTop - offsetHeight);
+
+      for (let i of categories) {
+        if (item.id === i.id) {
+          category_name.value = i.name;
+        }
+      }
     };
+
     let getItemsForDesktop = (item) => {
       let header = document.getElementById("header");
       let carousel = document.getElementById("carousel-lg");
       let itemsSection = document.getElementById("lg-" + item.name);
       let offsetHeight = header.offsetHeight + carousel.offsetHeight;
       window.scrollTo(0, itemsSection.offsetTop - offsetHeight);
+
+      for (let i of categories) {
+        if (item.id === i.id) {
+          category_name.value = i.name;
+        }
+      }
     };
 
     let onScroll = () => {
@@ -449,10 +497,12 @@ export default {
 
     return {
       isFixed,
+      category_name,
       backgroundImage,
       getItemsForMobile,
       getItemsForDesktop,
       categories,
+      breakpoints,
     };
   },
 };
@@ -460,11 +510,11 @@ export default {
 
 <style scoped>
 .carousel__item {
-  color: var(--carousel-color-white);
+  /* color: var(--carousel-color-white); */
 }
 
 .carousel__slide {
-  padding: 3px;
+  padding: 1px;
 }
 
 .w-48 {
@@ -476,4 +526,28 @@ export default {
   box-sizing: content-box;
   border: 5px solid white;
 } */
+
+.category-name::before {
+  content: "";
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  top: -2px;
+  left: -8px;
+  border-radius: 7px;
+  border-top: 4px solid #ffb400;
+  border-left: 4px solid #ffb400;
+}
+
+.category-name::after {
+  content: "";
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  bottom: -3px;
+  right: -9px;
+  border-radius: 7px;
+  border-bottom: 4px solid #ffb400;
+  border-right: 4px solid #ffb400;
+}
 </style>

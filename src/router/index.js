@@ -8,18 +8,21 @@ const routes = [
   },
   {
     path: "/about",
+    name: "About",
     component: () =>
       import(/* webpackChunkName: "About" */ "../components/AboutUs.vue"),
   },
   {
-    path: "/categories",
+    path: "/login",
+    name: "Login",
     component: () =>
       import(
-        /* webpackChunkName: "Categories" */ "../components/CategoriesScreen.vue"
+        /* webpackChunkName: "Login" */ "../components/LoginScreen.vue"
       ),
   },
   {
     path: "/settings",
+    name: "Settings",
     component: () =>
       import(
         /* webpackChunkName: "Settings" */ "../components/SettingsScreen.vue"
