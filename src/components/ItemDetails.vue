@@ -20,7 +20,7 @@
           >
             <img
               @click.prevent="showSelectedImage(image)"
-              @touchend.prevent="showSelectedImage(image)"
+              @touchstart.prevent="showSelectedImage(image)"
               :src="image.image"
               class="w-full h-14 rounded-md"
               alt=""
