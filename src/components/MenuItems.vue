@@ -88,6 +88,7 @@
               </div>
               <button
                 class="rounded w-full bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none py-1 font-medium text-sm text-white absolute bottom-0"
+                @click.prevent="goToItemDetails(item.id)"
               >
                 Add to Cart
               </button>
@@ -202,6 +203,7 @@ import backgroundImage from "../assets/images/crochet-background.jpg";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide } from "vue3-carousel";
 import { onMounted, onBeforeUnmount, ref } from "vue";
+import { useRouter } from "vue-router";
 
 const categories = [
   {
@@ -251,37 +253,37 @@ const categories = [
     id: 1,
     items: [
       {
-        id: 0,
+        id: 6,
         name: "Crochets One",
         price: "25 INR",
         image: "cap-one.jpg",
       },
       {
-        id: 1,
+        id: 7,
         name: "Crochets Two",
         price: "60 INR",
         image: "cap-one.jpg",
       },
       {
-        id: 2,
+        id: 8,
         name: "Crochets Three",
         price: "5 INR",
         image: "cap-one.jpg",
       },
       {
-        id: 3,
+        id: 9,
         name: "Crochets Four",
         price: "100 INR",
         image: "cap-one.jpg",
       },
       {
-        id: 4,
+        id: 10,
         name: "Crochets Five",
         price: "25 INR",
         image: "cap-one.jpg",
       },
       {
-        id: 5,
+        id: 11,
         name: "Crochets Six",
         price: "75 INR",
         image: "cap-one.jpg",
@@ -293,19 +295,19 @@ const categories = [
     id: 2,
     items: [
       {
-        id: 0,
+        id: 12,
         name: "Pants One",
         price: "25 INR",
         image: "cap-one.jpg",
       },
       {
-        id: 1,
+        id: 13,
         name: "Pants Two",
         price: "60 INR",
         image: "cap-one.jpg",
       },
       {
-        id: 2,
+        id: 14,
         name: "Pants Three",
         price: "5 INR",
         image: "cap-one.jpg",
@@ -317,37 +319,37 @@ const categories = [
     id: 3,
     items: [
       {
-        id: 0,
+        id: 15,
         name: "Shirts One",
         price: "25 INR",
         image: "cap-one.jpg",
       },
       {
-        id: 1,
+        id: 16,
         name: "Shirts Two",
         price: "60 INR",
         image: "cap-one.jpg",
       },
       {
-        id: 2,
+        id: 17,
         name: "Shirts Three",
         price: "5 INR",
         image: "cap-one.jpg",
       },
       {
-        id: 3,
+        id: 18,
         name: "Shirts Four",
         price: "100 INR",
         image: "cap-one.jpg",
       },
       {
-        id: 4,
+        id: 19,
         name: "Shirts Five",
         price: "25 INR",
         image: "cap-one.jpg",
       },
       {
-        id: 5,
+        id: 20,
         name: "Shirts Six",
         price: "75 INR",
         image: "cap-one.jpg",
@@ -359,37 +361,37 @@ const categories = [
     id: 4,
     items: [
       {
-        id: 0,
+        id: 21,
         name: "Trousers One",
         price: "25 INR",
         image: "cap-one.jpg",
       },
       {
-        id: 1,
+        id: 22,
         name: "Trousers Two",
         price: "60 INR",
         image: "cap-one.jpg",
       },
       {
-        id: 2,
+        id: 23,
         name: "Trousers Three",
         price: "5 INR",
         image: "cap-one.jpg",
       },
       {
-        id: 3,
+        id: 24,
         name: "Trousers Four",
         price: "100 INR",
         image: "cap-one.jpg",
       },
       {
-        id: 4,
+        id: 25,
         name: "Trousers Five",
         price: "25 INR",
         image: "cap-one.jpg",
       },
       {
-        id: 5,
+        id: 26,
         name: "Trousers Six",
         price: "75 INR",
         image: "cap-one.jpg",
@@ -401,19 +403,19 @@ const categories = [
     id: 5,
     items: [
       {
-        id: 0,
+        id: 27,
         name: "Inners One",
         price: "25 INR",
         image: "cap-one.jpg",
       },
       {
-        id: 1,
+        id: 28,
         name: "Inners Two",
         price: "60 INR",
         image: "cap-one.jpg",
       },
       {
-        id: 2,
+        id: 29,
         name: "Inners Three",
         price: "5 INR",
         image: "cap-one.jpg",
@@ -423,12 +425,13 @@ const categories = [
 ];
 
 export default {
-  name: "Home Screen",
+  name: "Menu Items",
   components: {
     Carousel,
     Slide,
   },
   setup() {
+    const router = useRouter();
     let isFixed = ref(false);
     let category_name = ref("");
 
@@ -476,6 +479,10 @@ export default {
       }
     };
 
+    let goToItemDetails = (item_id) => {
+      router.push({ name: "Item Details", params: { id: item_id } });
+    };
+
     let onScroll = () => {
       let carousel = document.getElementById("carousel");
       let section = document.getElementById("section");
@@ -501,6 +508,7 @@ export default {
       backgroundImage,
       getItemsForMobile,
       getItemsForDesktop,
+      goToItemDetails,
       categories,
       breakpoints,
     };
