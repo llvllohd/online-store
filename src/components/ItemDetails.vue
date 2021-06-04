@@ -5,15 +5,19 @@
       <div class="w-full h-1/3">
         <img :src="item_detail.image" class="w-full h-full" alt="" />
       </div>
-      <div class="images-carousel w-full h-1/3">
+      <div class="images-carousel w-full h-1/3 focus:outline-none select-none">
         <carousel
-          class="cursor-pointer"
+          class="cursor-pointer focus:outline-none select-none"
           :items-to-show="4"
           :autoplay="5000"
           :wrap-around="false"
           :transition="1500"
         >
-          <slide v-for="image in item_detail.images" :key="image.id">
+          <slide
+            v-for="image in item_detail.images"
+            :key="image.id"
+            class="focus:outline-none select-none"
+          >
             <img
               @click.prevent="showSelectedImage(image)"
               @touchend.prevent="showSelectedImage(image)"

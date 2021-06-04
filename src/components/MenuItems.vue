@@ -12,7 +12,7 @@
         :style="isFixed ? 'position:fixed;top:4rem' : ''"
       >
         <carousel
-          class="cursor-pointer "
+          class="cursor-pointer"
           :items-to-show="3.5"
           :autoplay="5000"
           :wrap-around="true"
