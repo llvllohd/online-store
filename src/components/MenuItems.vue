@@ -76,22 +76,26 @@
                   alt=""
                 />
               </div>
-              <div
-                class="details h-14 flex flex-col items-start justify-around px-2 mb-7"
-              >
+              <div class="details flex flex-col justify-around p-1 mb-10">
                 <div class="item-name">
                   <h5 class="font-medium text-sm">{{ item.name }}</h5>
                 </div>
-                <div class="Pice">
-                  <h5 class="font-medium text-sm">{{ item.price }}</h5>
-                </div>
               </div>
-              <button
-                class="rounded w-full bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none py-1 font-medium text-sm text-white absolute bottom-0"
-                @click.prevent="goToItemDetails(item.id)"
+              <div
+                class="flex flex-row justify-around w-full absolute bottom-0"
               >
-                Add to Cart
-              </button>
+                <button
+                  class="rounded mr-1 w-1/2 border-2 border-gray-900  focus:outline-none hover:outline-none py-1 font-bold text-sm text-gray-900"
+                >
+                  &#8377; {{ item.price }}
+                </button>
+                <button
+                  class="rounded ml-1 w-1/2 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none py-1 font-medium text-sm text-white"
+                  @click.prevent="goToItemDetails(item.id)"
+                >
+                  ADD
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -117,8 +121,8 @@
           >
             <slide v-for="category in categories" :key="category.id">
               <div
-                @click="getItemsForDesktop(category)"
-                @touchend="getItemsForDesktop(category)"
+                @click.prevent="getItemsForDesktop(category)"
+                @touchstart.prevent="getItemsForDesktop(category)"
                 class="carousel__item tracking-wider flex w-full items-center justify-center rounded-lg h-8 font-bold text-sm text-white  bg-gray-900"
                 :class="
                   category_name == category.name
@@ -153,7 +157,7 @@
             </div>
 
             <div
-              class="items flex flex-row items-center justify-between flex-wrap p-3 "
+              class="items flex flex-row items-center justify-between flex-wrap p-3"
             >
               <div
                 class="card w-48 shadow-lg rounded-lg relative mb-3"
@@ -168,20 +172,27 @@
                   />
                 </div>
                 <div
-                  class="details h-14 flex flex-col items-start justify-around px-2 mb-7"
+                  class="details flex flex-col items-start justify-around p-1 mb-10"
                 >
                   <div class="item-name">
-                    <h5 class="font-medium text-sm">{{ item.name }}</h5>
-                  </div>
-                  <div class="Pice">
-                    <h5 class="font-medium text-sm">{{ item.price }}</h5>
+                    <h5 class="font-medium text-lg">{{ item.name }}</h5>
                   </div>
                 </div>
-                <button
-                  class="rounded w-full bg-gray-900 hover:bg-gray-800 hover:outline-none py-1 font-medium text-sm text-white absolute bottom-0"
+                <div
+                  class="flex flex-row justify-around w-full absolute bottom-0"
                 >
-                  Add to Cart
-                </button>
+                  <button
+                    class="rounded mr-1 w-1/2 border-2 border-gray-900  focus:outline-none hover:outline-none py-1 font-bold text-sm text-gray-900"
+                  >
+                    &#8377; {{ item.price }}
+                  </button>
+                  <button
+                    class="rounded ml-1 w-1/2 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none py-1 font-medium text-sm text-white"
+                    @click.prevent="goToItemDetails(item.id)"
+                  >
+                    ADD
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -213,37 +224,37 @@ const categories = [
       {
         id: 0,
         name: "Stitchings One",
-        price: "25 INR",
+        price: "25",
         image: "cap-one.jpg",
       },
       {
         id: 1,
         name: "Stitchings Two",
-        price: "60 INR",
+        price: "60",
         image: "cap-one.jpg",
       },
       {
         id: 2,
         name: "Stitchings Three",
-        price: "5 INR",
+        price: "5",
         image: "cap-one.jpg",
       },
       {
         id: 3,
         name: "Stitchings Four",
-        price: "100 INR",
+        price: "100",
         image: "cap-one.jpg",
       },
       {
         id: 4,
         name: "Stitchings Five",
-        price: "25 INR",
+        price: "25",
         image: "cap-one.jpg",
       },
       {
         id: 5,
         name: "Stitchings Six",
-        price: "75 INR",
+        price: "75",
         image: "cap-one.jpg",
       },
     ],
@@ -255,37 +266,37 @@ const categories = [
       {
         id: 6,
         name: "Crochets One",
-        price: "25 INR",
+        price: "25",
         image: "cap-one.jpg",
       },
       {
         id: 7,
         name: "Crochets Two",
-        price: "60 INR",
+        price: "60",
         image: "cap-one.jpg",
       },
       {
         id: 8,
         name: "Crochets Three",
-        price: "5 INR",
+        price: "5",
         image: "cap-one.jpg",
       },
       {
         id: 9,
         name: "Crochets Four",
-        price: "100 INR",
+        price: "100",
         image: "cap-one.jpg",
       },
       {
         id: 10,
         name: "Crochets Five",
-        price: "25 INR",
+        price: "25",
         image: "cap-one.jpg",
       },
       {
         id: 11,
         name: "Crochets Six",
-        price: "75 INR",
+        price: "75",
         image: "cap-one.jpg",
       },
     ],
@@ -297,19 +308,19 @@ const categories = [
       {
         id: 12,
         name: "Pants One",
-        price: "25 INR",
+        price: "25",
         image: "cap-one.jpg",
       },
       {
         id: 13,
         name: "Pants Two",
-        price: "60 INR",
+        price: "60",
         image: "cap-one.jpg",
       },
       {
         id: 14,
         name: "Pants Three",
-        price: "5 INR",
+        price: "5",
         image: "cap-one.jpg",
       },
     ],
@@ -321,37 +332,37 @@ const categories = [
       {
         id: 15,
         name: "Shirts One",
-        price: "25 INR",
+        price: "25",
         image: "cap-one.jpg",
       },
       {
         id: 16,
         name: "Shirts Two",
-        price: "60 INR",
+        price: "60",
         image: "cap-one.jpg",
       },
       {
         id: 17,
         name: "Shirts Three",
-        price: "5 INR",
+        price: "5",
         image: "cap-one.jpg",
       },
       {
         id: 18,
         name: "Shirts Four",
-        price: "100 INR",
+        price: "100",
         image: "cap-one.jpg",
       },
       {
         id: 19,
         name: "Shirts Five",
-        price: "25 INR",
+        price: "25",
         image: "cap-one.jpg",
       },
       {
         id: 20,
         name: "Shirts Six",
-        price: "75 INR",
+        price: "75",
         image: "cap-one.jpg",
       },
     ],
@@ -363,37 +374,37 @@ const categories = [
       {
         id: 21,
         name: "Trousers One",
-        price: "25 INR",
+        price: "25",
         image: "cap-one.jpg",
       },
       {
         id: 22,
         name: "Trousers Two",
-        price: "60 INR",
+        price: "60",
         image: "cap-one.jpg",
       },
       {
         id: 23,
         name: "Trousers Three",
-        price: "5 INR",
+        price: "5",
         image: "cap-one.jpg",
       },
       {
         id: 24,
         name: "Trousers Four",
-        price: "100 INR",
+        price: "100",
         image: "cap-one.jpg",
       },
       {
         id: 25,
         name: "Trousers Five",
-        price: "25 INR",
+        price: "25",
         image: "cap-one.jpg",
       },
       {
         id: 26,
         name: "Trousers Six",
-        price: "75 INR",
+        price: "75",
         image: "cap-one.jpg",
       },
     ],
@@ -405,19 +416,19 @@ const categories = [
       {
         id: 27,
         name: "Inners One",
-        price: "25 INR",
+        price: "25",
         image: "cap-one.jpg",
       },
       {
         id: 28,
         name: "Inners Two",
-        price: "60 INR",
+        price: "60",
         image: "cap-one.jpg",
       },
       {
         id: 29,
         name: "Inners Three",
-        price: "5 INR",
+        price: "5",
         image: "cap-one.jpg",
       },
     ],

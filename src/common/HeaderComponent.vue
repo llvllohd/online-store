@@ -83,8 +83,16 @@
             class="w-full p-2 flex items-center justify-center"
           >
             <div class="flex items-center justify-center w-1/4">
-              <span class="text-lg">
-                <fa :icon="['fa', item.icon]"> </fa>
+              <span>
+                <fa-layer class="text-xl">
+                  <fa :icon="['fa', 'circle']"> </fa>
+                  <fa
+                    :icon="['fa', item.icon]"
+                    class="text-gray-900 text-center"
+                    transform="shrink-5"
+                  >
+                  </fa>
+                </fa-layer>
               </span>
             </div>
             <div class="flex items-center w-2/4">
