@@ -43,16 +43,37 @@
             <div class="text-xl font-bold mt-1">
               &#8377; {{ item_detail.price }}
             </div>
+
+            <div class="mt-1 flex items-center">
+              <span class="text-lg font-bold mr-2"> To Buy Contact On: </span>
+              <a
+                :href="`https://api.whatsapp.com/send?phone=${+919731735035}`"
+                target="_blank"
+                class="mr-2"
+              >
+                <fa :icon="['fab', 'whatsapp']" class="text-2xl text-gray-900">
+                </fa>
+              </a>
+              <a
+                href="https://www.instagram.com/creativity_storee/"
+                target="_blank"
+              >
+                <fa :icon="['fab', 'instagram']" class="text-2xl text-gray-900">
+                </fa>
+              </a>
+            </div>
           </div>
         </div>
-        <div class="w-full">
+
+        <!-- Related Products -->
+        <div class="w-full mt-10">
           <div class="flex items-center justify-start p-2 text-md font-medium">
             <h4 class="category-name">
               Related Products
             </h4>
           </div>
           <div
-            class="items flex flex-row items-center justify-between overflow-x-scroll p-1"
+            class="items flex flex-row items-center justify-between overflow-x-scroll p-1 mb-5"
           >
             <div
               class="card flex-none w-48 shadow-lg rounded-lg relative ml-1 mr-1"
@@ -70,7 +91,7 @@
                 class="details flex flex-col items-start justify-around p-1 mb-10"
               >
                 <div class="item-name">
-                  <h5 class="font-medium text-lg">{{ item.name }}</h5>
+                  <h5 class="font-medium text-sm">{{ item.name }}</h5>
                 </div>
               </div>
               <div
