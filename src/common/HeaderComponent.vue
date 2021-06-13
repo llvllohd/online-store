@@ -88,8 +88,8 @@
                   <fa :icon="['fa', 'circle']"> </fa>
                   <fa
                     :icon="['fa', item.icon]"
-                    class="text-gray-900 text-center"
-                    transform="shrink-5"
+                    class="text-gray-900 text-xs"
+                    transform="shrink-0"
                   >
                   </fa>
                 </fa-layer>
