@@ -16,6 +16,7 @@ import App from "./App.vue";
 import "./assets/css/tailwind.css";
 import "animate.css";
 import router from "./router";
+import './common/validator.js'
 
 library.add(
   faHome,

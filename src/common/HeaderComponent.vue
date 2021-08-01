@@ -163,7 +163,8 @@ export default {
 
 <style scoped>
 .nav:hover {
-  color: #ffb400;
+  /* color: #ffb400; */
+  color: var(--primary);
 }
 
 .router-link-active {

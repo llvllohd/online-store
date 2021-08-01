@@ -167,7 +167,7 @@
                 <div class="image">
                   <img
                     :src="require(`../assets/images/${item.image}`)"
-                    class="rounded-t-lg h-32 w-full"
+                    class="rounded-t-lg h-32 md:h-40 lg:h-44 w-full"
                     alt=""
                   />
                 </div>
