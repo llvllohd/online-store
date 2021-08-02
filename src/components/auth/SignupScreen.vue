@@ -126,11 +126,7 @@ export default {
   components: { RightHandSide },
   setup() {
     const { meta: formMeta, handleSubmit } = useForm();
-    const nameField = reactive(
-      useField("name", "required", {
-        initialValue: "",
-      })
-    );
+    const nameField = reactive(useField("name", "required"));
     const emailField = reactive(useField("email", "email"));
     const passwordField = reactive(useField("password", "password"));
     const confirmPasswordField = reactive(useField("confirmPassword", "confirmPassword:password"));
