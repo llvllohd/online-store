@@ -1,51 +1,82 @@
 import { createRouter, createWebHistory } from "vue-router";
+import store from "@/store/index.js";
 
+let siteName = " - Fatimas";
 const routes = [
   {
-    path: "/",
-    name: "Menu Items",
-    component: () =>
-      import(
-        /* webpackChunkName: "Menu Items" */ "../components/MenuItems.vue"
-      ),
-  },
-  {
-    path: "/item-details/:id",
-    name: "Item Details",
-    component: () =>
-      import(
-        /* webpackChunkName: "Item Details" */ "../components/ItemDetails.vue"
-      ),
-  },
-  {
-    path: "/about",
-    name: "About",
-    component: () =>
-      import(/* webpackChunkName: "About" */ "../components/AboutUs.vue"),
-  },
-  {
-    path: "/settings",
-    name: "Settings",
-    component: () =>
-      import(
-        /* webpackChunkName: "Settings" */ "../components/SettingsScreen.vue"
-      ),
+    path: "/register",
+    name: "Register",
+    component: () => import(/* webpackChunkName: "Signup" */ "@/components/auth/SignupScreen.vue"),
+    meta: {
+      title: "Registration" + siteName,
+      requiresAuth: false,
+    },
   },
   {
     path: "/login",
     name: "Login",
-    component: () =>
-      import(
-        /* webpackChunkName: "Login" */ "../components/auth/LoginScreen.vue"
-      ),
+    component: () => import(/* webpackChunkName: "Login" */ "@/components/auth/LoginScreen.vue"),
+    meta: {
+      title: "Login" + siteName,
+      requiresAuth: false,
+    },
+  },
+
+  {
+    path: "/",
+    name: "Menu Items",
+    component: () => import(/* webpackChunkName: "Menu Items" */ "@/components/menu-items/MenuItems.vue"),
+    meta: {
+      title: "Menu Items" + siteName,
+      requiresAuth: false,
+    },
   },
   {
-    path: "/register",
-    name: "Register",
-    component: () =>
-      import(
-        /* webpackChunkName: "Signup" */ "../components/auth/SignupScreen.vue"
-      ),
+    path: "/item-details/:id",
+    name: "Item Details",
+    component: () => import(/* webpackChunkName: "Item Details" */ "@/components/menu-items/ItemDetails.vue"),
+    meta: {
+      title: "Item Details" + siteName,
+      requiresAuth: false,
+    },
+  },
+
+  {
+    path: "/categories",
+    name: "Categories",
+    component: () => import(/* webpackChunkName: "Categories" */ "@/components/categories/CategoriesScreen.vue"),
+    meta: {
+      title: "Categories" + siteName,
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/add-category",
+    name: "Add Category",
+    component: () => import(/* webpackChunkName: "Add Category" */ "@/components/categories/AddUpdateCategory.vue"),
+    meta: {
+      title: "Add Category" + siteName,
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/about",
+    name: "About Us",
+    component: () => import(/* webpackChunkName: "About" */ "../components/AboutUs.vue"),
+    meta: {
+      title: "About Us" + siteName,
+      requiresAuth: false,
+    },
+  },
+
+  {
+    path: "/:pathMatch(.*)*",
+    name: "Page Not Found",
+    component: () => import("@/components/common/PageNotFound.vue"),
+    meta: {
+      title: "Page Not Found" + siteName,
+      requiresAuth: false,
+    },
   },
 ];
 
@@ -54,8 +85,25 @@ const router = createRouter({
   routes,
   scrollBehavior() {
     // always scroll to top
-    return { top: 0 };
+    return { top: 0, behavior: "smooth" };
   },
+});
+
+router.beforeEach((to, from, next) => {
+  var token = store.getters["auth/isUserLoggedIn"];
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (token) {
+      next();
+    } else if (token == "") {
+      next({ name: "Login" });
+      return;
+    } else {
+      next({ name: "Login" });
+    }
+  } else {
+    next();
+  }
+  document.title = to.meta.title;
 });
 
 // Loading chunk error

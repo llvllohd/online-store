@@ -82,7 +82,7 @@
             >
               <div class="image">
                 <img
-                  :src="require(`../assets/images/${item.image}`)"
+                  :src="require(`@/assets/images/${item.image}`)"
                   class="rounded-t-lg h-32 w-full"
                   alt=""
                 />
@@ -132,7 +132,7 @@
 </template>
 
 <script>
-import backgroundImage from "../assets/images/crochet-background.jpg";
+import backgroundImage from "@/assets/images/crochet-background.jpg";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide } from "vue3-carousel";
 import { onMounted, ref } from "vue";

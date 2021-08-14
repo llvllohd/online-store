@@ -1,4 +1,5 @@
 <template>
+  <header-component></header-component>
   <div class="top h-no-header w-full sm:w-1/2 fixed left-0">
     <div class="h-full flex items-center justify-center overflow-y-auto">
       <div class="h-full p-3 w-full sm:max-w-md">
@@ -52,7 +53,7 @@
               Password
             </label>
             <input
-              type="passsword"
+              type="text"
               placeholder="Password"
               @input="passwordField.handleChange"
               @blur="passwordField.handleBlur"
@@ -71,7 +72,7 @@
               Confirm Password
             </label>
             <input
-              type="passsword"
+              type="text"
               placeholder="Confirm Password"
               @input="confirmPasswordField.handleChange"
               @blur="confirmPasswordField.handleBlur"
@@ -90,10 +91,15 @@
           <!-- Signup Btn -->
           <div class="flex items-center">
             <button
+              :disabled="isSubmitting ? true : false"
               type="submit"
               class="w-full text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              :class="formMeta.valid ? 'bg-gray-900 hover:bg-gray-800' : 'bg-gray-500 hover:bg-gray-500'"
+              :class="[
+                formMeta.valid ? 'bg-gray-900 hover:bg-gray-800' : 'bg-gray-500 hover:bg-gray-500',
+                isSubmitting ? 'cursor-not-allowed' : 'cursor-pointer',
+              ]"
             >
+              <fa :icon="['fa', 'circle-notch']" class="text-white text-xs animate-spin mr-2" v-if="isSubmitting"> </fa>
               Register
             </button>
           </div>
@@ -117,14 +123,21 @@
 </template>
 
 <script>
-import { reactive } from "vue";
-import RightHandSide from "../../common/RightHandSide";
+import HeaderComponent from "@/components/common/HeaderComponent.vue";
+import { reactive, ref } from "vue";
+import useToast from "@/hooks/useToast";
+import RightHandSide from "@/components/common/RightHandSide";
 import { useForm, useField } from "vee-validate";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
   name: "Register",
-  components: { RightHandSide },
+  components: { HeaderComponent, RightHandSide },
   setup() {
+    const store = useStore();
+    const router = useRouter();
+    const isSubmitting = ref(false);
     const { meta: formMeta, handleSubmit } = useForm();
     const nameField = reactive(useField("name", "required"));
     const emailField = reactive(useField("email", "email"));
@@ -132,10 +145,26 @@ export default {
     const confirmPasswordField = reactive(useField("confirmPassword", "confirmPassword:password"));
 
     const submitForm = handleSubmit((formValues) => {
-      console.log(formValues);
+      isSubmitting.value = true;
+      store
+        .dispatch("auth/register", {
+          name: formValues.name,
+          email: formValues.email,
+          password: formValues.password,
+        })
+        .then((res) => {
+          isSubmitting.value = false;
+          if (res.data.status) {
+            useToast(res.data.message, "success");
+            router.push({ name: "Menu Items" });
+          } else {
+            useToast(res.data.message, "danger");
+          }
+        });
     });
 
     return {
+      isSubmitting,
       nameField,
       emailField,
       passwordField,
