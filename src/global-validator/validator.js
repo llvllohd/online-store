@@ -30,3 +30,10 @@ defineRule("confirmPassword", (value, [target], ctx) => {
   }
   return "Passwords must match";
 });
+
+defineRule("conditional", (value, [target], ctx) => {
+  if (!ctx.form[target] || (ctx.form[target] && value && required(value))) {
+    return true;
+  }
+  return "Field is Required";
+});

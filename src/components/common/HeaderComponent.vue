@@ -43,6 +43,11 @@
           Categories
         </router-link>
       </li>
+      <li class="nav text-white text-lg font-bold relative p-1">
+        <router-link :to="{ name: 'Products' }" class="nav-lg">
+          Products
+        </router-link>
+      </li>
       <li class="nav text-white text-lg font-bold relative p-1" v-if="!isUserLoggedIn">
         <router-link :to="{ name: 'Login' }" class="nav-lg">
           Login

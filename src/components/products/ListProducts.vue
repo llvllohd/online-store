@@ -4,13 +4,13 @@
   <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
     <div class="p-1 sm:p-3 w-full">
       <div class="flex justify-center text-3xl font-bold p-3 mb-3">
-        Categories
+        Products
       </div>
 
       <!-- Add Category -->
       <div class="flex items-center justify-end mb-2">
         <router-link
-          :to="{ name: 'Add Category' }"
+          :to="{ name: 'Add Product' }"
           class=" text-white bg-gray-900 hover:bg-gray-800 font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline"
         >
           ADD
@@ -23,20 +23,24 @@
             <th class="text-left border border-gray-400 p-2">Name</th>
             <th class="text-left border border-gray-400 p-2">Description</th>
             <th class="text-left border border-gray-400 p-2">Visible</th>
+            <th class="text-left border border-gray-400 p-2">Available</th>
+            <th class="text-left border border-gray-400 p-2">Price</th>
             <th class="text-center border border-gray-400 p-2">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="category in categories" :key="category.id">
-            <td class="border border-gray-400 p-2">{{ category.name }}</td>
-            <td class="border border-gray-400 p-2">{{ category.description }}</td>
-            <td class="border border-gray-400 p-2">{{ category.is_visible == 1 ? "Yes" : "No" }}</td>
+          <tr v-for="product in products" :key="product.id">
+            <td class="border border-gray-400 p-2">{{ product.name }}</td>
+            <td class="border border-gray-400 p-2">{{ product.description }}</td>
+            <td class="border border-gray-400 p-2">{{ product.is_visible == 1 ? "Yes" : "No" }}</td>
+            <td class="border border-gray-400 p-2">{{ product.is_available == 1 ? "Yes" : "No" }}</td>
+            <td class="border border-gray-400 p-2">{{ product.price == 1 ? "Yes" : "No" }}</td>
             <td class="text-center border border-gray-400 p-2">
               <div class="r cursor-pointer">
-                <router-link :to="{ name: 'Add Category', query: { categoryId: category.id } }">
+                <router-link :to="{ name: 'Add Category', query: { productId: product.id } }">
                   <fa :icon="['fa', 'edit']" class="text-gray-900 text-sm mr-2"> </fa>
                 </router-link>
-                <fa :icon="['fa', 'trash']" class="text-gray-900 text-sm ml-2" @click.prevent="openAlert(category.id)"> </fa>
+                <fa :icon="['fa', 'trash']" class="text-gray-900 text-sm ml-2" @click.prevent="openAlert(product.id)"> </fa>
               </div>
             </td>
           </tr>
@@ -54,7 +58,7 @@
     :is-alert="is_alert"
     :item-id="item_id"
     @confirm-alert="confirmAlert"
-    :delete-Action="deleteCategory"
+    :delete-Action="deleteProduct"
   ></alert-screen>
 </template>
 
@@ -67,12 +71,12 @@ import { onMounted, ref } from "vue";
 import { useStore } from "vuex";
 
 export default {
-  name: "Categories",
+  name: "Products",
   components: { HeaderComponent, RightHandSide, AlertScreen },
 
   setup() {
     const store = useStore();
-    const categories = ref([]);
+    const products = ref([]);
     const is_alert = ref(false);
     const item_id = ref("");
 
@@ -87,11 +91,10 @@ export default {
       }
     };
 
-    const deleteCategory = (categoryId) => {
-      console.log("running");
-      store.dispatch("categories/deleteCategory", categoryId).then((res) => {
+    const deleteProduct = (categoryId) => {
+      store.dispatch("categories/deleteProduct", categoryId).then((res) => {
         if (res.data.status) {
-          categories.value = res.data.data;
+          products.value = res.data.data;
           is_alert.value = false;
           useToast(res.data.message, "success");
         } else {
@@ -101,9 +104,9 @@ export default {
     };
 
     onMounted(() => {
-      store.dispatch("categories/getCategories").then((res) => {
+      store.dispatch("products/getProducts").then((res) => {
         if (res.data.status) {
-          categories.value = res.data.data;
+          products.value = res.data.data;
         } else {
           useToast(res.data.message, "danger");
         }
@@ -115,8 +118,8 @@ export default {
       openAlert,
       confirmAlert,
       item_id,
-      categories,
-      deleteCategory,
+      products,
+      deleteProduct,
     };
   },
 };

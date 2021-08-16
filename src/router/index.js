@@ -40,11 +40,11 @@ const routes = [
       requiresAuth: false,
     },
   },
-
+  // Categories
   {
     path: "/categories",
     name: "Categories",
-    component: () => import(/* webpackChunkName: "Categories" */ "@/components/categories/CategoriesScreen.vue"),
+    component: () => import(/* webpackChunkName: "Categories" */ "@/components/categories/ListCategories.vue"),
     meta: {
       title: "Categories" + siteName,
       requiresAuth: true,
@@ -56,6 +56,25 @@ const routes = [
     component: () => import(/* webpackChunkName: "Add Category" */ "@/components/categories/AddUpdateCategory.vue"),
     meta: {
       title: "Add Category" + siteName,
+      requiresAuth: true,
+    },
+  },
+  // Products
+  {
+    path: "/products",
+    name: "Products",
+    component: () => import(/* webpackChunkName: "Products" */ "@/components/products/ListProducts.vue"),
+    meta: {
+      title: "Products" + siteName,
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/add-product",
+    name: "Add Product",
+    component: () => import(/* webpackChunkName: "Add Product" */ "@/components/products/AddUpdateProduct.vue"),
+    meta: {
+      title: "Add Product" + siteName,
       requiresAuth: true,
     },
   },

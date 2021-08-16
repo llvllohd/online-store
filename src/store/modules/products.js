@@ -4,24 +4,24 @@ import { HTTP } from "@/interceptor/interceptor.js";
 export default {
   namespaced: true,
   state: {
-    categories: [],
+    products: [],
   },
   getters: {
-    categories: (state) => state.categories,
+    products: (state) => state.products,
   },
   mutations: {
-    setCategories(state, data) {
-      state.categories = data;
+    setProducts(state, data) {
+      state.products = data;
     },
   },
   actions: {
-    getCategories({ commit }) {
+    getProducts({ commit }) {
       return new Promise((resolve, reject) => {
-        HTTP.get(`${process.env.VUE_APP_API_URL}api/categories`)
+        HTTP.get(`${process.env.VUE_APP_API_URL}api/products`)
           .then((response) => {
             resolve(response);
             if (response.data.status) {
-              commit("setCategories", response.data.data);
+              commit("setProducts", response.data.data);
             }
           })
           .catch((e) => {
@@ -30,21 +30,9 @@ export default {
       });
     },
     // eslint-disable-next-line no-empty-pattern
-    getCategoriesList({}) {
+    getProductById({}, productId) {
       return new Promise((resolve, reject) => {
-        HTTP.get(`${process.env.VUE_APP_API_URL}api/categories-list`)
-          .then((response) => {
-            resolve(response);
-          })
-          .catch((e) => {
-            reject(e);
-          });
-      });
-    },
-    // eslint-disable-next-line no-empty-pattern
-    getCategoryById({}, categoryId) {
-      return new Promise((resolve, reject) => {
-        HTTP.get(`${process.env.VUE_APP_API_URL}api/categories/${categoryId}`)
+        HTTP.get(`${process.env.VUE_APP_API_URL}api/products/${productId}`)
           .then((response) => {
             resolve(response);
           })
@@ -54,13 +42,13 @@ export default {
       });
     },
 
-    addCategory({ commit }, params) {
+    addProduct({ commit }, params) {
       return new Promise((resolve, reject) => {
-        HTTP.post(`${process.env.VUE_APP_API_URL}api/categories`, params)
+        HTTP.post(`${process.env.VUE_APP_API_URL}api/products`, params)
           .then((response) => {
             resolve(response);
             if (response.data.status) {
-              commit("setCategories", response.data.data);
+              commit("setProducts", response.data.data);
             }
           })
           .catch((e) => {
@@ -69,9 +57,9 @@ export default {
       });
     },
 
-    updateCategory({ commit }, params) {
+    updateProduct({ commit }, params) {
       return new Promise((resolve, reject) => {
-        HTTP.put(`${process.env.VUE_APP_API_URL}api/categories/${params.category_id}`, {
+        HTTP.put(`${process.env.VUE_APP_API_URL}api/products/${params.product_id}`, {
           name: params.name,
           description: params.description,
           is_visible: params.is_visible,
@@ -79,7 +67,7 @@ export default {
           .then((response) => {
             resolve(response);
             if (response.data.status) {
-              commit("setCategories", response.data.data);
+              commit("setProducts", response.data.data);
             }
           })
           .catch((e) => {
@@ -88,13 +76,13 @@ export default {
       });
     },
 
-    deleteCategory({ commit }, categoryId) {
+    deleteProduct({ commit }, productId) {
       return new Promise((resolve, reject) => {
-        HTTP.delete(`${process.env.VUE_APP_API_URL}api/categories/${categoryId}`)
+        HTTP.delete(`${process.env.VUE_APP_API_URL}api/categories/${productId}`)
           .then((response) => {
             resolve(response);
             if (response.data.status) {
-              commit("setCategories", response.data.data);
+              commit("setProducts", response.data.data);
             }
           })
           .catch((e) => {
