@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["Login"],{"418c":function(e,t,c){"use strict";c.r(t);var n=c("7a23"),i={class:"flex items-center justify-center"},s=Object(n["i"])("div",{class:"top bg-yellow-400 flex items-center justify-center text-center mt-7"},[Object(n["i"])("h3",null,"I am Categories")],-1);function r(e,t){return Object(n["t"])(),Object(n["e"])("div",i,[s])}const o={};o.render=r;t["default"]=o}}]);
-//# sourceMappingURL=Login.a4d55315.js.map
