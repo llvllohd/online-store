@@ -17,7 +17,7 @@ export default {
   actions: {
     getCategories({ commit }) {
       return new Promise((resolve, reject) => {
-        HTTP.get(`${process.env.VUE_APP_API_URL}api/categories`)
+        HTTP.get(`${process.env.VUE_APP_API_URL}categories`)
           .then((response) => {
             resolve(response);
             if (response.data.status) {
@@ -32,7 +32,7 @@ export default {
     // eslint-disable-next-line no-empty-pattern
     getCategoriesList({}) {
       return new Promise((resolve, reject) => {
-        HTTP.get(`${process.env.VUE_APP_API_URL}api/categories-list`)
+        HTTP.get(`${process.env.VUE_APP_API_URL}categories-list`)
           .then((response) => {
             resolve(response);
           })
@@ -44,7 +44,7 @@ export default {
     // eslint-disable-next-line no-empty-pattern
     getCategoryById({}, categoryId) {
       return new Promise((resolve, reject) => {
-        HTTP.get(`${process.env.VUE_APP_API_URL}api/categories/${categoryId}`)
+        HTTP.get(`${process.env.VUE_APP_API_URL}categories/${categoryId}`)
           .then((response) => {
             resolve(response);
           })
@@ -56,7 +56,7 @@ export default {
 
     addCategory({ commit }, params) {
       return new Promise((resolve, reject) => {
-        HTTP.post(`${process.env.VUE_APP_API_URL}api/categories`, params)
+        HTTP.post(`${process.env.VUE_APP_API_URL}categories`, params)
           .then((response) => {
             resolve(response);
             if (response.data.status) {
@@ -71,7 +71,7 @@ export default {
 
     updateCategory({ commit }, params) {
       return new Promise((resolve, reject) => {
-        HTTP.put(`${process.env.VUE_APP_API_URL}api/categories/${params.category_id}`, {
+        HTTP.put(`${process.env.VUE_APP_API_URL}categories/${params.category_id}`, {
           name: params.name,
           description: params.description,
           is_visible: params.is_visible,
@@ -90,7 +90,7 @@ export default {
 
     deleteCategory({ commit }, categoryId) {
       return new Promise((resolve, reject) => {
-        HTTP.delete(`${process.env.VUE_APP_API_URL}api/categories/${categoryId}`)
+        HTTP.delete(`${process.env.VUE_APP_API_URL}categories/${categoryId}`)
           .then((response) => {
             resolve(response);
             if (response.data.status) {

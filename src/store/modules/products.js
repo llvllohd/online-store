@@ -17,7 +17,7 @@ export default {
   actions: {
     getProducts({ commit }) {
       return new Promise((resolve, reject) => {
-        HTTP.get(`${process.env.VUE_APP_API_URL}api/products`)
+        HTTP.get(`${process.env.VUE_APP_API_URL}products`)
           .then((response) => {
             resolve(response);
             if (response.data.status) {
@@ -32,7 +32,7 @@ export default {
     // eslint-disable-next-line no-empty-pattern
     getProductById({}, productId) {
       return new Promise((resolve, reject) => {
-        HTTP.get(`${process.env.VUE_APP_API_URL}api/products/${productId}`)
+        HTTP.get(`${process.env.VUE_APP_API_URL}products/${productId}`)
           .then((response) => {
             resolve(response);
           })
@@ -43,8 +43,23 @@ export default {
     },
 
     addProduct({ commit }, params) {
+      let formData = new FormData();
+      formData.append("category_id", params.category_id);
+      formData.append("name", params.name);
+      formData.append("description", params.description);
+      formData.append("is_visible", params.is_visible);
+      formData.append("is_available", params.is_available);
+      formData.append("price", params.price);
+      formData.append("on_offer", params.on_offer);
+      formData.append("offer_price", params.offer_price);
+      formData.append("image_file", params.image_file);
+
       return new Promise((resolve, reject) => {
-        HTTP.post(`${process.env.VUE_APP_API_URL}api/products`, params)
+        HTTP.post(`${process.env.VUE_APP_API_URL}products`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
           .then((response) => {
             resolve(response);
             if (response.data.status) {
@@ -58,11 +73,20 @@ export default {
     },
 
     updateProduct({ commit }, params) {
+      console.log(params);
+      let formData = new FormData();
+      formData.append("category_id", params.category_id);
+      formData.append("name", params.name);
+      formData.append("description", params.description);
+      formData.append("is_visible", params.is_visible);
+      formData.append("is_available", params.is_available);
+      formData.append("price", params.price);
+      formData.append("on_offer", params.on_offer);
+      formData.append("offer_price", params.offer_price);
+      formData.append("image_file", params.image_file);
       return new Promise((resolve, reject) => {
-        HTTP.put(`${process.env.VUE_APP_API_URL}api/products/${params.product_id}`, {
-          name: params.name,
-          description: params.description,
-          is_visible: params.is_visible,
+        HTTP.post(`${process.env.VUE_APP_API_URL}products/${params.product_id}`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
         })
           .then((response) => {
             resolve(response);
@@ -78,7 +102,7 @@ export default {
 
     deleteProduct({ commit }, productId) {
       return new Promise((resolve, reject) => {
-        HTTP.delete(`${process.env.VUE_APP_API_URL}api/categories/${productId}`)
+        HTTP.delete(`${process.env.VUE_APP_API_URL}products/${productId}`)
           .then((response) => {
             resolve(response);
             if (response.data.status) {

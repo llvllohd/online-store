@@ -53,13 +53,17 @@
             Select Category
           </label>
           <select
-            @change="OnChangeSelect($event)"
+            v-model="category_id.value"
             class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+            :class="category_id.meta.touched && !category_id.meta.valid ? 'border border-red-500' : ''"
           >
             <option class="py-1" :value="category.value" v-for="category in category_options.value" :key="category.value">
               {{ category.text }}</option
             >
           </select>
+          <span v-if="category_id.meta.touched && !category_id.meta.valid" class=" text-red-500 text-xs italic">
+            {{ category_id.errorMessage || "Field is required" }}
+          </span>
         </div>
 
         <!-- Is Visible -->
@@ -135,8 +139,8 @@
             Select Image
           </label>
 
-          <div class="shadow rounded" v-if="image_file.value && image_file.value.length > 0">
-            <img class="h-40 w-full object-cover rounded" :src="image_file.value" alt="image" />
+          <div class="shadow rounded" v-if="selected_image_file && selected_image_file.length > 0">
+            <img class="h-40 w-full object-cover rounded" :src="selected_image_file" alt="image" />
           </div>
           <div
             :class="image_file.meta.touched && !image_file.meta.valid ? 'border border-red-500' : ''"
@@ -195,7 +199,7 @@
 import HeaderComponent from "@/components/common/HeaderComponent.vue";
 import RightHandSide from "@/components/common/RightHandSide";
 import useToast from "@/hooks/useToast";
-import { onMounted, reactive, ref } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { useForm, useField } from "vee-validate";
@@ -209,36 +213,44 @@ export default {
     const route = useRoute();
     const isSubmitting = ref(false);
     const { meta: formMeta, handleSubmit } = useForm();
+    const category_options = reactive([]);
     const name = reactive(useField("name", "required"));
     const description = reactive(useField("description", "required"));
+    const category_id = reactive(useField("category_id", "required", { initialValue: "" }));
     const is_visible = reactive(useField("is_visible", "", { initialValue: true }));
     const is_available = reactive(useField("is_available", "", { initialValue: true }));
     const price = reactive(useField("price", "required"));
     const on_offer = reactive(useField("on_offer", "", { initialValue: false }));
     const offer_price = reactive(useField("offer_price", "conditional:on_offer"));
-    const image_file = reactive(useField("image_file[]", "required"));
-    const image_filee = ref([]);
-    const selected_category = ref("");
-    const category_options = reactive([]);
+    const image_file = reactive(useField("image_file", imageRequired));
+    const selected_image_file = ref([]);
 
-    const OnChangeSelect = (event) => {
-      console.log(event)
-    };
+    function imageRequired() {
+      console.log(image_file.value);
+      if ((!productId.value && image_file.value) || productId.value) {
+        return true;
+      }
+      return "This is required";
+    }
 
     const onFileChange = (e) => {
       let file = e.target.files || e.dataTransfer.files;
-      image_filee.value = file;
+      image_file.value = file[0];
       if (file && file[0]) {
-        image_file.value = URL.createObjectURL(file[0]);
+        selected_image_file.value = URL.createObjectURL(file[0]);
       }
     };
 
+    const productId = computed(() => route.query.productId);
+
     const submitForm = handleSubmit((formValues) => {
       isSubmitting.value = true;
-      if (route.query.categoryId) {
-        formValues.category_id = 1;
-        formValues.image_file = image_filee;
-        store.dispatch("products/addProduct", formValues).then((res) => {
+      if (productId.value) {
+        formValues.product_id = productId.value;
+        formValues.is_visible = is_visible ? 1 : 0;
+        formValues.is_available = is_available ? 1 : 0;
+        formValues.on_offer = on_offer ? 1 : 0;
+        store.dispatch("products/updateProduct", formValues).then((res) => {
           isSubmitting.value = false;
           if (res.data.status) {
             useToast(res.data.message, "success");
@@ -248,8 +260,9 @@ export default {
           }
         });
       } else {
-        formValues.category_id = 1;
-        formValues.image_file = image_filee;
+        formValues.is_visible = is_visible ? 1 : 0;
+        formValues.is_available = is_available ? 1 : 0;
+        formValues.on_offer = on_offer ? 1 : 0;
         store.dispatch("products/addProduct", formValues).then((res) => {
           isSubmitting.value = false;
           if (res.data.status) {
@@ -269,20 +282,18 @@ export default {
         }
       });
 
-      if (route.query.categoryId) {
-        store.dispatch("categories/getCategoryById", route.query.categoryId).then((res) => {
+      if (productId.value) {
+        store.dispatch("products/getProductById", productId.value).then((res) => {
           if (res.data.status) {
+            category_id.value = res.data.data.category_id;
             name.value = res.data.data.name;
             description.value = res.data.data.description;
             is_visible.value = res.data.data.is_visible == 1 ? true : false;
             is_available.value = res.data.data.is_available == 1 ? true : false;
             price.value = res.data.data.price;
-          } else {
-            name.value = "";
-            description.value = "";
-            is_visible.value = true;
-            is_available.value = true;
-            price.value = "";
+            on_offer.value = res.data.data.on_offer == 1 ? true : false;
+            offer_price.value = res.data.data.offer_price;
+            selected_image_file.value = res.data.data.image_file;
           }
         });
       }
@@ -299,12 +310,11 @@ export default {
       offer_price,
       onFileChange,
       image_file,
-      image_filee,
+      selected_image_file,
       category_options,
       formMeta,
-      OnChangeSelect,
       submitForm,
-      selected_category,
+      category_id,
     };
   },
 };

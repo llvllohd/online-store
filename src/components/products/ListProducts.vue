@@ -37,7 +37,7 @@
             <td class="border border-gray-400 p-2">{{ product.price == 1 ? "Yes" : "No" }}</td>
             <td class="text-center border border-gray-400 p-2">
               <div class="r cursor-pointer">
-                <router-link :to="{ name: 'Add Category', query: { productId: product.id } }">
+                <router-link :to="{ name: 'Add Product', query: { productId: product.id } }">
                   <fa :icon="['fa', 'edit']" class="text-gray-900 text-sm mr-2"> </fa>
                 </router-link>
                 <fa :icon="['fa', 'trash']" class="text-gray-900 text-sm ml-2" @click.prevent="openAlert(product.id)"> </fa>
@@ -80,9 +80,9 @@ export default {
     const is_alert = ref(false);
     const item_id = ref("");
 
-    const openAlert = (categoryId) => {
+    const openAlert = (productId) => {
       is_alert.value = true;
-      item_id.value = categoryId;
+      item_id.value = productId;
     };
 
     const confirmAlert = (value) => {
@@ -91,8 +91,8 @@ export default {
       }
     };
 
-    const deleteProduct = (categoryId) => {
-      store.dispatch("categories/deleteProduct", categoryId).then((res) => {
+    const deleteProduct = (productId) => {
+      store.dispatch("products/deleteProduct", productId).then((res) => {
         if (res.data.status) {
           products.value = res.data.data;
           is_alert.value = false;

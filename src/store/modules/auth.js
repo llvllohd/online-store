@@ -20,7 +20,7 @@ export default {
   actions: {
     register({ commit }, params) {
       return new Promise((resolve, reject) => {
-        HTTP.post(`${process.env.VUE_APP_API_URL}api/register`, params)
+        HTTP.post(`${process.env.VUE_APP_API_URL}register`, params)
           .then((response) => {
             resolve(response);
             if (response.data.status) {
@@ -34,7 +34,7 @@ export default {
     },
     login({ commit, dispatch }, params) {
       return new Promise((resolve, reject) => {
-        HTTP.post(`${process.env.VUE_APP_API_URL}api/login`, params)
+        HTTP.post(`${process.env.VUE_APP_API_URL}login`, params)
           .then((response) => {
             resolve(response);
             if (response.data.status) {
@@ -52,7 +52,7 @@ export default {
     },
     logout({ commit }) {
       return new Promise((resolve, reject) => {
-        HTTP.post(`${process.env.VUE_APP_API_URL}api/logout`)
+        HTTP.post(`${process.env.VUE_APP_API_URL}logout`)
           .then((response) => {
             resolve(response);
             if (response.data.status) {
