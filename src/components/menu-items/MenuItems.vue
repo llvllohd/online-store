@@ -1,23 +1,23 @@
 <template>
   <header-component></header-component>
-  <div class="flex items-center justify-center">
-    <!-- Small Screens Device -->
-    <div class="top h-no-header w-full sm:hidden">
-      <div
-        class="w-full h-1/3 bg-cover bg-center flex sm:hidden"
-        :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"
-      ></div>
-      <div
-        class="w-full z-10 pt-3 pb-3 transition duration-1000 bg-white"
-        id="carousel"
-        :style="isFixed ? 'position:fixed;top:4rem' : ''"
-      >
-        <carousel class="cursor-pointer" :items-to-show="3.5" :autoplay="5000" :wrap-around="true" :transition="1500">
-          <slide v-for="category in categories" :key="category.id" class="focus:outline-none">
+  <!-- LHS -->
+  <section class="min-h-no-header w-full sm:w-1/2 flex flex-col items-center">
+    <template class="top h-no-header flex flex-col">
+      <!-- Carousel -->
+      <div class="w-full sm:w-1/2 z-10 pt-3 pb-3 transition duration-1000 bg-white fixed" id="carousel">
+        <carousel
+          class="cursor-pointer"
+          :items-to-show="3.5"
+          :autoplay="5000"
+          :wrap-around="true"
+          :transition="1500"
+          :breakpoints="breakpoints"
+        >
+          <slide v-for="category in categories" :key="category.id">
             <div
-              @click.prevent="getItemsForMobile(category)"
-              @touchstart.prevent="getItemsForMobile(category)"
-              class="carousel__item tracking-wider flex w-full items-center justify-center rounded-lg h-8 font-bold text-white text-xs bg-gray-900 cursor-pointer"
+              @click.prevent="positionItemsSection(category)"
+              @touchstart.prevent="positionItemsSection(category)"
+              class="carousel__item tracking-wider flex w-full items-center justify-center rounded-lg h-8 font-bold text-sm text-white  bg-gray-900"
               :class="category_name == category.name ? 'text-yellow-400 uppercase' : ''"
             >
               {{ category.name }}
@@ -30,8 +30,8 @@
           </template>
         </carousel>
       </div>
-
-      <section :style="isFixed ? 'margin-top:64px' : ''" class="transition duration-1000" id="section">
+      <!-- Items Card -->
+      <section class="transition duration-1000 mt-16" id="section">
         <div class="flex flex-col min-h-screen" :id="category.name" v-for="category in categories" :key="category.name">
           <div class="flex items-center justify-center p-3 text-2xl font-bold">
             <h4 class="category-name relative uppercase">
@@ -42,11 +42,11 @@
           <div class="items flex flex-row items-center justify-between flex-wrap p-3">
             <div class="card w-48 shadow-lg rounded-lg relative mb-3" v-for="item in category.items" :key="item.id">
               <div class="image">
-                <img :src="require(`@/assets/images/${item.image}`)" class="rounded-t-lg h-32 w-full" alt="" />
+                <img :src="require(`@/assets/images/${item.image}`)" class="rounded-t-lg h-32 md:h-40 lg:h-52 w-full" alt="" />
               </div>
-              <div class="details flex flex-col justify-around p-1 mb-10">
+              <div class="details flex flex-col items-start justify-around p-1 mb-10">
                 <div class="item-name">
-                  <h5 class="font-medium text-sm">{{ item.name }}</h5>
+                  <h5 class="font-medium text-lg">{{ item.name }}</h5>
                 </div>
               </div>
               <div class="flex flex-row justify-around w-full absolute bottom-0">
@@ -66,86 +66,18 @@
           </div>
         </div>
       </section>
-    </div>
+    </template>
+  </section>
 
-    <!-- ================================================================================ -->
-
-    <!-- Desktop Device -->
-    <div class="w-full hidden sm:flex">
-      <div class="top h-no-header w-1/2 flex flex-col">
-        <div class="w-1/2 z-10 pt-3 pb-3 transition duration-1000 bg-white fixed" id="carousel-lg">
-          <carousel
-            class="cursor-pointer"
-            :items-to-show="5"
-            :autoplay="5000"
-            :wrap-around="true"
-            :transition="1500"
-            :breakpoints="breakpoints"
-          >
-            <slide v-for="category in categories" :key="category.id">
-              <div
-                @click.prevent="getItemsForDesktop(category)"
-                @touchstart.prevent="getItemsForDesktop(category)"
-                class="carousel__item tracking-wider flex w-full items-center justify-center rounded-lg h-8 font-bold text-sm text-white  bg-gray-900"
-                :class="category_name == category.name ? 'text-yellow-400 uppercase' : ''"
-              >
-                {{ category.name }}
-              </div>
-            </slide>
-
-            <template #addons>
-              <!-- <navigation /> -->
-              <!-- <pagination /> -->
-            </template>
-          </carousel>
-        </div>
-
-        <section class="transition duration-1000 mt-16" id="section-lg">
-          <div class="flex flex-col min-h-screen" :id="'lg-' + category.name" v-for="category in categories" :key="category.name">
-            <div class="flex items-center justify-center p-3 text-2xl font-bold">
-              <h4 class="category-name relative uppercase">
-                {{ category.name }}
-              </h4>
-            </div>
-
-            <div class="items flex flex-row items-center justify-between flex-wrap p-3">
-              <div class="card w-48 shadow-lg rounded-lg relative mb-3" v-for="item in category.items" :key="item.id">
-                <div class="image">
-                  <img :src="require(`@/assets/images/${item.image}`)" class="rounded-t-lg h-32 md:h-40 lg:h-44 w-full" alt="" />
-                </div>
-                <div class="details flex flex-col items-start justify-around p-1 mb-10">
-                  <div class="item-name">
-                    <h5 class="font-medium text-lg">{{ item.name }}</h5>
-                  </div>
-                </div>
-                <div class="flex flex-row justify-around w-full absolute bottom-0">
-                  <button
-                    class="rounded mr-1 w-1/2 border-2 border-gray-900  focus:outline-none hover:outline-none py-1 font-bold text-sm text-gray-900"
-                  >
-                    &#8377; {{ item.price }}
-                  </button>
-                  <button
-                    class="rounded ml-1 w-1/2 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none py-1 font-medium text-sm text-white"
-                    @click.prevent="goToItemDetails(item.id)"
-                  >
-                    ADD
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <div class="top h-no-header w-1/2 fixed right-0">
-        <div class="w-full h-no-header bg-cover bg-center" :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"></div>
-      </div>
-    </div>
-  </div>
+  <!-- RHS -->
+  <section>
+    <right-hand-side></right-hand-side>
+  </section>
 </template>
 
 <script>
 import HeaderComponent from "@/components/common//HeaderComponent.vue";
+import RightHandSide from "@/components/common/RightHandSide";
 import backgroundImage from "@/assets/images/crochet-background.jpg";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide } from "vue3-carousel";
@@ -375,6 +307,7 @@ export default {
   name: "Menu Items",
   components: {
     HeaderComponent,
+    RightHandSide,
     Carousel,
     Slide,
   },
@@ -399,26 +332,16 @@ export default {
       },
     });
 
-    let getItemsForMobile = (item) => {
+    let positionItemsSection = (item) => {
       let header = document.getElementById("header");
       let carousel = document.getElementById("carousel");
       let itemsSection = document.getElementById(item.name);
       let offsetHeight = header.offsetHeight + carousel.offsetHeight;
-      window.scrollTo(0, itemsSection.offsetTop - offsetHeight);
-
-      for (let i of categories) {
-        if (item.id === i.id) {
-          category_name.value = i.name;
-        }
-      }
-    };
-
-    let getItemsForDesktop = (item) => {
-      let header = document.getElementById("header");
-      let carousel = document.getElementById("carousel-lg");
-      let itemsSection = document.getElementById("lg-" + item.name);
-      let offsetHeight = header.offsetHeight + carousel.offsetHeight;
-      window.scrollTo(0, itemsSection.offsetTop - offsetHeight);
+      window.scrollTo({
+        top: itemsSection.offsetTop - offsetHeight,
+        left: 0,
+        behavior: "smooth",
+      });
 
       for (let i of categories) {
         if (item.id === i.id) {
@@ -454,8 +377,7 @@ export default {
       isFixed,
       category_name,
       backgroundImage,
-      getItemsForMobile,
-      getItemsForDesktop,
+      positionItemsSection,
       goToItemDetails,
       categories,
       breakpoints,

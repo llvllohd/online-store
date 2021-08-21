@@ -124,7 +124,7 @@ export default {
     const { meta: formMeta, handleSubmit } = useForm();
     const name = reactive(useField("name", "required"));
     const description = reactive(useField("description", "required"));
-    const is_visible = reactive(useField("is_visible", "", { initialValue: false }));
+    const is_visible = reactive(useField("is_visible", "", { initialValue: true }));
 
     // const price = reactive(useField("price", "required"));
 

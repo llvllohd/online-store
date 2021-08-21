@@ -221,12 +221,11 @@ export default {
     const is_available = reactive(useField("is_available", "", { initialValue: true }));
     const price = reactive(useField("price", "required"));
     const on_offer = reactive(useField("on_offer", "", { initialValue: false }));
-    const offer_price = reactive(useField("offer_price", "conditional:on_offer"));
+    const offer_price = reactive(useField("offer_price", "conditional:on_offer", { initialValue: "" }));
     const image_file = reactive(useField("image_file", imageRequired));
     const selected_image_file = ref([]);
 
     function imageRequired() {
-      console.log(image_file.value);
       if ((!productId.value && image_file.value) || productId.value) {
         return true;
       }
@@ -244,12 +243,14 @@ export default {
     const productId = computed(() => route.query.productId);
 
     const submitForm = handleSubmit((formValues) => {
+      console.log(formValues.on_offer);
+      console.log(on_offer.value);
       isSubmitting.value = true;
       if (productId.value) {
         formValues.product_id = productId.value;
-        formValues.is_visible = is_visible ? 1 : 0;
-        formValues.is_available = is_available ? 1 : 0;
-        formValues.on_offer = on_offer ? 1 : 0;
+        formValues.is_visible = is_visible.value ? 1 : 0;
+        formValues.is_available = is_available.value ? 1 : 0;
+        formValues.on_offer = on_offer.value ? 1 : 0;
         store.dispatch("products/updateProduct", formValues).then((res) => {
           isSubmitting.value = false;
           if (res.data.status) {
@@ -260,9 +261,9 @@ export default {
           }
         });
       } else {
-        formValues.is_visible = is_visible ? 1 : 0;
-        formValues.is_available = is_available ? 1 : 0;
-        formValues.on_offer = on_offer ? 1 : 0;
+        formValues.is_visible = is_visible.value ? 1 : 0;
+        formValues.is_available = is_available.value ? 1 : 0;
+        formValues.on_offer = on_offer.value ? 1 : 0;
         store.dispatch("products/addProduct", formValues).then((res) => {
           isSubmitting.value = false;
           if (res.data.status) {
