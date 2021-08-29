@@ -48,7 +48,13 @@
             <div class="w-1/2 lg:w-1/3 mb-5" v-for="item in category.items" :key="item.id">
               <div class="card m-1 shadow-lg rounded-lg">
                 <div class="image">
-                  <img :src="require(`@/assets/images/${item.image}`)" class="rounded-t-lg w-full" alt="" />
+                  <img
+                    :src="require(`@/assets/images/${item.image}`)"
+                    class="rounded-t-lg w-full"
+                    alt=""
+                    v-if="item.image && item.image.length > 0"
+                  />
+                  <img :src="require(`@/assets/images/no-image.png`)" class="rounded-t-lg w-full border" alt="" v-else />
                 </div>
                 <div class="details flex flex-col items-start justify-around p-2">
                   <div class="item-name">

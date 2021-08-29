@@ -83,14 +83,14 @@
       </div>
 
       <!-- Nav Items -->
-      <ul class="w-full h-full flex flex-col justify-start items-center pt-11">
+      <ul class="w-full h-full flex flex-col justify-start items-center">
         <li v-for="item in navigation" :key="item.name" class="nav text-white font-bold flex w-full items-center justify-center">
           <router-link
             exact
             :to="item.path"
             @click="gotoLinks(item)"
             class="w-full p-2 flex items-center justify-center"
-            v-if="isUserLoggedIn && item.name != 'Login'"
+            v-if="(isUserLoggedIn && item.name != 'Login') || (!isUserLoggedIn && item.name != 'Logout')"
           >
             <div class="flex items-center justify-center w-1/4">
               <span>
