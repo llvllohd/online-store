@@ -83,7 +83,7 @@
       </div>
 
       <!-- Nav Items -->
-      <ul class="w-full h-full flex flex-col justify-start items-center">
+      <ul class="w-full h-full flex flex-col justify-start items-center mt-10">
         <li v-for="item in navigation" :key="item.name" class="nav text-white font-bold flex w-full items-center justify-center">
           <router-link
             exact
@@ -277,7 +277,7 @@ export default {
 
 .sidebar-custom-height {
   height: calc(100vh - theme("spacing.16"));
-  margin-top: calc(theme("spacing.16"));
+  /* margin-top: calc(theme("spacing.16")); */
   transition: all 0.5s ease-in-out;
 }
 

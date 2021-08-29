@@ -1,8 +1,8 @@
 <template>
   <header-component></header-component>
   <!-- LHS -->
-  <section class="min-h-no-header w-full md:w-1/2 flex flex-col items-center">
-    <template class="top flex flex-col">
+  <section class="top min-h-no-header w-full md:w-1/2 flex flex-col items-center">
+    <template class=" flex flex-col">
       <!-- Banner Image for Mobile -->
       <section
         class="w-full h-60 bg-cover bg-center flex sm:hidden"
