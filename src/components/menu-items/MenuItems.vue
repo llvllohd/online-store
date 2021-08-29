@@ -9,12 +9,12 @@
         :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"
       ></section>
       <!-- Carousel -->
-      <div class="w-full z-10 pt-3 pb-3 transition duration-1000 bg-white" id="carousel" :class="isFixed ? 'fixed md:w-1/2' : ''">
+      <div class="z-10 pt-3 pb-3 transition duration-1000 bg-white" id="carousel" :class="isFixed ? 'fixed w-full sm:w-1/2' : ''">
         <carousel
           class="cursor-pointer"
-          :items-to-show="3.5"
+          :items-to-show="4"
           :autoplay="5000"
-          :wrap-around="true"
+          :wrap-around="false"
           :transition="1500"
           :breakpoints="breakpoints"
         >
@@ -22,8 +22,8 @@
             <div
               @click.prevent="positionItemsSection(category)"
               @touchstart.prevent="positionItemsSection(category)"
-              class="carousel__item tracking-wider flex w-full items-center justify-center rounded-lg h-8 font-bold text-sm text-white  bg-gray-900"
-              :class="category_name == category.name ? 'text-yellow-400 uppercase' : ''"
+              class="carousel__item tracking-wider flex w-full items-center justify-center rounded-lg h-8 sm:font-bold font-medium sm:text-sm text-xs text-white  bg-gray-900"
+              :class="category_name == category.name ? 'text-yellow-400' : ''"
             >
               {{ category.name }}
             </div>
@@ -36,8 +36,8 @@
         </carousel>
       </div>
       <!-- Items Card -->
-      <section class="transition duration-1000" :class="isFixed ? 'top' : ''" id="section">
-        <div class="flex flex-col" :id="category.name" v-for="category in categories" :key="category.name">
+      <section class="transition duration-1000" :class="isFixed ? '' : ''" id="section">
+        <div class="" :id="category.name" v-for="category in categories" :key="category.name">
           <div class="flex items-center justify-center p-3 text-2xl font-bold">
             <h4 class="category-name relative uppercase">
               {{ category.name }}
@@ -58,17 +58,17 @@
                 </div>
                 <div class="details flex flex-col items-start justify-around p-2">
                   <div class="item-name">
-                    <h5 class="font-medium text-lg">{{ item.name }}</h5>
+                    <h5 class="font-medium text-sm sm:text-lg">{{ item.name }}</h5>
                   </div>
                 </div>
                 <div class="flex flex-row justify-around w-full">
                   <button
-                    class="rounded mr-1 w-1/2 border-2 border-gray-900  focus:outline-none hover:outline-none py-1 font-bold text-sm text-gray-900"
+                    class="rounded mr-1 w-1/2 border-2 border-gray-900  focus:outline-none hover:outline-none py-0 sm:py-1 font-bold text-xs sm:text-sm text-gray-900"
                   >
                     &#8377; {{ item.price }}
                   </button>
                   <button
-                    class="rounded ml-1 w-1/2 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none py-1 font-medium text-sm text-white"
+                    class="rounded ml-1 w-1/2 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none py-0 sm:py-1 font-medium text-xs sm:text-sm text-white"
                     @click.prevent="goToItemDetails(item.id)"
                   >
                     ADD
