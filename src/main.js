@@ -4,6 +4,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faHome,
   faInfo,
+  faSignOutAlt,
   faSignInAlt,
   faCog,
   faCircle,
@@ -12,6 +13,7 @@ import {
   faTrash,
   faTimes,
   faUpload,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import App from "./App.vue";
@@ -24,6 +26,7 @@ import "@/global-validator/validator.js";
 library.add(
   faHome,
   faInfo,
+  faSignOutAlt,
   faSignInAlt,
   faCog,
   faCircle,
@@ -33,7 +36,8 @@ library.add(
   faTimes,
   faUpload,
   faWhatsapp,
-  faInstagram
+  faInstagram,
+  faPlus
 );
 
 const app = createApp(App);

@@ -1,10 +1,15 @@
 <template>
   <header-component></header-component>
   <!-- LHS -->
-  <section class="min-h-no-header w-full sm:w-1/2 flex flex-col items-center">
-    <template class="top h-no-header flex flex-col">
+  <section class="min-h-no-header w-full md:w-1/2 flex flex-col items-center">
+    <template class="top flex flex-col">
+      <!-- Banner Image for Mobile -->
+      <section
+        class="w-full h-60 bg-cover bg-center flex sm:hidden"
+        :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"
+      ></section>
       <!-- Carousel -->
-      <div class="w-full sm:w-1/2 z-10 pt-3 pb-3 transition duration-1000 bg-white fixed" id="carousel">
+      <div class="w-full z-10 pt-3 pb-3 transition duration-1000 bg-white" id="carousel" :class="isFixed ? 'fixed md:w-1/2' : ''">
         <carousel
           class="cursor-pointer"
           :items-to-show="3.5"
@@ -31,36 +36,38 @@
         </carousel>
       </div>
       <!-- Items Card -->
-      <section class="transition duration-1000 mt-16" id="section">
-        <div class="flex flex-col min-h-screen" :id="category.name" v-for="category in categories" :key="category.name">
+      <section class="transition duration-1000" :class="isFixed ? 'top' : ''" id="section">
+        <div class="flex flex-col" :id="category.name" v-for="category in categories" :key="category.name">
           <div class="flex items-center justify-center p-3 text-2xl font-bold">
             <h4 class="category-name relative uppercase">
               {{ category.name }}
             </h4>
           </div>
 
-          <div class="items flex flex-row items-center justify-between flex-wrap p-3">
-            <div class="card w-48 shadow-lg rounded-lg relative mb-3" v-for="item in category.items" :key="item.id">
-              <div class="image">
-                <img :src="require(`@/assets/images/${item.image}`)" class="rounded-t-lg h-32 md:h-40 lg:h-52 w-full" alt="" />
-              </div>
-              <div class="details flex flex-col items-start justify-around p-1 mb-10">
-                <div class="item-name">
-                  <h5 class="font-medium text-lg">{{ item.name }}</h5>
+          <div class="items flex flex-row items-center justify-between flex-wrap p-2">
+            <div class="w-1/2 lg:w-1/3 mb-5" v-for="item in category.items" :key="item.id">
+              <div class="card m-1 shadow-lg rounded-lg">
+                <div class="image">
+                  <img :src="require(`@/assets/images/${item.image}`)" class="rounded-t-lg w-full" alt="" />
                 </div>
-              </div>
-              <div class="flex flex-row justify-around w-full absolute bottom-0">
-                <button
-                  class="rounded mr-1 w-1/2 border-2 border-gray-900  focus:outline-none hover:outline-none py-1 font-bold text-sm text-gray-900"
-                >
-                  &#8377; {{ item.price }}
-                </button>
-                <button
-                  class="rounded ml-1 w-1/2 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none py-1 font-medium text-sm text-white"
-                  @click.prevent="goToItemDetails(item.id)"
-                >
-                  ADD
-                </button>
+                <div class="details flex flex-col items-start justify-around p-2">
+                  <div class="item-name">
+                    <h5 class="font-medium text-lg">{{ item.name }}</h5>
+                  </div>
+                </div>
+                <div class="flex flex-row justify-around w-full">
+                  <button
+                    class="rounded mr-1 w-1/2 border-2 border-gray-900  focus:outline-none hover:outline-none py-1 font-bold text-sm text-gray-900"
+                  >
+                    &#8377; {{ item.price }}
+                  </button>
+                  <button
+                    class="rounded ml-1 w-1/2 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none py-1 font-medium text-sm text-white"
+                    @click.prevent="goToItemDetails(item.id)"
+                  >
+                    ADD
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -318,7 +325,7 @@ export default {
 
     let breakpoints = ref({
       640: {
-        itemsToShow: 3,
+        itemsToShow: 5,
         snapAlign: "center",
       },
       768: {
@@ -357,10 +364,10 @@ export default {
     let onScroll = () => {
       let carousel = document.getElementById("carousel");
       let section = document.getElementById("section");
-      if (carousel.getBoundingClientRect().top < 64) {
+      if (carousel.getBoundingClientRect().top < 80) {
         isFixed.value = true;
       }
-      if (section.getBoundingClientRect().top > 130) {
+      if (section.getBoundingClientRect().top > 190) {
         isFixed.value = false;
       }
     };
