@@ -21,6 +21,24 @@ const routes = [
       requiresAuth: false,
     },
   },
+  {
+    path: "/forgot-password",
+    name: "Forgot Password",
+    component: () => import(/* webpackChunkName: "Forgot Password" */ "@/components/auth/ForgotPassword.vue"),
+    meta: {
+      title: "Forgot Password" + siteName,
+      requiresAuth: false,
+    },
+  },
+  {
+    path: "/change-password",
+    name: "Change Password",
+    component: () => import(/* webpackChunkName: "Change Password" */ "@/components/auth/ChangePassword.vue"),
+    meta: {
+      title: "Change Password" + siteName,
+      requiresAuth: false,
+    },
+  },
 
   {
     path: "/",

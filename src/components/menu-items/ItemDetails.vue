@@ -1,140 +1,78 @@
 <template>
-  <div class="flex items-center justify-center">
-    <!-- Small Screens Device -->
-    <div class="top h-no-header w-full">
-      <div class="w-full h-1/3 sm:h-2/5">
-        <img :src="item_detail.image" class="w-full h-full" alt="" />
-      </div>
-      <div class="w-full h-2/3 sm:h-3/5 flex flex-col items-center">
-        <div class="w-full h-2/4">
-          <div class="images-carousel w-full focus:outline-none select-none">
-            <carousel
-              class="cursor-pointer focus:outline-none select-none"
-              :items-to-show="4"
-              :autoplay="5000"
-              :wrap-around="false"
-              :transition="1500"
-            >
-              <slide
-                v-for="image in item_detail.images"
-                :key="image.id"
-                class="focus:outline-none select-none"
-              >
-                <img
-                  @click.prevent="showSelectedImage(image)"
-                  @touchstart.prevent="showSelectedImage(image)"
-                  :src="image.image"
-                  class="w-full h-14 rounded-md"
-                  alt=""
-                />
-              </slide>
+  <header-component></header-component>
 
-              <template #addons>
-                <!-- <navigation /> -->
-                <!-- <pagination /> -->
-              </template>
-            </carousel>
-          </div>
-
-          <div class="p-2">
-            <div class="text-xl font-bold">
-              {{ item_detail.name }}
-            </div>
-            <div class="text-xl font-bold mt-1">
-              &#8377; {{ item_detail.price }}
-            </div>
-
-            <div class="mt-1 flex items-center">
-              <span class="text-lg font-bold mr-2"> To Buy Contact On: </span>
-              <a
-                :href="`https://api.whatsapp.com/send?phone=${+919731735035}`"
-                target="_blank"
-                class="mr-2"
-              >
-                <fa :icon="['fab', 'whatsapp']" class="text-2xl text-gray-900">
-                </fa>
-              </a>
-              <a
-                href="https://www.instagram.com/creativity_storee/"
-                target="_blank"
-              >
-                <fa :icon="['fab', 'instagram']" class="text-2xl text-gray-900">
-                </fa>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Related Products -->
-        <div class="w-full mt-10">
-          <div class="flex items-center justify-start p-2 text-md font-medium">
-            <h4 class="category-name">
-              Related Products
-            </h4>
-          </div>
-          <div
-            class="items flex flex-row items-center justify-between overflow-x-scroll p-1 mb-5"
-          >
-            <div
-              class="card flex-none w-48 shadow-lg rounded-lg relative ml-1 mr-1"
-              v-for="item in categories[0].items"
-              :key="item.id"
-            >
-              <div class="image">
-                <img
-                  :src="require(`@/assets/images/${item.image}`)"
-                  class="rounded-t-lg h-32 w-full"
-                  alt=""
-                />
-              </div>
-              <div
-                class="details flex flex-col items-start justify-around p-1 mb-10"
-              >
-                <div class="item-name">
-                  <h5 class="font-medium text-sm">{{ item.name }}</h5>
-                </div>
-              </div>
-              <div
-                class="flex flex-row justify-around w-full absolute bottom-0"
-              >
-                <button
-                  class="rounded mr-1 w-1/2 border-2 border-gray-900  focus:outline-none hover:outline-none py-1 font-bold text-sm text-gray-900"
-                >
-                  &#8377; {{ item.price }}
-                </button>
-                <button
-                  class="rounded ml-1 w-1/2 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none py-1 font-medium text-sm text-white"
-                  @click.prevent="goToItemDetails(item.id)"
-                >
-                  ADD
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <!-- LHS -->
+  <section class="top min-h-no-header w-full md:w-1/2 flex flex-col">
+    <div class="w-full h-60 sm:h-72">
+      <img :src="item_detail.image" class="w-full h-full" alt="" />
     </div>
 
-    <!-- ================================================================================ -->
+    <div class="p-2">
+      <div class="text-xl font-bold">
+        {{ item_detail.name }}
+      </div>
+      <div class="text-xl font-bold mt-1">&#8377; {{ item_detail.price }}</div>
 
-    <!-- Desktop Device -->
-    <div class="w-full hidden sm:flex">
-      <div class="top h-no-header w-1/2 flex flex-col"></div>
-
-      <div class="top h-no-header w-1/2 fixed right-0">
+      <div class="mt-1 flex items-center">
+        <span class="text-lg font-bold mr-2"> To Buy Contact On: </span>
+        <a :href="`https://api.whatsapp.com/send?phone=${+919731735035}`" target="_blank" class="mr-2">
+          <fa :icon="['fab', 'whatsapp']" class="text-2xl text-gray-900"> </fa>
+        </a>
+        <a href="https://www.instagram.com/creativity_storee/" target="_blank">
+          <fa :icon="['fab', 'instagram']" class="text-2xl text-gray-900"> </fa>
+        </a>
+      </div>
+    </div>
+    <!-- Related Products -->
+    <div class="w-full mt-10" v-if="false">
+      <div class="flex items-center justify-start p-2 text-md font-medium">
+        <h4 class="category-name">
+          Related Products
+        </h4>
+      </div>
+      <div class="items flex flex-row items-center justify-between overflow-x-scroll p-1 mb-5">
         <div
-          class="w-full h-no-header bg-cover bg-center"
-          :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"
-        ></div>
+          class="card flex-none w-48 shadow-lg rounded-lg relative ml-1 mr-1"
+          v-for="item in categories[0].items"
+          :key="item.id"
+        >
+          <div class="image">
+            <img :src="require(`@/assets/images/${item.image}`)" class="rounded-t-lg h-32 w-full" alt="" />
+          </div>
+          <div class="details flex flex-col items-start justify-around p-1 mb-10">
+            <div class="item-name">
+              <h5 class="font-medium text-sm">{{ item.name }}</h5>
+            </div>
+          </div>
+          <div class="flex flex-row justify-around w-full absolute bottom-0">
+            <button
+              class="rounded mr-1 w-1/2 border-2 border-gray-900  focus:outline-none hover:outline-none py-1 font-bold text-sm text-gray-900"
+            >
+              &#8377; {{ item.price }}
+            </button>
+            <button
+              class="rounded ml-1 w-1/2 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none py-1 font-medium text-sm text-white"
+              @click.prevent="goToItemDetails(item.id)"
+            >
+              ADD
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
+
+  <!-- RHS -->
+  <section>
+    <right-hand-side></right-hand-side>
+  </section>
 </template>
 
 <script>
+import HeaderComponent from "@/components/common//HeaderComponent.vue";
+import RightHandSide from "@/components/common/RightHandSide";
 import backgroundImage from "@/assets/images/crochet-background.jpg";
 import "vue3-carousel/dist/carousel.css";
-import { Carousel, Slide } from "vue3-carousel";
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
@@ -459,9 +397,8 @@ const categories = [
 export default {
   name: "Menu Items",
   components: {
-    Carousel,
-    Slide,
-    //  Pagination,
+    HeaderComponent,
+    RightHandSide,
   },
   setup() {
     const route = useRoute();

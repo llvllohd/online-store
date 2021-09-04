@@ -16,32 +16,33 @@
           ADD
         </router-link>
       </div>
-
-      <table class="table-auto w-full overflow-x-auto">
-        <thead>
-          <tr>
-            <th class="text-left border border-gray-400 p-2">Name</th>
-            <th class="text-left border border-gray-400 p-2">Description</th>
-            <th class="text-left border border-gray-400 p-2">Visible</th>
-            <th class="text-center border border-gray-400 p-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="category in categories" :key="category.id">
-            <td class="border border-gray-400 p-2">{{ category.name }}</td>
-            <td class="border border-gray-400 p-2">{{ category.description }}</td>
-            <td class="border border-gray-400 p-2">{{ category.is_visible == 1 ? "Yes" : "No" }}</td>
-            <td class="text-center border border-gray-400 p-2">
-              <div class="r cursor-pointer">
-                <router-link :to="{ name: 'Add Category', query: { categoryId: category.id } }">
-                  <fa :icon="['fa', 'edit']" class="text-gray-900 text-sm mr-2"> </fa>
-                </router-link>
-                <fa :icon="['fa', 'trash']" class="text-gray-900 text-sm ml-2" @click.prevent="openAlert(category.id)"> </fa>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="overflow-x-auto">
+        <table class="table-auto w-full">
+          <thead>
+            <tr>
+              <th class="text-left border border-gray-400 p-2">Name</th>
+              <th class="text-left border border-gray-400 p-2">Description</th>
+              <th class="text-left border border-gray-400 p-2">Visible</th>
+              <th class="text-center border border-gray-400 p-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="category in categories" :key="category.id">
+              <td class="border border-gray-400 p-2">{{ category.name }}</td>
+              <td class="border border-gray-400 p-2">{{ category.description }}</td>
+              <td class="border border-gray-400 p-2">{{ category.is_visible == 1 ? "Yes" : "No" }}</td>
+              <td class="text-center border border-gray-400 p-2">
+                <div class="r cursor-pointer">
+                  <router-link :to="{ name: 'Add Category', query: { categoryId: category.id } }">
+                    <fa :icon="['fa', 'edit']" class="text-gray-900 text-sm mr-2"> </fa>
+                  </router-link>
+                  <fa :icon="['fa', 'trash']" class="text-gray-900 text-sm ml-2" @click.prevent="openAlert(category.id)"> </fa>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
   <!-- RHS -->

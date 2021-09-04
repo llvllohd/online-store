@@ -32,6 +32,7 @@ export default {
           });
       });
     },
+
     login({ commit, dispatch }, params) {
       return new Promise((resolve, reject) => {
         HTTP.post(`${process.env.VUE_APP_API_URL}login`, params)
@@ -50,6 +51,7 @@ export default {
           });
       });
     },
+
     logout({ commit }) {
       return new Promise((resolve, reject) => {
         HTTP.post(`${process.env.VUE_APP_API_URL}logout`)
@@ -60,6 +62,38 @@ export default {
               if (timer) {
                 clearTimeout(timer);
               }
+            }
+          })
+          .catch((e) => {
+            reject(e);
+          });
+      });
+    },
+
+    // eslint-disable-next-line no-empty-pattern
+    forgotPassword({}, params) {
+      return new Promise((resolve, reject) => {
+        HTTP.post(`${process.env.VUE_APP_API_URL}forgot-password`, params)
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((e) => {
+            reject(e);
+          });
+      });
+    },
+
+    changePassword({ commit, dispatch }, params) {
+      return new Promise((resolve, reject) => {
+        HTTP.put(`${process.env.VUE_APP_API_URL}forgot-password`, params)
+          .then((response) => {
+            resolve(response);
+            if (response.data.status) {
+              let expirationTime = +response.data.data.expires_in * 1000;
+              timer = setTimeout(() => {
+                dispatch("logout");
+              }, expirationTime);
+              commit("setAuthData", response.data.data);
             }
           })
           .catch((e) => {

@@ -23,7 +23,7 @@
       </div>
       <!-- Name -->
       <div class="flex mx-5">
-        <h5 class="text-white text-lg font-bold my-auto">My Project</h5>
+        <h5 class="text-white text-lg font-bold my-auto">Fatimas</h5>
       </div>
     </div>
     <!-- Nav Items -->
@@ -33,11 +33,11 @@
           Menu
         </router-link>
       </li>
-      <li class="nav text-white text-lg font-bold relative p-1">
+      <!-- <li class="nav text-white text-lg font-bold relative p-1">
         <router-link :to="{ name: 'About Us' }" class="nav-lg">
           About
         </router-link>
-      </li>
+      </li> -->
       <li class="nav text-white text-lg font-bold relative p-1">
         <router-link :to="{ name: 'Categories' }" class="nav-lg">
           Categories

@@ -4,7 +4,7 @@
   <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
     <div class="p-3 w-full sm:max-w-md">
       <div class="flex justify-center text-3xl font-bold p-5">
-        Add Product
+        {{ productId ? "Update Product" : "Add Product" }}
       </div>
 
       <form @submit="submitForm" class="shadow-md rounded px-5 p-5">
@@ -140,7 +140,7 @@
           </label>
 
           <div class="shadow rounded" v-if="selected_image_file && selected_image_file.length > 0">
-            <img class="h-40 w-full object-cover rounded" :src="selected_image_file" alt="image" />
+            <img class="h-40 w-full object-contain rounded" :src="selected_image_file" alt="image" />
           </div>
           <div
             :class="image_file.meta.touched && !image_file.meta.valid ? 'border border-red-500' : ''"
@@ -178,7 +178,7 @@
             ]"
           >
             <fa :icon="['fa', 'circle-notch']" class="text-white text-xs animate-spin mr-2" v-if="isSubmitting"> </fa>
-            ADD
+            {{ productId ? "Update" : "ADD" }}
           </button>
         </div>
       </form>
@@ -243,8 +243,6 @@ export default {
     const productId = computed(() => route.query.productId);
 
     const submitForm = handleSubmit((formValues) => {
-      console.log(formValues.on_offer);
-      console.log(on_offer.value);
       isSubmitting.value = true;
       if (productId.value) {
         formValues.product_id = productId.value;
@@ -316,6 +314,7 @@ export default {
       formMeta,
       submitForm,
       category_id,
+      productId,
     };
   },
 };

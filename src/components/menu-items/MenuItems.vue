@@ -1,8 +1,11 @@
 <template>
   <header-component></header-component>
   <!-- LHS -->
-  <section class="top min-h-no-header w-full md:w-1/2 flex flex-col items-center">
-    <template class=" flex flex-col">
+  <section
+    class="top min-h-no-header w-full md:w-1/2 flex flex-col items-center"
+    v-if="categories.value && categories.value.length > 0"
+  >
+    <template class="flex flex-col w-full">
       <!-- Banner Image for Mobile -->
       <section
         class="w-full h-60 bg-cover bg-center flex sm:hidden"
@@ -12,18 +15,20 @@
       <div class="z-10 pt-3 pb-3 transition duration-1000 bg-white" id="carousel" :class="isFixed ? 'fixed w-full sm:w-1/2' : ''">
         <carousel
           class="cursor-pointer"
-          :items-to-show="4"
+          :items-to-show="3"
           :autoplay="5000"
           :wrap-around="false"
           :transition="1500"
           :breakpoints="breakpoints"
+          v-if="categories.value && categories.value.length > 0"
         >
-          <slide v-for="category in categories" :key="category.id">
+          <slide v-for="category in categories.value" :key="category.id" class="">
             <div
               @click.prevent="positionItemsSection(category)"
               @touchstart.prevent="positionItemsSection(category)"
               class="carousel__item tracking-wider flex w-full items-center justify-center rounded-lg h-8 sm:font-bold font-medium sm:text-sm text-xs text-white  bg-gray-900"
               :class="category_name == category.name ? 'text-yellow-400' : ''"
+              v-if="category.menu_items && category.menu_items.length > 0"
             >
               {{ category.name }}
             </div>
@@ -36,25 +41,34 @@
         </carousel>
       </div>
       <!-- Items Card -->
-      <section class="transition duration-1000" :class="isFixed ? '' : ''" id="section">
-        <div class="" :id="category.name" v-for="category in categories" :key="category.name">
-          <div class="flex items-center justify-center p-3 text-2xl font-bold">
-            <h4 class="category-name relative uppercase">
+      <section class="transition duration-1000" :class="isFixed ? 'top' : ''" id="section">
+        <div :id="category.name" v-for="category in categories.value" :key="category.name">
+          <div
+            class="flex items-center justify-center p-3 text-2xl font-bold"
+            v-if="category.menu_items && category.menu_items.length > 0"
+          >
+            <h4 class="category-name relative uppercase text-lg sm:text-2xl">
               {{ category.name }}
             </h4>
           </div>
 
-          <div class="items flex flex-row items-center justify-between flex-wrap p-2">
-            <div class="w-1/2 lg:w-1/3 mb-5" v-for="item in category.items" :key="item.id">
+          <div class="items flex flex-row items-center justify-between flex-wrap p-2 ">
+            <div class="w-1/2 lg:w-1/3 mb-5" v-for="item in category.menu_items" :key="item.id">
               <div class="card m-1 shadow-lg rounded-lg">
                 <div class="image">
                   <img
-                    :src="require(`@/assets/images/${item.image}`)"
+                    :src="item.image_file"
                     class="rounded-t-lg w-full"
                     alt=""
-                    v-if="item.image && item.image.length > 0"
+                    v-if="item.image_file && item.image_file.length > 0"
                   />
-                  <img :src="require(`@/assets/images/no-image.png`)" class="rounded-t-lg w-full border" alt="" v-else />
+                  <img
+                    :src="require(`@/assets/images/no-image.png`)"
+                    class="rounded-t-lg border"
+                    style="width: 500px"
+                    alt=""
+                    v-else
+                  />
                 </div>
                 <div class="details flex flex-col items-start justify-around p-2">
                   <div class="item-name">
@@ -63,12 +77,12 @@
                 </div>
                 <div class="flex flex-row justify-around w-full">
                   <button
-                    class="rounded mr-1 w-1/2 border-2 border-gray-900  focus:outline-none hover:outline-none py-0 sm:py-1 font-bold text-xs sm:text-sm text-gray-900"
+                    class="rounded mr-1 w-1/2 border-2 border-gray-900  focus:outline-none hover:outline-none py-1 font-bold text-xs sm:text-sm text-gray-900"
                   >
                     &#8377; {{ item.price }}
                   </button>
                   <button
-                    class="rounded ml-1 w-1/2 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none py-0 sm:py-1 font-medium text-xs sm:text-sm text-white"
+                    class="rounded ml-1 w-1/2 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none py-1 font-medium text-xs sm:text-sm text-white"
                     @click.prevent="goToItemDetails(item.id)"
                   >
                     ADD
@@ -82,6 +96,14 @@
     </template>
   </section>
 
+  <section
+    class="top min-h-no-header w-full md:w-1/2 flex flex-col items-center justify-center"
+    v-if="categories.value && categories.value.length <= 0"
+  >
+    <div class="text-sm sm:text-base font-medium text-red-500">No Products Found.</div>
+    <div class="text-medium sm:text-lg font-medium">Please Add Products.</div>
+  </section>
+
   <!-- RHS -->
   <section>
     <right-hand-side></right-hand-side>
@@ -93,228 +115,11 @@ import HeaderComponent from "@/components/common//HeaderComponent.vue";
 import RightHandSide from "@/components/common/RightHandSide";
 import backgroundImage from "@/assets/images/crochet-background.jpg";
 import "vue3-carousel/dist/carousel.css";
+import useToast from "@/hooks/useToast";
 import { Carousel, Slide } from "vue3-carousel";
-import { onMounted, onBeforeUnmount, ref } from "vue";
+import { onMounted, onBeforeUnmount, ref, reactive } from "vue";
 import { useRouter } from "vue-router";
-
-const categories = [
-  {
-    name: "Stitchings",
-    id: 0,
-    items: [
-      {
-        id: 0,
-        name: "Stitchings One",
-        price: "25",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 1,
-        name: "Stitchings Two",
-        price: "60",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 2,
-        name: "Stitchings Three",
-        price: "5",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 3,
-        name: "Stitchings Four",
-        price: "100",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 4,
-        name: "Stitchings Five",
-        price: "25",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 5,
-        name: "Stitchings Six",
-        price: "75",
-        image: "cap-one.jpg",
-      },
-    ],
-  },
-  {
-    name: "Crochets",
-    id: 1,
-    items: [
-      {
-        id: 6,
-        name: "Crochets One",
-        price: "25",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 7,
-        name: "Crochets Two",
-        price: "60",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 8,
-        name: "Crochets Three",
-        price: "5",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 9,
-        name: "Crochets Four",
-        price: "100",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 10,
-        name: "Crochets Five",
-        price: "25",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 11,
-        name: "Crochets Six",
-        price: "75",
-        image: "cap-one.jpg",
-      },
-    ],
-  },
-  {
-    name: "Pants",
-    id: 2,
-    items: [
-      {
-        id: 12,
-        name: "Pants One",
-        price: "25",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 13,
-        name: "Pants Two",
-        price: "60",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 14,
-        name: "Pants Three",
-        price: "5",
-        image: "cap-one.jpg",
-      },
-    ],
-  },
-  {
-    name: "Shirts",
-    id: 3,
-    items: [
-      {
-        id: 15,
-        name: "Shirts One",
-        price: "25",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 16,
-        name: "Shirts Two",
-        price: "60",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 17,
-        name: "Shirts Three",
-        price: "5",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 18,
-        name: "Shirts Four",
-        price: "100",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 19,
-        name: "Shirts Five",
-        price: "25",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 20,
-        name: "Shirts Six",
-        price: "75",
-        image: "cap-one.jpg",
-      },
-    ],
-  },
-  {
-    name: "Trousers",
-    id: 4,
-    items: [
-      {
-        id: 21,
-        name: "Trousers One",
-        price: "25",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 22,
-        name: "Trousers Two",
-        price: "60",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 23,
-        name: "Trousers Three",
-        price: "5",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 24,
-        name: "Trousers Four",
-        price: "100",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 25,
-        name: "Trousers Five",
-        price: "25",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 26,
-        name: "Trousers Six",
-        price: "75",
-        image: "cap-one.jpg",
-      },
-    ],
-  },
-  {
-    name: "Inners",
-    id: 5,
-    items: [
-      {
-        id: 27,
-        name: "Inners One",
-        price: "25",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 28,
-        name: "Inners Two",
-        price: "60",
-        image: "cap-one.jpg",
-      },
-      {
-        id: 29,
-        name: "Inners Three",
-        price: "5",
-        image: "cap-one.jpg",
-      },
-    ],
-  },
-];
+import { useStore } from "vuex";
 
 export default {
   name: "Menu Items",
@@ -326,6 +131,8 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const store = useStore();
+    const categories = reactive([]);
     let isFixed = ref(false);
     let category_name = ref("");
 
@@ -356,7 +163,7 @@ export default {
         behavior: "smooth",
       });
 
-      for (let i of categories) {
+      for (let i of categories.value) {
         if (item.id === i.id) {
           category_name.value = i.name;
         }
@@ -373,13 +180,21 @@ export default {
       if (carousel.getBoundingClientRect().top < 80) {
         isFixed.value = true;
       }
-      if (section.getBoundingClientRect().top > 190) {
+      if (section.getBoundingClientRect().top > 150) {
         isFixed.value = false;
       }
     };
 
     onMounted(() => {
       document.addEventListener("scroll", onScroll);
+
+      store.dispatch("menuItems/getMenuItems").then((res) => {
+        if (res.data.status) {
+          categories.value = res.data.data.categories;
+        } else {
+          useToast(res.data.message, "danger");
+        }
+      });
     });
 
     onBeforeUnmount(() => {

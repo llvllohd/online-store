@@ -5,6 +5,7 @@ import VuexPersist from "vuex-persist";
 import auth from "@/store/modules/auth.js";
 import categories from "@/store/modules/categories.js";
 import products from "@/store/modules/products.js";
+import menuItems from "@/store/modules/menuItems.js";
 
 const vuexPersist = new VuexPersist({
   key: "Fatimas",
@@ -17,6 +18,7 @@ const store = createStore({
     auth,
     categories,
     products,
+    menuItems,
   },
 });
 

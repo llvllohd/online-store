@@ -73,7 +73,6 @@ export default {
     },
 
     updateProduct({ commit }, params) {
-      console.log(params);
       let formData = new FormData();
       formData.append("category_id", params.category_id);
       formData.append("name", params.name);
