@@ -79,7 +79,7 @@
                   <button
                     class="rounded mr-1 w-1/2 border-2 border-gray-900  focus:outline-none hover:outline-none py-1 font-bold text-xs sm:text-sm text-gray-900"
                   >
-                    &#8377; {{ item.price }}
+                    &#8377; {{ item.on_offer ? item.offer_price : item.price }}
                   </button>
                   <button
                     class="rounded ml-1 w-1/2 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none py-1 font-medium text-xs sm:text-sm text-white"
@@ -171,7 +171,7 @@ export default {
     };
 
     let goToItemDetails = (item_id) => {
-      router.push({ name: "Item Details", params: { id: item_id } });
+      router.push({ name: "Item Detail", query: { menuItemId: item_id } });
     };
 
     let onScroll = () => {

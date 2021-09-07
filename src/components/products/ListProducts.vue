@@ -34,7 +34,7 @@
               <td class="border border-gray-400 p-2">{{ product.description }}</td>
               <td class="border border-gray-400 p-2">{{ product.is_visible == 1 ? "Yes" : "No" }}</td>
               <td class="border border-gray-400 p-2">{{ product.is_available == 1 ? "Yes" : "No" }}</td>
-              <td class="border border-gray-400 p-2">{{ product.price == 1 ? "Yes" : "No" }}</td>
+              <td class="border border-gray-400 p-2">{{ product.price }}</td>
               <td class="text-center border border-gray-400 p-2">
                 <div class="r cursor-pointer">
                   <router-link :to="{ name: 'Add Product', query: { productId: product.id } }">

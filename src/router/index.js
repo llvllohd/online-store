@@ -50,11 +50,11 @@ const routes = [
     },
   },
   {
-    path: "/item-details/:id",
-    name: "Item Details",
+    path: "/item-detail",
+    name: "Item Detail",
     component: () => import(/* webpackChunkName: "Item Details" */ "@/components/menu-items/ItemDetails.vue"),
     meta: {
-      title: "Item Details" + siteName,
+      title: "Item Detail" + siteName,
       requiresAuth: false,
     },
   },
