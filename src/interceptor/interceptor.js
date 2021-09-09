@@ -12,7 +12,7 @@ export const HTTP = window.axios;
 
 HTTP.interceptors.request.use(
   (config) => {
-    // store.commit("loaderStore/updateLoader", true);
+    store.commit("loader/updateLoader", true);
     const token = store.getters["auth/token"];
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -20,18 +20,18 @@ HTTP.interceptors.request.use(
     return config;
   },
   (error) => {
-    //   store.commit("loaderStore/updateLoader", false);
+    store.commit("loader/updateLoader", false);
     Promise.reject(error);
   }
 );
 
-// HTTP.interceptors.response.use(
-//   (response) => {
-// store.commit("loaderStore/updateLoader", false);
-// return response;
-//   },
-//   (error) => {
-// store.commit("loaderStore/updateLoader", false);
-// Promise.reject(error);
-//   }
-// );
+HTTP.interceptors.response.use(
+  (response) => {
+    store.commit("loader/updateLoader", false);
+    return response;
+  },
+  (error) => {
+    store.commit("loader/updateLoader", false);
+    Promise.reject(error);
+  }
+);

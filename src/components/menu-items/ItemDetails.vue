@@ -22,7 +22,9 @@
       </p>
 
       <div class="flex mt-2">
-        <div class="text-lg font-bold text-red-500 line-through mr-3">&#8377; {{ item_detail.price }}</div>
+        <div class="text-lg font-bold  mr-3" :class="item_detail.on_offer ? 'text-red-500 line-through' : ''">
+          &#8377; {{ item_detail.price }}
+        </div>
         <div class="text-xl font-bold" v-if="item_detail.on_offer">&#8377; {{ item_detail.offer_price }}</div>
       </div>
 

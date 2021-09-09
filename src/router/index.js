@@ -58,6 +58,15 @@ const routes = [
       requiresAuth: false,
     },
   },
+  {
+    path: "/cart",
+    name: "Cart",
+    component: () => import(/* webpackChunkName: "Cart" */ "@/components/cart/CartScreen.vue"),
+    meta: {
+      title: "Cart" + siteName,
+      requiresAuth: false,
+    },
+  },
   // Categories
   {
     path: "/categories",
@@ -94,15 +103,6 @@ const routes = [
     meta: {
       title: "Add Product" + siteName,
       requiresAuth: true,
-    },
-  },
-  {
-    path: "/about",
-    name: "About Us",
-    component: () => import(/* webpackChunkName: "About" */ "../components/AboutUs.vue"),
-    meta: {
-      title: "About Us" + siteName,
-      requiresAuth: false,
     },
   },
 

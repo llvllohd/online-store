@@ -1,15 +1,22 @@
 <template>
   <!-- Header -->
   <nav class="w-full h-16 fixed top-0 bg-gray-900 flex flex-row items-center px-3 z-50" id="header">
-    <!-- Hamburger -->
-    <div
-      class="relative w-10 h-10 ring-1 ring-white rounded cursor-pointer flex items-center justify-center md:hidden transition duration-500 ease-in-out"
-      :class="isToggle ? 'open' : ''"
-      @click.stop="toggleMenu"
-    >
+    <!-- Mobile Header -->
+    <div class="flex md:hidden items-center justify-between w-full">
+      <!-- Hamburger -->
       <div
-        class="menu-btn__line bg-white rounded w-8 h-1 flex items-center justify-center duration-500 transition ease-in-out"
-      ></div>
+        class="relative w-10 h-10 ring-1 ring-white rounded cursor-pointer flex items-center justify-center transition duration-500 ease-in-out"
+        :class="isToggle ? 'open' : ''"
+        @click.stop="toggleMenu"
+      >
+        <div
+          class="menu-btn__line bg-white rounded w-8 h-1 flex items-center justify-center duration-500 transition ease-in-out"
+        ></div>
+      </div>
+
+      <div class="flex items-center justify-end" @click.prevent="$router.push({ name: 'Cart' })">
+        <fa :icon="['fa', 'shopping-cart']" class="text-3xl text-white"> </fa>
+      </div>
     </div>
 
     <div class="w-2/5 h-full hidden md:flex">
@@ -33,19 +40,20 @@
           Menu
         </router-link>
       </li>
-      <!-- <li class="nav text-white text-lg font-bold relative p-1">
-        <router-link :to="{ name: 'About Us' }" class="nav-lg">
-          About
-        </router-link>
-      </li> -->
-      <li class="nav text-white text-lg font-bold relative p-1">
+
+      <li class="nav text-white text-lg font-bold relative p-1" v-if="isUserLoggedIn">
         <router-link :to="{ name: 'Categories' }" class="nav-lg">
           Categories
         </router-link>
       </li>
-      <li class="nav text-white text-lg font-bold relative p-1">
+      <li class="nav text-white text-lg font-bold relative p-1" v-if="isUserLoggedIn">
         <router-link :to="{ name: 'Products' }" class="nav-lg">
           Products
+        </router-link>
+      </li>
+      <li class="nav text-white text-lg font-bold relative p-1">
+        <router-link :to="{ name: 'Cart' }" class="nav-lg">
+          <fa :icon="['fa', 'shopping-cart']" class="nav-lg  text-sm"> </fa> Cart
         </router-link>
       </li>
       <li class="nav text-white text-lg font-bold relative p-1" v-if="!isUserLoggedIn">
@@ -90,7 +98,15 @@
             :to="item.path"
             @click="gotoLinks(item)"
             class="w-full p-2 flex items-center justify-center"
-            v-if="(isUserLoggedIn && item.name != 'Login') || (!isUserLoggedIn && item.name != 'Logout')"
+            v-if="
+              (isUserLoggedIn && item.name != 'Login') ||
+                (!isUserLoggedIn &&
+                  item.name != 'Logout' &&
+                  !isUserLoggedIn &&
+                  item.name != 'Categories' &&
+                  !isUserLoggedIn &&
+                  item.name != 'Products')
+            "
           >
             <div class="flex items-center justify-center w-1/4">
               <span>
