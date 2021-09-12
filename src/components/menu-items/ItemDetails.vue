@@ -1,94 +1,84 @@
 <template>
-  <header-component></header-component>
-
-  <!-- LHS -->
-  <section class="top min-h-no-header w-full md:w-1/2 flex flex-col items-center overflow-y-scroll">
-    <div class="w-full sm:w-1/2 bg-red-400">
-      <img
-        :src="item_detail.image_file"
-        class="w-full h-full"
-        alt=""
-        v-if="item_detail.image_file && item_detail.image_file.length > 0"
-      />
-      <img :src="require(`@/assets/images/no-image.png`)" class="w-full h-full" alt="" v-else />
-    </div>
-
-    <div class="p-2 w-full sm:w-1/2">
-      <div class="text-xl font-bold">
-        {{ item_detail.name }}
+  <section
+    class="fixed top-10 left-0 h-full w-full md:w-1/2 flex flex-col items-center justify-center z-10 bg-gray-500 bg-opacity-95"
+  >
+    <section class="relative w-4/5 lg:w-3/5 flex flex-col items-center rounded-b bg-white">
+      <div class=" w-full absolute flex items-center justify-end" style="top:-30px" @click.prevent="closeItemDetail()">
+        <fa :icon="['fa', 'times-circle']" class="text-2xl text-gray-900"> </fa>
       </div>
-      <p class="text text-base text-gray-700 mt-2">
-        {{ item_detail.description }}
-      </p>
+      <div class="w-full h-60 md:h-80" v-if="true">
+        <img
+          :src="item_detail.image_file"
+          class="w-full h-full"
+          alt=""
+          v-if="item_detail.image_file && item_detail.image_file.length > 0"
+        />
+        <img :src="require(`@/assets/images/no-image.png`)" class="w-full h-full" alt="" v-else />
+      </div>
 
-      <div class="flex mt-2">
-        <div class="text-lg font-bold  mr-3" :class="item_detail.on_offer ? 'text-red-500 line-through' : ''">
-          &#8377; {{ item_detail.price }}
+      <div class="p-2 w-full">
+        <div class="text-xl font-bold">
+          {{ item_detail.name }}
         </div>
-        <div class="text-xl font-bold" v-if="item_detail.on_offer">&#8377; {{ item_detail.offer_price }}</div>
+        <p class="text text-base text-gray-700 mt-2">
+          {{ item_detail.description }}
+        </p>
+
+        <div class="flex mt-2">
+          <div class="text-lg font-bold  mr-3" :class="item_detail.on_offer ? 'text-red-500 line-through' : ''">
+            &#8377; {{ item_detail.price }}
+          </div>
+          <div class="text-xl font-bold" v-if="item_detail.on_offer">&#8377; {{ item_detail.offer_price }}</div>
+        </div>
+
+        <div class="mt-2 flex items-center">
+          <span class="text-lg font-bold mr-2"> To Buy Contact On: </span>
+          <a :href="`https://api.whatsapp.com/send?phone=${+919731735035}`" target="_blank" class="mr-2">
+            <fa :icon="['fab', 'whatsapp']" class="text-2xl text-gray-900"> </fa>
+          </a>
+          <a href="https://www.instagram.com/creativity_storee/" target="_blank">
+            <fa :icon="['fab', 'instagram']" class="text-2xl text-gray-900"> </fa>
+          </a>
+        </div>
       </div>
 
-      <div class="mt-2 flex items-center">
-        <span class="text-lg font-bold mr-2"> To Buy Contact On: </span>
-        <a :href="`https://api.whatsapp.com/send?phone=${+919731735035}`" target="_blank" class="mr-2">
-          <fa :icon="['fab', 'whatsapp']" class="text-2xl text-gray-900"> </fa>
-        </a>
-        <a href="https://www.instagram.com/creativity_storee/" target="_blank">
-          <fa :icon="['fab', 'instagram']" class="text-2xl text-gray-900"> </fa>
-        </a>
+      <div class="mt-3 w-full">
+        <button
+          class="rounded w-full bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none p-2 font-medium text-base sm:text-lg text-white"
+          @click.prevent="goToItemDetails(item.id)"
+        >
+          Add to Cart
+        </button>
       </div>
-    </div>
-
-    <div class="mt-3 w-full sm:w-1/2">
-      <button
-        class="rounded w-full bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none p-2 font-medium text-base sm:text-lg text-white"
-        @click.prevent="goToItemDetails(item.id)"
-      >
-        Add to Cart
-      </button>
-    </div>
-  </section>
-
-  <!-- RHS -->
-  <section>
-    <right-hand-side></right-hand-side>
+    </section>
   </section>
 </template>
 
 <script>
-import HeaderComponent from "@/components/common//HeaderComponent.vue";
-import RightHandSide from "@/components/common/RightHandSide";
 import "vue3-carousel/dist/carousel.css";
-import { computed, onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
-import { useStore } from "vuex";
+import { ref } from "vue";
 
 export default {
   name: "Menu Items",
-  components: {
-    HeaderComponent,
-    RightHandSide,
+  props: {
+    selectedItem: {
+      type: Object,
+      required: true,
+    },
   },
-  setup() {
-    const route = useRoute();
-    const store = useStore();
+  components: {},
+  setup(props, context) {
     const item_detail = ref([]);
 
-    const menuItemId = computed(() => route.query.menuItemId);
+    item_detail.value = props.selectedItem ? props.selectedItem : [];
 
-    onMounted(() => {
-      if (menuItemId.value) {
-        store.dispatch("menuItems/getMenuItemById", menuItemId.value).then((res) => {
-          if (res.data.status) {
-            item_detail.value = res.data.data;
-          }
-        });
-      }
-    });
+    const closeItemDetail = () => {
+      context.emit("closeItemDetail");
+    };
 
     return {
       item_detail,
-      menuItemId,
+      closeItemDetail,
     };
   },
 };

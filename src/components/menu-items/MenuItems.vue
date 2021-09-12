@@ -83,7 +83,7 @@
                   </button>
                   <button
                     class="rounded ml-1 w-1/2 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none py-1 font-medium text-xs sm:text-sm text-white"
-                    @click.prevent="goToItemDetails(item.id)"
+                    @click.prevent="gotoItemDetail(item)"
                   >
                     ADD
                   </button>
@@ -104,6 +104,9 @@
     <div class="text-medium sm:text-lg font-medium">Please Add Products.</div>
   </section>
 
+  <!-- Menu Detail -->
+  <item-detail :selectedItem="selected_item" @closeItemDetail="closeItemDetail" v-if="is_item_detail"></item-detail>
+
   <!-- RHS -->
   <section>
     <right-hand-side></right-hand-side>
@@ -112,29 +115,33 @@
 
 <script>
 import HeaderComponent from "@/components/common//HeaderComponent.vue";
+import ItemDetail from "@/components/menu-items/ItemDetails.vue";
 import RightHandSide from "@/components/common/RightHandSide";
 import backgroundImage from "@/assets/images/crochet-background.jpg";
 import "vue3-carousel/dist/carousel.css";
 import useToast from "@/hooks/useToast";
 import { Carousel, Slide } from "vue3-carousel";
 import { onMounted, onBeforeUnmount, ref, reactive } from "vue";
-import { useRouter } from "vue-router";
 import { useStore } from "vuex";
+import ItemDetails from "./ItemDetails.vue";
 
 export default {
   name: "Menu Items",
   components: {
     HeaderComponent,
+    ItemDetail,
     RightHandSide,
     Carousel,
     Slide,
   },
   setup() {
-    const router = useRouter();
+    ItemDetails;
     const store = useStore();
     const categories = reactive([]);
     let isFixed = ref(false);
+    let is_item_detail = ref(false);
     let category_name = ref("");
+    let selected_item = ref([]);
 
     let breakpoints = ref({
       640: {
@@ -170,8 +177,13 @@ export default {
       }
     };
 
-    let goToItemDetails = (item_id) => {
-      router.push({ name: "Item Detail", query: { menuItemId: item_id } });
+    let gotoItemDetail = (item) => {
+      is_item_detail.value = true;
+      selected_item.value = item;
+    };
+
+    let closeItemDetail = () => {
+      is_item_detail.value = false;
     };
 
     let onScroll = () => {
@@ -202,13 +214,16 @@ export default {
     });
 
     return {
-      isFixed,
-      category_name,
       backgroundImage,
-      positionItemsSection,
-      goToItemDetails,
-      categories,
       breakpoints,
+      positionItemsSection,
+      categories,
+      category_name,
+      isFixed,
+      is_item_detail,
+      closeItemDetail,
+      gotoItemDetail,
+      selected_item,
     };
   },
 };
