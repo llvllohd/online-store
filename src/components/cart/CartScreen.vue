@@ -9,27 +9,80 @@
 
       <div class="overflow-x-auto">
         <table class="table-auto w-full">
-          <thead>
-            <tr>
-              <th class="text-left border border-gray-400 p-2">Name</th>
-              <th class="text-left border border-gray-400 p-2">Description</th>
-              <th class="text-left border border-gray-400 p-2">Visible</th>
-              <th class="text-center border border-gray-400 p-2">Actions</th>
-            </tr>
-          </thead>
           <tbody>
-            <tr v-for="category in categories" :key="category.id">
-              <td class="border border-gray-400 p-2">{{ category.name }}</td>
-              <td class="border border-gray-400 p-2">{{ category.description }}</td>
-              <td class="border border-gray-400 p-2">{{ category.is_visible == 1 ? "Yes" : "No" }}</td>
-              <td class="text-center border border-gray-400 p-2">
-                <div class="r cursor-pointer">
-                  <router-link :to="{ name: 'Add Category', query: { categoryId: category.id } }">
-                    <fa :icon="['fa', 'edit']" class="text-gray-900 text-sm mr-2"> </fa>
-                  </router-link>
-                  <fa :icon="['fa', 'trash']" class="text-gray-900 text-sm ml-2" @click.prevent="openAlert(category.id)"> </fa>
+            <tr v-for="item in cartDetail.cart_items" :key="item.id" class="border-t border-b">
+              <td class="p-2 h-20 w-20">
+                <img :src="item.item_image" class="w-full h-full" alt="" />
+              </td>
+
+              <td class="p-2">
+                <div class="">
+                  {{ item.menu_item_name }}
                 </div>
               </td>
+
+              <td class="p-2 text-center">
+                <div class="">
+                  {{ item.quantity }}
+                </div>
+              </td>
+
+              <td class="p-2 text-right">
+                <div class="">
+                  {{ item.total_price }}
+                </div>
+              </td>
+
+              <td class="p-2 text-center" @click="removeCartItem(item)">
+                <div class="">
+                  <fa :icon="['fa', 'times']" class="text-lg text-gray-900"> </fa>
+                </div>
+              </td>
+            </tr>
+            <!-- Sub Total -->
+            <tr class="border-b">
+              <th colspan="1"></th>
+              <th colspan="2" class="p-1">
+                <div class="p-1 text-left">
+                  Sub Total
+                </div>
+              </th>
+              <th colspan="1" class="p-1">
+                <div class="p-1 text-right">
+                  {{ cartDetail.sub_total }}
+                </div>
+              </th>
+              <th colspan="1"></th>
+            </tr>
+            <!-- Delivery Charge -->
+            <tr class="border-b">
+              <th colspan="1"></th>
+              <th colspan="2" class="p-1">
+                <div class="p-1 text-left">
+                  Delivery Charge
+                </div>
+              </th>
+              <th colspan="1" class="p-1">
+                <div class="p-1 text-right">
+                  {{ cartDetail.delivery_charges }}
+                </div>
+              </th>
+              <th colspan="1"></th>
+            </tr>
+            <!-- Total -->
+            <tr class="border-b">
+              <th colspan="1"></th>
+              <th colspan="2" class="p-1">
+                <div class="p-1 text-left">
+                  Total
+                </div>
+              </th>
+              <th colspan="1" class="p-1">
+                <div class="p-1 text-right">
+                  {{ cartDetail.total_amount }}
+                </div>
+              </th>
+              <th colspan="1"></th>
             </tr>
           </tbody>
         </table>
@@ -40,51 +93,35 @@
   <section>
     <right-hand-side></right-hand-side>
   </section>
-
-  <!-- Alert Modal -->
-  <alert-screen
-    :is-alert="is_alert"
-    :item-id="item_id"
-    @confirm-alert="confirmAlert"
-    :delete-Action="deleteCategory"
-  ></alert-screen>
 </template>
 
 <script>
 import HeaderComponent from "@/components/common/HeaderComponent.vue";
 import RightHandSide from "@/components/common/RightHandSide";
-import AlertScreen from "@/components/common/AlertScreen.vue";
 import useToast from "@/hooks/useToast";
 import { onMounted, ref } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
-  name: "Categories",
-  components: { HeaderComponent, RightHandSide, AlertScreen },
+  name: "Cart",
+  components: { HeaderComponent, RightHandSide },
 
   setup() {
+    const router = useRouter();
     const store = useStore();
-    const categories = ref([]);
-    const is_alert = ref(false);
-    const item_id = ref("");
+    const cartDetail = ref([]);
 
-    const openAlert = (categoryId) => {
-      is_alert.value = true;
-      item_id.value = categoryId;
-    };
-
-    const confirmAlert = (value) => {
-      if (!value) {
-        is_alert.value = value;
-      }
-    };
-
-    const deleteCategory = (categoryId) => {
-      store.dispatch("categories/deleteCategory", categoryId).then((res) => {
+    const removeCartItem = (item) => {
+      store.dispatch("cart/removeCartItem", item.id).then((res) => {
         if (res.data.status) {
-          categories.value = res.data.data;
-          is_alert.value = false;
-          useToast(res.data.message, "success");
+          if (res.data.data.cart_items && res.data.data.cart_items.length > 0) {
+            useToast("Item Removed From Cart.", "success");
+            cartDetail.value = res.data.data;
+          } else {
+            useToast(res.data.message, "danger");
+            router.push({ name: "Menu Items" });
+          }
         } else {
           useToast(res.data.message, "danger");
         }
@@ -92,22 +129,18 @@ export default {
     };
 
     onMounted(() => {
-      // store.dispatch("categories/getCategories").then((res) => {
-      //   if (res.data.status) {
-      //     categories.value = res.data.data;
-      //   } else {
-      //     useToast(res.data.message, "danger");
-      //   }
-      // });
+      store.dispatch("cart/getCartDetail").then((res) => {
+        if (res.data.status) {
+          cartDetail.value = res.data.data;
+        } else {
+          useToast(res.data.message, "danger");
+        }
+      });
     });
 
     return {
-      is_alert,
-      openAlert,
-      confirmAlert,
-      item_id,
-      categories,
-      deleteCategory,
+      cartDetail,
+      removeCartItem,
     };
   },
 };

@@ -43,7 +43,8 @@ library.add(
   faPlus,
   faShoppingCart,
   faSpinner,
-  faTimesCircle
+  faTimesCircle,
+  faTimes
 );
 
 const app = createApp(App);

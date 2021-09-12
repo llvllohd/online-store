@@ -14,8 +14,9 @@
         ></div>
       </div>
 
-      <div class="flex items-center justify-end" @click.prevent="$router.push({ name: 'Cart' })">
+      <div class="flex items-center justify-end" @click.prevent="gotoCart()">
         <fa :icon="['fa', 'shopping-cart']" class="text-3xl text-white"> </fa>
+        <span class="text-xs font-bold border rounded-full px-2 py-1 bg-white"> {{ totalCartCount }} </span>
       </div>
     </div>
 
@@ -52,9 +53,10 @@
         </router-link>
       </li>
       <li class="nav text-white text-lg font-bold relative p-1">
-        <router-link :to="{ name: 'Cart' }" class="nav-lg">
+        <div :to="{ name: 'Cart' }" class="nav-lg" @click.prevent="gotoCart()">
           <fa :icon="['fa', 'shopping-cart']" class="nav-lg  text-sm"> </fa> Cart
-        </router-link>
+          <span class="text-xs border rounded-full px-1"> {{ totalCartCount }} </span>
+        </div>
       </li>
       <li class="nav text-white text-lg font-bold relative p-1" v-if="!isUserLoggedIn">
         <router-link :to="{ name: 'Login' }" class="nav-lg">
@@ -135,8 +137,6 @@ import { useStore } from "vuex";
 import useToast from "@/hooks/useToast";
 const navigation = [
   { name: "Menu", icon: "home", path: "/", current: true },
-  // { name: "About", icon: "info", path: "about", current: false },
-  // { name: "Settings", icon: "cog", path: "settings", current: false },
   { name: "Categories", icon: "plus", path: "categories", current: false },
   { name: "Products", icon: "plus", path: "products", current: false },
   { name: "Login", icon: "sign-in-alt", path: "login", current: false },
@@ -175,6 +175,8 @@ export default {
       store.dispatch("auth/logout").then((res) => {
         if (res.data.status) {
           useToast(res.data.message, "success");
+          store.commit("cart/setCartDetails");
+          localStorage.removeItem("Fatimas");
           router.push({ name: "Login" });
         } else {
           useToast(res.data.message, "danger");
@@ -182,7 +184,17 @@ export default {
       });
     };
 
+    const gotoCart = () => {
+      if (totalCartCount.value > 0) {
+        router.replace({ name: "Cart" });
+      } else {
+        useToast("No Items In Cart.", "danger");
+      }
+    };
+
     const isUserLoggedIn = computed(() => store.getters["auth/isUserLoggedIn"]);
+
+    const totalCartCount = computed(() => store.getters["cart/cartCount"]);
 
     watch(isUserLoggedIn, (oldValue, newValue) => {
       if (newValue) {
@@ -198,7 +210,17 @@ export default {
       document.removeEventListener("click", clickAway);
     });
 
-    return { isUserLoggedIn, isToggle, toggleMenu, navigation, gotoLinks, selected_nav_name, logout };
+    return {
+      isUserLoggedIn,
+      isToggle,
+      toggleMenu,
+      navigation,
+      gotoLinks,
+      selected_nav_name,
+      logout,
+      totalCartCount,
+      gotoCart,
+    };
   },
 };
 </script>

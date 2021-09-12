@@ -45,7 +45,7 @@
       <div class="mt-3 w-full">
         <button
           class="rounded w-full bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none p-2 font-medium text-base sm:text-lg text-white"
-          @click.prevent="goToItemDetails(item.id)"
+          @click.prevent="addToCart(item_detail)"
         >
           Add to Cart
         </button>
@@ -57,6 +57,8 @@
 <script>
 import "vue3-carousel/dist/carousel.css";
 import { ref } from "vue";
+import { useStore } from "vuex";
+import useToast from "@/hooks/useToast";
 
 export default {
   name: "Menu Items",
@@ -68,17 +70,36 @@ export default {
   },
   components: {},
   setup(props, context) {
+    const store = useStore();
     const item_detail = ref([]);
-
+    const isSubmitting = ref(false);
     item_detail.value = props.selectedItem ? props.selectedItem : [];
 
     const closeItemDetail = () => {
       context.emit("closeItemDetail");
     };
 
+    const addToCart = (item) => {
+      store
+        .dispatch("cart/addToCart", {
+          menu_item_id: item.id,
+          quantity: 1,
+        })
+        .then((res) => {
+          isSubmitting.value = false;
+          if (res.data.status) {
+            useToast("Item Added to Cart.", "success");
+            closeItemDetail();
+          } else {
+            useToast(res.data.message, "danger");
+          }
+        });
+    };
+
     return {
       item_detail,
       closeItemDetail,
+      addToCart,
     };
   },
 };
