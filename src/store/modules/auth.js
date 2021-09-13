@@ -6,15 +6,20 @@ export default {
   namespaced: true,
   state: {
     authData: [],
+    sessionId: "",
   },
   getters: {
     authData: (state) => state.authData,
     token: (state) => (state.authData && state.authData.token ? state.authData.token : ""),
     isUserLoggedIn: (state) => (state.authData && state.authData.token ? true : false),
+    sessionId: (state) => state.sessionId,
   },
   mutations: {
     setAuthData(state, data) {
       state.authData = data;
+    },
+    setSessionId(state, data) {
+      state.sessionId = data;
     },
   },
   actions: {
@@ -59,6 +64,8 @@ export default {
             resolve(response);
             if (response.data.status) {
               commit("setAuthData", response.data.data);
+              let sessionId = `Guest:${new Date().getTime()}`;
+              commit("setSessionId", sessionId);
               if (timer) {
                 clearTimeout(timer);
               }
