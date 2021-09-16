@@ -105,6 +105,24 @@ const routes = [
       requiresAuth: true,
     },
   },
+  {
+    path: "/manage-address",
+    name: "Manage Address",
+    component: () => import(/* webpackChunkName: "Manage Address" */ "@/components/auth/ManageAddress.vue"),
+    meta: {
+      title: "Manage Address" + siteName,
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/add-address",
+    name: "Add Address",
+    component: () => import(/* webpackChunkName: "Add Address" */ "@/components/auth/AddUpdateAddress.vue"),
+    meta: {
+      title: "Add Address" + siteName,
+      requiresAuth: true,
+    },
+  },
 
   {
     path: "/:pathMatch(.*)*",

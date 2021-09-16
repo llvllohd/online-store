@@ -2,14 +2,14 @@
   <section
     class="fixed top-10 left-0 h-full w-full md:w-1/2 flex flex-col items-center justify-center z-10 bg-gray-500 bg-opacity-95"
   >
-    <section class="relative w-4/5 lg:w-3/5 flex flex-col items-center rounded-b bg-white">
+    <section class="relative w-4/5 lg:w-3/5 flex flex-col items-center rounded-b rounded-t bg-white">
       <div class=" w-full absolute flex items-center justify-end" style="top:-30px" @click.prevent="closeItemDetail()">
         <fa :icon="['fa', 'times-circle']" class="text-2xl text-gray-900"> </fa>
       </div>
       <div class="w-full h-60 md:h-80" v-if="true">
         <img
           :src="item_detail.image_file"
-          class="w-full h-full"
+          class="w-full h-full rounded-t"
           alt=""
           v-if="item_detail.image_file && item_detail.image_file.length > 0"
         />

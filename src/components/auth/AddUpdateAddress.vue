@@ -4,59 +4,71 @@
   <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
     <div class="p-3 w-full sm:max-w-md">
       <div class="flex justify-center text-3xl font-bold p-5">
-        {{ categoryId ? "Update Category" : "Add Category" }}
+        {{ addressId ? "Update Address" : "Add Address" }}
       </div>
 
       <form @submit="submitForm" class="shadow-md rounded px-5 p-5">
-        <!-- Name -->
+        <!-- Address -->
         <div class="mb-4">
           <label class="block text-sm font-bold mb-2">
-            Name
+            Address
           </label>
           <input
             type="text"
-            placeholder="Name"
-            @input="name.handleChange"
-            @blur="name.handleBlur"
-            v-model="name.value"
+            placeholder="Address"
+            @input="address.handleChange"
+            @blur="address.handleBlur"
+            v-model="address.value"
             class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            :class="name.meta.touched && !name.meta.valid ? 'border border-red-500' : ''"
+            :class="address.meta.touched && !address.meta.valid ? 'border border-red-500' : ''"
             id="name"
           />
-          <span v-if="name.meta.touched && !name.meta.valid" class="text-red-500 text-xs italic">
-            {{ name.errorMessage || "Field is required" }}
+          <span v-if="address.meta.touched && !address.meta.valid" class="text-red-500 text-xs italic">
+            {{ address.errorMessage || "Field is required" }}
           </span>
         </div>
 
-        <!-- Description -->
+        <!-- House Name -->
         <div class="mb-4">
           <label class="block text-sm font-bold mb-2">
-            Description
+            House Name
           </label>
 
           <input
             type="text"
-            placeholder="Description"
-            @input="description.handleChange"
-            @blur="description.handleBlur"
-            v-model="description.value"
+            placeholder="House Name"
+            @input="house_name.handleChange"
+            @blur="house_name.handleBlur"
+            v-model="house_name.value"
             class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            :class="description.meta.touched && !description.meta.valid ? 'border border-red-500' : ''"
+            :class="house_name.meta.touched && !house_name.meta.valid ? 'border border-red-500' : ''"
           />
-          <span v-if="description.meta.touched && !description.meta.valid" class=" text-red-500 text-xs italic">
-            {{ description.errorMessage || "Field is required" }}
+          <span v-if="house_name.meta.touched && !house_name.meta.valid" class=" text-red-500 text-xs italic">
+            {{ house_name.errorMessage || "Field is required" }}
           </span>
         </div>
 
-        <!-- Is Visible -->
-        <div class="flex mb-4">
-          <label class="flex items-center">
-            <input type="checkbox" v-model="is_visible.value" class="form-checkbox rounded" />
-            <span class="ml-2">Visible</span>
+        <!-- House Name -->
+        <div class="mb-4">
+          <label class="block text-sm font-bold mb-2">
+            Landmark
           </label>
+
+          <input
+            type="text"
+            placeholder="Landmark"
+            @input="landmark.handleChange"
+            @blur="landmark.handleBlur"
+            v-model="landmark.value"
+            class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+            :class="landmark.meta.touched && !landmark.meta.valid ? 'border border-red-500' : ''"
+          />
+          <span v-if="landmark.meta.touched && !landmark.meta.valid" class=" text-red-500 text-xs italic">
+            {{ landmark.errorMessage || "Field is required" }}
+          </span>
         </div>
 
-        <!-- Add Category -->
+        <!-- Add Address -->
         <div class="flex items-center">
           <button
             :disabled="isSubmitting ? true : false"
@@ -68,7 +80,7 @@
             ]"
           >
             <fa :icon="['fa', 'circle-notch']" class="text-white text-xs animate-spin mr-2" v-if="isSubmitting"> </fa>
-            {{ categoryId ? "Update" : "ADD" }}
+            {{ addressId ? "Update" : "ADD" }}
           </button>
         </div>
       </form>
@@ -102,31 +114,31 @@ export default {
     const route = useRoute();
     const isSubmitting = ref(false);
     const { meta: formMeta, handleSubmit } = useForm();
-    const name = reactive(useField("name", "required"));
-    const description = reactive(useField("description", "required"));
-    const is_visible = reactive(useField("is_visible", "", { initialValue: true }));
+    const address = reactive(useField("address", "required"));
+    const house_name = reactive(useField("house_name", "required"));
+    const landmark = reactive(useField("landmark", "required"));
 
-    const categoryId = computed(() => route.query.categoryId);
+    const addressId = computed(() => route.query.addressId);
 
     const submitForm = handleSubmit((formValues) => {
       isSubmitting.value = true;
-      if (categoryId.value) {
-        formValues.category_id = categoryId.value;
-        store.dispatch("categories/updateCategory", formValues).then((res) => {
+      if (addressId.value) {
+        formValues.address_id = addressId.value;
+        store.dispatch("address/updateAddress", formValues).then((res) => {
           isSubmitting.value = false;
           if (res.data.status) {
             useToast(res.data.message, "success");
-            router.push({ name: "Categories" });
+            router.push({ name: "Manage Address" });
           } else {
             useToast(res.data.message, "danger");
           }
         });
       } else {
-        store.dispatch("categories/addCategory", formValues).then((res) => {
+        store.dispatch("address/addAddress", formValues).then((res) => {
           isSubmitting.value = false;
           if (res.data.status) {
             useToast(res.data.message, "success");
-            router.push({ name: "Categories" });
+            router.push({ name: "Manage Address" });
           } else {
             useToast(res.data.message, "danger");
           }
@@ -135,29 +147,29 @@ export default {
     });
 
     onMounted(() => {
-      if (categoryId.value) {
-        store.dispatch("categories/getCategoryById", categoryId.value).then((res) => {
+      if (addressId.value) {
+        store.dispatch("address/getAddressById", addressId.value).then((res) => {
           if (res.data.status) {
-            name.value = res.data.data.name;
-            description.value = res.data.data.description;
-            is_visible.value = res.data.data.is_visible == 1 ? true : false;
+            address.value = res.data.data.address;
+            house_name.value = res.data.data.house_name;
+            landmark.value = res.data.data.landmark;
           } else {
-            name.value = "";
-            description.value = "";
-            is_visible.value = true;
+            address.value = "";
+            house_name.value = "";
+            landmark.value = "";
           }
         });
       }
     });
 
     return {
-      isSubmitting,
-      name,
-      description,
-      is_visible,
-      categoryId,
       formMeta,
+      isSubmitting,
       submitForm,
+      address,
+      house_name,
+      landmark,
+      addressId,
     };
   },
 };

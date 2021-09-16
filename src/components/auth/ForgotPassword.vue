@@ -19,7 +19,7 @@
             @input="emailField.handleChange"
             @blur="emailField.handleBlur"
             v-model="emailField.value"
-            class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+            class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
             :class="emailField.meta.touched && !emailField.meta.valid ? 'border border-red-500' : ''"
           />
           <span v-if="emailField.meta.touched && !emailField.meta.valid" class=" text-red-500 text-xs italic">

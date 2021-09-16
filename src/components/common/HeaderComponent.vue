@@ -1,8 +1,8 @@
 <template>
   <!-- Header -->
-  <nav class="w-full h-16 fixed top-0 bg-gray-900 flex flex-row items-center px-3 z-50" id="header">
+  <nav class="w-full h-16 fixed top-0 bg-gray-900 flex flex-row items-center z-50" id="header">
     <!-- Mobile Header -->
-    <div class="flex md:hidden items-center justify-between w-full">
+    <div class="w-full flex md:hidden items-center justify-between mx-3">
       <!-- Hamburger -->
       <div
         class="relative w-10 h-10 ring-1 ring-white rounded cursor-pointer flex items-center justify-center transition duration-500 ease-in-out"
@@ -20,36 +20,21 @@
       </div>
     </div>
 
-    <div class="w-2/5 h-full hidden md:flex">
+    <div class="w-1/3 h-full hidden md:flex">
       <!-- Image -->
-      <div class="flex mx-5">
-        <img
-          class="rounded-full h-14 w-14 mx-auto my-auto"
-          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-          alt=""
-        />
+      <div class="flex mx-3">
+        <img class="rounded-full h-11 w-11 mx-auto my-auto" src="@/assets/images/user.jpg" alt="" />
       </div>
       <!-- Name -->
-      <div class="flex mx-5">
-        <h5 class="text-white text-lg font-bold my-auto">Fatimas</h5>
+      <div class="flex mx-3">
+        <h5 class="text-white text-xl font-bold my-auto font-roboto tracking-wide ">Fatimas</h5>
       </div>
     </div>
     <!-- Nav Items -->
-    <ul class="w-3/5 h-full hidden md:flex flex-row justify-start items-center space-x-5 md:space-x-10 cursor-pointer">
+    <ul class="w-1/3 h-full hidden md:flex items-center justify-center space-x-5 md:space-x-10 cursor-pointer">
       <li class="nav text-white text-lg font-bold relative p-1">
         <router-link :to="{ name: 'Menu Items' }" class="nav-lg">
           Menu
-        </router-link>
-      </li>
-
-      <li class="nav text-white text-lg font-bold relative p-1" v-if="isUserLoggedIn">
-        <router-link :to="{ name: 'Categories' }" class="nav-lg">
-          Categories
-        </router-link>
-      </li>
-      <li class="nav text-white text-lg font-bold relative p-1" v-if="isUserLoggedIn">
-        <router-link :to="{ name: 'Products' }" class="nav-lg">
-          Products
         </router-link>
       </li>
       <li class="nav text-white text-lg font-bold relative p-1">
@@ -58,17 +43,63 @@
           <span class="text-xs border rounded-full px-1"> {{ totalCartCount }} </span>
         </div>
       </li>
-      <li class="nav text-white text-lg font-bold relative p-1" v-if="!isUserLoggedIn">
-        <router-link :to="{ name: 'Login' }" class="nav-lg">
-          Login
-        </router-link>
-      </li>
-      <li class="nav text-white text-lg font-bold relative p-1" v-if="isUserLoggedIn">
-        <div class="nav-lg" @click.prevent="logout">
-          Logout
-        </div>
-      </li>
     </ul>
+
+    <!-- User Image -->
+    <div class="w-1/3 h-full hidden md:flex items-center justify-end">
+      <div class="side-mini-card flex items-center cursor-pointer p-3" @click.stop="openSideMiniCard()">
+        <img class="rounded-full h-11 w-11 mx-2 my-auto" src="@/assets/images/user.jpg" alt="" />
+        <fa :icon="['fa', 'caret-down']" class="text-white text-sm"> </fa>
+      </div>
+      <ul class="absolute top-16 pt-1 right-1 w-36 text-sm font-medium cursor-pointer" v-if="isSideMiniCard">
+        <li v-if="isUserLoggedIn">
+          <div class="dropdown rounded-t border-b bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap">
+            Edit Profile
+          </div>
+        </li>
+        <li v-if="isUserLoggedIn">
+          <router-link
+            :to="{ name: 'Manage Address' }"
+            class="dropdown border-b bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
+          >
+            Manage Address
+          </router-link>
+        </li>
+        <li v-if="isUserLoggedIn">
+          <router-link
+            :to="{ name: 'Categories' }"
+            class="dropdown border-b bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
+          >
+            Categories
+          </router-link>
+        </li>
+        <li v-if="isUserLoggedIn">
+          <router-link
+            :to="{ name: 'Products' }"
+            class="dropdown border-b bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
+          >
+            Products
+          </router-link>
+        </li>
+
+        <li v-if="!isUserLoggedIn">
+          <router-link
+            :to="{ name: 'Login' }"
+            class="dropdown rounded-b rounded-t bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
+          >
+            Login
+          </router-link>
+        </li>
+        <li v-if="isUserLoggedIn">
+          <div
+            class="dropdown rounded-b rounded-t bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
+            @click.prevent="logout"
+          >
+            Logout
+          </div>
+        </li>
+      </ul>
+    </div>
   </nav>
 
   <!-- Sidebar -->
@@ -76,15 +107,11 @@
     enter-active-class="animate__animated animate__slideInLeft"
     leave-active-class="animate__animated animate__slideOutLeft"
   >
-    <div v-if="isToggle" class="side-menu sidebar-custom-height bg-gray-900 w-3/6 sm:w-1/3 fixed md:hidden z-50">
+    <div v-if="isToggle" class="side-menu sidebar-custom-height bg-gray-900 w-4/6 sm:w-1/3 fixed md:hidden z-50">
       <div class="h-40 flex flex-col items-center justify-center space-y-2">
         <!-- Image -->
         <div class="side-menu w-20 h-20">
-          <img
-            class="rounded-full mx-auto my-auto"
-            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            alt=""
-          />
+          <img class="rounded-full mx-auto my-auto" src="@/assets/images/user.jpg" alt="" />
         </div>
         <!-- Name -->
         <div class="side-menu title relative flex">
@@ -93,13 +120,14 @@
       </div>
 
       <!-- Nav Items -->
-      <ul class="w-full h-full flex flex-col justify-start items-center mt-10">
-        <li v-for="item in navigation" :key="item.name" class="nav text-white font-bold flex w-full items-center justify-center">
+      <ul class="w-full h-full flex flex-col items-center justify-start mt-10">
+        <li v-for="item in navigation" :key="item.name" class="nav text-white flex w-full items-center justify-center">
           <router-link
             exact
             :to="item.path"
             @click="gotoLinks(item)"
-            class="w-full p-2 flex items-center justify-center"
+            class="w-full p-2 flex items-center justify-center border-b"
+            :class="item.name == 'Menu' ? 'border-t' : ''"
             v-if="
               (isUserLoggedIn && item.name != 'Login') ||
                 (!isUserLoggedIn &&
@@ -110,16 +138,17 @@
                   item.name != 'Products')
             "
           >
-            <div class="flex items-center justify-center w-1/4">
-              <span>
+            <div class="flex items-center w-1/6">
+              <!-- <span>
                 <fa-layer class="text-xl">
                   <fa :icon="['fa', 'circle']"> </fa>
                   <fa :icon="['fa', item.icon]" class="text-gray-900 text-xs" transform="shrink-0"> </fa>
                 </fa-layer>
-              </span>
+              </span> -->
             </div>
-            <div class="flex items-center w-2/4">
-              <span class="text-lg">
+            <div class="flex items-center w-3/6">
+              <span class="text-sm font-bold">
+                <span> </span>
                 {{ item.name }}
               </span>
             </div>
@@ -137,6 +166,8 @@ import { useStore } from "vuex";
 import useToast from "@/hooks/useToast";
 const navigation = [
   { name: "Menu", icon: "home", path: "/", current: true },
+  { name: "Edit Profile", icon: "home", path: "/edit-profile", current: false },
+  { name: "Manage Address", icon: "home", path: "/manage-address", current: false },
   { name: "Categories", icon: "plus", path: "categories", current: false },
   { name: "Products", icon: "plus", path: "products", current: false },
   { name: "Login", icon: "sign-in-alt", path: "login", current: false },
@@ -149,6 +180,7 @@ export default {
     const router = useRouter();
     const store = useStore();
     let isToggle = ref(false);
+    let isSideMiniCard = ref(false);
     let selected_nav_name = ref("");
 
     let toggleMenu = () => {
@@ -163,12 +195,19 @@ export default {
       if (!el.target.parentElement.classList.contains("side-menu") && !el.target.classList.contains("side-menu")) {
         isToggle.value = false;
       }
+      if (!el.target.parentElement.classList.contains("side-mini-card") && !el.target.classList.contains("side-mini-card")) {
+        isSideMiniCard.value = false;
+      }
     };
 
     let gotoLinks = (item) => {
       isToggle.value = false;
       router.push(item.path);
       selected_nav_name.value = item.name;
+    };
+
+    let openSideMiniCard = () => {
+      isSideMiniCard.value = !isSideMiniCard.value;
     };
 
     const logout = () => {
@@ -220,6 +259,8 @@ export default {
       logout,
       totalCartCount,
       gotoCart,
+      isSideMiniCard,
+      openSideMiniCard,
     };
   },
 };
@@ -233,6 +274,12 @@ export default {
 
 .router-link-active {
   color: #ffb400;
+}
+
+.router-link-active.dropdown {
+  color: var(--primary);
+  background-color: #111827;
+  /* border-bottom-color: var(--primary); */
 }
 
 .nav-lg.router-link-active::before {

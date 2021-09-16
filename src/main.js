@@ -17,6 +17,7 @@ import {
   faShoppingCart,
   faSpinner,
   faTimesCircle,
+  faCaretDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import App from "./App.vue";
@@ -44,7 +45,8 @@ library.add(
   faShoppingCart,
   faSpinner,
   faTimesCircle,
-  faTimes
+  faTimes,
+  faCaretDown
 );
 
 const app = createApp(App);

@@ -6,10 +6,12 @@ export default {
   namespaced: true,
   state: {
     authData: [],
+    addressData: [],
     sessionId: "",
   },
   getters: {
     authData: (state) => state.authData,
+    addressData: (state) => state.addressData,
     token: (state) => (state.authData && state.authData.token ? state.authData.token : ""),
     isUserLoggedIn: (state) => (state.authData && state.authData.token ? true : false),
     sessionId: (state) => state.sessionId,
@@ -17,6 +19,9 @@ export default {
   mutations: {
     setAuthData(state, data) {
       state.authData = data;
+    },
+    setaddressData(state, data) {
+      state.addressData = data;
     },
     setSessionId(state, data) {
       state.sessionId = data;
@@ -101,6 +106,36 @@ export default {
                 dispatch("logout");
               }, expirationTime);
               commit("setAuthData", response.data.data);
+            }
+          })
+          .catch((e) => {
+            reject(e);
+          });
+      });
+    },
+
+    // Address Crud
+    addAddress({ commit }, params) {
+      return new Promise((resolve, reject) => {
+        HTTP.post(`${process.env.VUE_APP_API_URL}address`, params)
+          .then((response) => {
+            resolve(response);
+            if (response.data.status) {
+              commit("addressData", response.data.data);
+            }
+          })
+          .catch((e) => {
+            reject(e);
+          });
+      });
+    },
+    updateAddress({ commit }, params) {
+      return new Promise((resolve, reject) => {
+        HTTP.put(`${process.env.VUE_APP_API_URL}address`, params)
+          .then((response) => {
+            resolve(response);
+            if (response.data.status) {
+              commit("addressData", response.data.data);
             }
           })
           .catch((e) => {

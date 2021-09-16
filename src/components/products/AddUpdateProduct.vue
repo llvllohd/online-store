@@ -19,7 +19,7 @@
             @input="name.handleChange"
             @blur="name.handleBlur"
             v-model="name.value"
-            class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+            class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
             :class="name.meta.touched && !name.meta.valid ? 'border border-red-500' : ''"
             id="name"
           />
@@ -39,7 +39,7 @@
             @input="description.handleChange"
             @blur="description.handleBlur"
             v-model="description.value"
-            class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+            class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
             :class="description.meta.touched && !description.meta.valid ? 'border border-red-500' : ''"
           />
           <span v-if="description.meta.touched && !description.meta.valid" class=" text-red-500 text-xs italic">
@@ -95,7 +95,7 @@
             @input="price.handleChange"
             @blur="price.handleBlur"
             v-model="price.value"
-            class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+            class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
             :class="price.meta.touched && !price.meta.valid ? 'border border-red-500' : ''"
             id="name"
           />
@@ -124,7 +124,7 @@
             @input="offer_price.handleChange"
             @blur="offer_price.handleBlur"
             v-model="offer_price.value"
-            class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+            class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
             :class="offer_price.meta.touched && !offer_price.meta.valid ? 'border border-red-500' : ''"
             id="name"
           />
