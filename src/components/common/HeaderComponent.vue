@@ -107,7 +107,7 @@
     enter-active-class="animate__animated animate__slideInLeft"
     leave-active-class="animate__animated animate__slideOutLeft"
   >
-    <div v-if="isToggle" class="side-menu sidebar-custom-height bg-gray-900 w-4/6 sm:w-1/3 fixed md:hidden z-50">
+    <div v-if="isToggle" class="side-menu sidebar-custom-height bg-gray-900 w-3/6 sm:w-1/3 fixed md:hidden z-50">
       <div class="h-40 flex flex-col items-center justify-center space-y-2">
         <!-- Image -->
         <div class="side-menu w-20 h-20">
@@ -138,15 +138,15 @@
                   item.name != 'Products')
             "
           >
-            <div class="flex items-center w-1/6">
-              <!-- <span>
+            <div class="flex items-center  mr-3">
+              <span>
                 <fa-layer class="text-xl">
                   <fa :icon="['fa', 'circle']"> </fa>
-                  <fa :icon="['fa', item.icon]" class="text-gray-900 text-xs" transform="shrink-0"> </fa>
+                  <fa :icon="['fas', item.icon]" class="text-gray-900 text-xs" transform="shrink-0"> </fa>
                 </fa-layer>
-              </span> -->
+              </span>
             </div>
-            <div class="flex items-center w-3/6">
+            <div class="flex items-center w-5/6">
               <span class="text-sm font-bold">
                 <span> </span>
                 {{ item.name }}
@@ -166,10 +166,10 @@ import { useStore } from "vuex";
 import useToast from "@/hooks/useToast";
 const navigation = [
   { name: "Menu", icon: "home", path: "/", current: true },
-  { name: "Edit Profile", icon: "home", path: "/edit-profile", current: false },
-  { name: "Manage Address", icon: "home", path: "/manage-address", current: false },
-  { name: "Categories", icon: "plus", path: "categories", current: false },
-  { name: "Products", icon: "plus", path: "products", current: false },
+  { name: "Edit Profile", icon: "pencil-alt", path: "/edit-profile", current: false },
+  { name: "Manage Address", icon: "cog", path: "/manage-address", current: false },
+  { name: "Categories", icon: "shopping-bag", path: "categories", current: false },
+  { name: "Products", icon: "shopping-basket", path: "products", current: false },
   { name: "Login", icon: "sign-in-alt", path: "login", current: false },
   { name: "Logout", icon: "sign-out-alt", path: "login", current: false },
 ];
