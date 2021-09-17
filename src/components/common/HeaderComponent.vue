@@ -129,13 +129,13 @@
             class="w-full p-2 flex items-center justify-center border-b"
             :class="item.name == 'Menu' ? 'border-t' : ''"
             v-if="
-              (isUserLoggedIn && item.name != 'Login') ||
-                (!isUserLoggedIn &&
-                  item.name != 'Logout' &&
-                  !isUserLoggedIn &&
-                  item.name != 'Categories' &&
-                  !isUserLoggedIn &&
-                  item.name != 'Products')
+              (isUserLoggedIn && item.name == 'Edit Profile') ||
+                (isUserLoggedIn && item.name == 'Manage Address') ||
+                (isUserLoggedIn && item.name == 'Categories') ||
+                (isUserLoggedIn && item.name == 'Products') ||
+                (isUserLoggedIn && item.name == 'Logout') ||
+                (!isUserLoggedIn && item.name == 'Menu') ||
+                (!isUserLoggedIn && item.name == 'Login')
             "
           >
             <div class="flex items-center  mr-3">
@@ -202,8 +202,12 @@ export default {
 
     let gotoLinks = (item) => {
       isToggle.value = false;
-      router.push(item.path);
-      selected_nav_name.value = item.name;
+      if (item.name == "Logout") {
+        logout();
+      } else {
+        router.push(item.path);
+        selected_nav_name.value = item.name;
+      }
     };
 
     let openSideMiniCard = () => {
