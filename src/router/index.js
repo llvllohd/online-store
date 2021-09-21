@@ -66,6 +66,31 @@ const routes = [
       title: "Cart" + siteName,
       requiresAuth: false,
     },
+    beforeEnter: (to, from, next) => {
+      let cartCount = store.getters["cart/cartCount"];
+      if (cartCount > 0) {
+        next();
+      } else {
+        next({ name: "Menu Items" });
+      }
+    },
+  },
+  {
+    path: "/checkout",
+    name: "Checkout",
+    component: () => import(/* webpackChunkName: "Checkout" */ "@/components/checkout/CheckoutScreen.vue"),
+    meta: {
+      title: "Checkout" + siteName,
+      requiresAuth: false,
+    },
+    beforeEnter: (to, from, next) => {
+      let cartCount = store.getters["cart/cartCount"];
+      if (cartCount > 0) {
+        next();
+      } else {
+        next({ name: "Menu Items" });
+      }
+    },
   },
   // Categories
   {

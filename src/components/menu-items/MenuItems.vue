@@ -2,7 +2,7 @@
   <header-component></header-component>
   <!-- LHS -->
   <section
-    class="top min-h-no-header w-full md:w-1/2 flex flex-col items-center"
+    class="top min-h-no-header w-full md:w-1/2 flex flex-col items-center mb-10"
     v-if="categories.value && categories.value.length > 0"
   >
     <template class="flex flex-col w-full">
@@ -104,9 +104,10 @@
     <div class="text-medium sm:text-lg font-medium">Please Add Products.</div>
   </section>
 
+  <!-- Floating Button -->
+  <floating-button :floatingButtonText="'Review Order'" :isLink="true" :link="'Checkout'"></floating-button>
   <!-- Menu Detail -->
   <item-detail :selectedItem="selected_item" @closeItemDetail="closeItemDetail" v-if="is_item_detail"></item-detail>
-
   <!-- RHS -->
   <section>
     <right-hand-side></right-hand-side>
@@ -117,6 +118,7 @@
 import HeaderComponent from "@/components/common//HeaderComponent.vue";
 import ItemDetail from "@/components/menu-items/ItemDetails.vue";
 import RightHandSide from "@/components/common/RightHandSide";
+import FloatingButton from "@/components/common/FloatingButton";
 import backgroundImage from "@/assets/images/crochet-background.jpg";
 import "vue3-carousel/dist/carousel.css";
 import useToast from "@/hooks/useToast";
@@ -131,6 +133,7 @@ export default {
     HeaderComponent,
     ItemDetail,
     RightHandSide,
+    FloatingButton,
     Carousel,
     Slide,
   },
@@ -203,6 +206,7 @@ export default {
       store.dispatch("menuItems/getMenuItems").then((res) => {
         if (res.data.status) {
           categories.value = res.data.data.categories;
+          store.commit("cart/setCartDetails", res.data.data.cart);
         } else {
           useToast(res.data.message, "danger");
         }

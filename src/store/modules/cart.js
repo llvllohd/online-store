@@ -12,6 +12,7 @@ export default {
       state.cartDetails && state.cartDetails.cart_items && state.cartDetails.cart_items.length > 0
         ? state.cartDetails.cart_items.length
         : 0,
+    totalAmount: (state) => (state.cartDetails && state.cartDetails.total_amount ? state.cartDetails.total_amount : 0),
   },
   mutations: {
     setCartDetails(state, data) {

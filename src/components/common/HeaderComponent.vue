@@ -192,10 +192,18 @@ export default {
     };
 
     let clickAway = (el) => {
-      if (!el.target.parentElement.classList.contains("side-menu") && !el.target.classList.contains("side-menu")) {
+      if (
+        el.target.parentElement &&
+        !el.target.parentElement.classList.contains("side-menu") &&
+        !el.target.classList.contains("side-menu")
+      ) {
         isToggle.value = false;
       }
-      if (!el.target.parentElement.classList.contains("side-mini-card") && !el.target.classList.contains("side-mini-card")) {
+      if (
+        el.target.parentElement &&
+        !el.target.parentElement.classList.contains("side-mini-card") &&
+        !el.target.classList.contains("side-mini-card")
+      ) {
         isSideMiniCard.value = false;
       }
     };

@@ -1,5 +1,5 @@
 import { defineRule } from "vee-validate";
-import { required, email, min, max } from "@vee-validate/rules";
+import { required, email, min, max, numeric } from "@vee-validate/rules";
 
 defineRule("required", (value) => {
   if (required(value)) {
@@ -14,6 +14,19 @@ defineRule("email", (value) => {
       return true;
     }
     return "A valid email address is required";
+  } else {
+    return "Field is Required";
+  }
+});
+
+defineRule("phone", (value) => {
+  if (value) {
+    if (required(value) && numeric(value) && min(value, { length: 10 }) && max(value, { length: 10 })) {
+      return true;
+    }
+    return "Invalid Phone Number";
+  } else {
+    return "Field is Required";
   }
 });
 

@@ -89,6 +89,8 @@
       </div>
     </div>
   </section>
+  <!-- Floating Button -->
+  <floating-button :floatingButtonText="'Checkout'" :isLink="true" :link="'Checkout'"></floating-button>
   <!-- RHS -->
   <section>
     <right-hand-side></right-hand-side>
@@ -98,6 +100,7 @@
 <script>
 import HeaderComponent from "@/components/common/HeaderComponent.vue";
 import RightHandSide from "@/components/common/RightHandSide";
+import FloatingButton from "@/components/common/FloatingButton";
 import useToast from "@/hooks/useToast";
 import { onMounted, ref } from "vue";
 import { useStore } from "vuex";
@@ -105,7 +108,7 @@ import { useRouter } from "vue-router";
 
 export default {
   name: "Cart",
-  components: { HeaderComponent, RightHandSide },
+  components: { HeaderComponent, RightHandSide, FloatingButton },
 
   setup() {
     const router = useRouter();
