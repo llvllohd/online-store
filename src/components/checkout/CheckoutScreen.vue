@@ -34,16 +34,19 @@
             </div>
             <!-- Phone-->
             <div class="w-full md:w-1/2 mb-1 md:mb-0">
-              <input
-                type="text"
-                placeholder="Phone"
-                @input="phone.handleChange"
-                @blur="phone.handleBlur"
-                v-model="phone.value"
-                class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                :class="phone.meta.touched && !phone.meta.valid ? 'border border-red-500' : ''"
-                id="name"
-              />
+              <div class="flex items-center relative">
+                <div class="absolute left-2 border-r border-gray-500 pr-2">+91</div>
+                <input
+                  type="text"
+                  placeholder="Phone Number"
+                  @input="phone.handleChange"
+                  @blur="phone.handleBlur"
+                  v-model="phone.value"
+                  class="pl-14 shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                  :class="phone.meta.touched && !phone.meta.valid ? 'border border-red-500' : ''"
+                  id="name"
+                />
+              </div>
               <span
                 class="text-red-500 text-xs italic"
                 :class="phone.meta.touched && !phone.meta.valid ? 'opacity-1' : 'opacity-0'"
@@ -217,13 +220,14 @@ import { computed, onMounted, reactive, ref } from "vue";
 import { useStore } from "vuex";
 // import { useRouter } from "vue-router";
 import { useField, useForm } from "vee-validate";
+import { useRouter } from "vue-router";
 
 export default {
   name: "Checkout",
   components: { HeaderComponent, RightHandSide, FloatingButton },
 
   setup() {
-    // const router = useRouter();
+    const router = useRouter();
     const store = useStore();
     const checkout_detail = ref([]);
     const user_addresses = ref([]);
@@ -260,13 +264,13 @@ export default {
     }
 
     const submitForm = handleSubmit((formValues) => {
-      console.log("pass");
       isSubmitting.value = true;
       store.dispatch("checkout/createOrder", formValues).then((res) => {
         isSubmitting.value = false;
         if (res.data.status) {
           useToast(res.data.message, "success");
-          // router.push({ name: "Menu Items" });
+          store.commit("cart/setCartDetails", "");
+          router.push({ name: "Confirmation", query: { orderId: res.data.data.id } });
         } else {
           useToast(res.data.message, "danger");
         }
@@ -290,9 +294,10 @@ export default {
       store.dispatch("checkout/getCheckoutDetail").then((res) => {
         if (res.data.status) {
           checkout_detail.value = res.data.data;
+          let cart = res.data.data && res.data.data.cart ? res.data.data.cart : [];
+          user_name.value = cart && cart.user_name ? cart.user_name : "";
+          email.value = cart && cart.user_email ? cart.user_email : "";
           user_addresses.value = res.data.data && res.data.data.user_addresses ? res.data.data.user_addresses : [];
-          user_name.value =
-            res.data.data && res.data.data.cart && res.data.data.cart.user_name ? res.data.data.cart.user_name : "";
         } else {
           useToast(res.data.message, "danger");
         }

@@ -92,6 +92,15 @@ const routes = [
       }
     },
   },
+  {
+    path: "/confirmation",
+    name: "Confirmation",
+    component: () => import(/* webpackChunkName: "Confirmation" */ "@/components/orders/ConfirmationScreen.vue"),
+    meta: {
+      title: "Confirmation" + siteName,
+      requiresAuth: false,
+    },
+  },
   // Categories
   {
     path: "/categories",

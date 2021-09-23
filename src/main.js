@@ -21,6 +21,7 @@ import {
   faPencilAlt,
   faShoppingBasket,
   faShoppingBag,
+  faCheck,
   
 } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp, faInstagram } from "@fortawesome/free-brands-svg-icons";
@@ -53,7 +54,8 @@ library.add(
   faCaretDown,
   faPencilAlt,
   faShoppingBasket,
-  faShoppingBag
+  faShoppingBag,
+  faCheck
   
 );
 

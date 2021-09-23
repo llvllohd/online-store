@@ -192,10 +192,10 @@ export default {
     let onScroll = () => {
       let carousel = document.getElementById("carousel");
       let section = document.getElementById("section");
-      if (carousel.getBoundingClientRect().top < 80) {
+      if (carousel && carousel.getBoundingClientRect().top < 80) {
         isFixed.value = true;
       }
-      if (section.getBoundingClientRect().top > 150) {
+      if (section && section.getBoundingClientRect().top > 150) {
         isFixed.value = false;
       }
     };

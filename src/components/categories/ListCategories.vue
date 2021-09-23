@@ -32,7 +32,7 @@
               <td class="border border-gray-400 p-2">{{ category.description }}</td>
               <td class="border border-gray-400 p-2">{{ category.is_visible == 1 ? "Yes" : "No" }}</td>
               <td class="text-center border border-gray-400 p-2">
-                <div class="r cursor-pointer">
+                <div class="cursor-pointer">
                   <router-link :to="{ name: 'Add Category', query: { categoryId: category.id } }">
                     <fa :icon="['fa', 'edit']" class="text-gray-900 text-sm mr-2"> </fa>
                   </router-link>

@@ -10,6 +10,7 @@ import products from "@/store/modules/products.js";
 import menuItems from "@/store/modules/menuItems.js";
 import cart from "@/store/modules/cart.js";
 import checkout from "@/store/modules/checkout.js";
+import orders from "@/store/modules/orders.js";
 
 const vuexPersist = new VuexPersist({
   key: "Fatimas",
@@ -27,6 +28,7 @@ const store = createStore({
     menuItems,
     cart,
     checkout,
+    orders,
   },
 });
 
