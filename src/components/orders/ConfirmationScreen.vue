@@ -1,8 +1,8 @@
 <template>
   <header-component></header-component>
   <!-- LHS -->
-  <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-center">
-    <div class="w-full md:w-2/3">
+  <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-center p-3 sm:p-0">
+    <div class="w-full md:w-2/3 shadow">
       <div class="flex flex-col items-center justify-center text-3xl font-bold p-3">
         <div class="flex items-center  justify-center border rounded-full w-12 h-12 md:w-16 md:h-16">
           <fa :icon="['fa', 'check']" class="text-2xl md:text-4xl"> </fa>
@@ -63,6 +63,22 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="w-full md:w-2/3 flex items-center justify-between mt-3">
+      <router-link
+        :to="{ name: 'Menu Items' }"
+        class="flex items-center justify-center w-full bg-gray-900 hover:bg-gray-800 text-white font-bold mr-1 py-2 px-4
+        rounded focus:outline-none focus:shadow-outline text-sm sm:text-base"
+      >
+        Go To Menu
+      </router-link>
+      <router-link
+        :to="{ name: 'Menu Items' }"
+        class="flex items-center justify-center w-full bg-gray-900 hover:bg-gray-800 text-white font-bold mr-1 py-2 px-4 
+        rounded focus:outline-none focus:shadow-outline text-sm sm:text-base"
+      >
+        Order Detail
+      </router-link>
     </div>
   </section>
   <!-- RHS -->

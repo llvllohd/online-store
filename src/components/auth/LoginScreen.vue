@@ -62,15 +62,13 @@
             Login
           </button>
         </div>
+        <div class="flex justify-end p-3">
+          <router-link :to="{ name: 'Forgot Password' }" class="text-xs sm:text-sm font-bold  text-blue-500 hover:text-blue-800 ">
+            Forgot Password?
+          </router-link>
+        </div>
 
-        <router-link
-          :to="{ name: 'Forgot Password' }"
-          class="text-xs sm:text-sm font-bold  text-blue-500 hover:text-blue-800 flex justify-end p-2"
-        >
-          Forgot Password?
-        </router-link>
-
-        <div class="text-xs sm:text-sm font-bold flex justify-center p-3">
+        <div class="text-xs sm:text-sm font-bold flex justify-center">
           Dont't Have An Account?
           <router-link :to="{ name: 'Register' }" class="ml-2 text-blue-500 hover:text-blue-800">
             Sign Up

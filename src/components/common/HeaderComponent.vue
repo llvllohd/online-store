@@ -134,7 +134,7 @@
                 (isUserLoggedIn && item.name == 'Categories') ||
                 (isUserLoggedIn && item.name == 'Products') ||
                 (isUserLoggedIn && item.name == 'Logout') ||
-                (!isUserLoggedIn && item.name == 'Menu') ||
+                item.name == 'Menu' ||
                 (!isUserLoggedIn && item.name == 'Login')
             "
           >
