@@ -21,7 +21,6 @@
             v-model="nameField.value"
             class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
             :class="nameField.meta.touched && !nameField.meta.valid ? 'border border-red-500' : ''"
-            id="name"
           />
           <span v-if="nameField.meta.touched && !nameField.meta.valid" class="text-red-500 text-xs italic">
             {{ nameField.errorMessage || "Field is required" }}
@@ -53,14 +52,13 @@
             Password
           </label>
           <input
-            type="text"
+            type="password"
             placeholder="Password"
             @input="passwordField.handleChange"
             @blur="passwordField.handleBlur"
             v-model="passwordField.value"
             class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
             :class="passwordField.meta.touched && !passwordField.meta.valid ? 'border border-red-500' : ''"
-            id="name"
           />
           <span v-if="passwordField.meta.touched && !passwordField.meta.valid" class="text-red-500 text-xs italic">
             {{ passwordField.errorMessage || "Field is required" }}
@@ -72,14 +70,13 @@
             Confirm Password
           </label>
           <input
-            type="text"
+            type="password"
             placeholder="Confirm Password"
             @input="confirmPasswordField.handleChange"
             @blur="confirmPasswordField.handleBlur"
             v-model="confirmPasswordField.value"
             class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
             :class="confirmPasswordField.meta.touched && !confirmPasswordField.meta.valid ? 'border border-red-500' : ''"
-            id="name"
           />
           <span v-if="confirmPasswordField.meta.touched && !confirmPasswordField.meta.valid" class="text-red-500 text-xs italic">
             {{ confirmPasswordField.errorMessage || "Field is required" }}
@@ -147,6 +144,7 @@ export default {
       store
         .dispatch("auth/register", {
           name: formValues.name,
+          type: "user",
           email: formValues.email,
           password: formValues.password,
         })

@@ -13,6 +13,7 @@ export default {
     authData: (state) => state.authData,
     addressData: (state) => state.addressData,
     token: (state) => (state.authData && state.authData.token ? state.authData.token : ""),
+    userType: (state) => (state.authData && state.authData.type ? state.authData.type : ""),
     isUserLoggedIn: (state) => (state.authData && state.authData.token ? true : false),
     sessionId: (state) => state.sessionId,
   },

@@ -73,7 +73,7 @@
         Go To Menu
       </router-link>
       <router-link
-        :to="{ name: 'Menu Items' }"
+        :to="{ name: 'Order Detail', query: { orderId: orderDetail.id } }"
         class="flex items-center justify-center w-full bg-gray-900 hover:bg-gray-800 text-white font-bold mr-1 py-2 px-4 
         rounded focus:outline-none focus:shadow-outline text-sm sm:text-base"
       >

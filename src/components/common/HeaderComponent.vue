@@ -67,13 +67,21 @@
         </li>
         <li v-if="isUserLoggedIn">
           <router-link
+            :to="{ name: 'My Orders' }"
+            class="dropdown border-b bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
+          >
+            My Orders
+          </router-link>
+        </li>
+        <li v-if="isUserLoggedIn && userType == 'admin'">
+          <router-link
             :to="{ name: 'Categories' }"
             class="dropdown border-b bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
           >
             Categories
           </router-link>
         </li>
-        <li v-if="isUserLoggedIn">
+        <li v-if="isUserLoggedIn && userType == 'admin'">
           <router-link
             :to="{ name: 'Products' }"
             class="dropdown border-b bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
@@ -131,8 +139,9 @@
             v-if="
               (isUserLoggedIn && item.name == 'Edit Profile') ||
                 (isUserLoggedIn && item.name == 'Manage Address') ||
-                (isUserLoggedIn && item.name == 'Categories') ||
-                (isUserLoggedIn && item.name == 'Products') ||
+                (isUserLoggedIn && item.name == 'My Orders') ||
+                (isUserLoggedIn && userType == 'admin' && item.name == 'Categories') ||
+                (isUserLoggedIn && userType == 'admin' && item.name == 'Products') ||
                 (isUserLoggedIn && item.name == 'Logout') ||
                 item.name == 'Menu' ||
                 (!isUserLoggedIn && item.name == 'Login')
@@ -168,6 +177,7 @@ const navigation = [
   { name: "Menu", icon: "home", path: "/", current: true },
   { name: "Edit Profile", icon: "pencil-alt", path: "/edit-profile", current: false },
   { name: "Manage Address", icon: "cog", path: "/manage-address", current: false },
+  { name: "My Orders", icon: "shopping-cart", path: "/orders", current: false },
   { name: "Categories", icon: "shopping-bag", path: "categories", current: false },
   { name: "Products", icon: "shopping-basket", path: "products", current: false },
   { name: "Login", icon: "sign-in-alt", path: "login", current: false },
@@ -245,6 +255,8 @@ export default {
 
     const isUserLoggedIn = computed(() => store.getters["auth/isUserLoggedIn"]);
 
+    const userType = computed(() => store.getters["auth/userType"]);
+
     const totalCartCount = computed(() => store.getters["cart/cartCount"]);
 
     watch(isUserLoggedIn, (oldValue, newValue) => {
@@ -263,6 +275,7 @@ export default {
 
     return {
       isUserLoggedIn,
+      userType,
       isToggle,
       toggleMenu,
       navigation,
