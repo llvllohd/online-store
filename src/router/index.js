@@ -58,6 +58,7 @@ const routes = [
       requiresAuth: false,
     },
   },
+
   {
     path: "/cart",
     name: "Cart",
@@ -75,6 +76,7 @@ const routes = [
       }
     },
   },
+
   {
     path: "/checkout",
     name: "Checkout",
@@ -92,6 +94,7 @@ const routes = [
       }
     },
   },
+
   {
     path: "/confirmation",
     name: "Confirmation",
@@ -101,6 +104,27 @@ const routes = [
       requiresAuth: false,
     },
   },
+
+  {
+    path: "/orders",
+    name: "My Orders",
+    component: () => import(/* webpackChunkName: "My Orders" */ "@/components/orders/MyOrders.vue"),
+    meta: {
+      title: "My Orders" + siteName,
+      requiresAuth: true,
+    },
+  },
+
+  {
+    path: "/order-detail",
+    name: "Order Detail",
+    component: () => import(/* webpackChunkName: "Order Detail" */ "@/components/orders/OrderDetail.vue"),
+    meta: {
+      title: "Order Detail" + siteName,
+      requiresAuth: false,
+    },
+  },
+
   // Categories
   {
     path: "/categories",
