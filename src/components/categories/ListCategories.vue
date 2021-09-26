@@ -3,9 +3,19 @@
   <!-- LHS -->
   <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
     <div class="p-1 sm:p-3 w-full">
-      <div class="flex justify-center text-3xl font-bold p-3 mb-3">
-        Categories
-      </div>
+      <!-- Back button & title -->
+      <section class="w-full flex items-center justify-between text-xl sm:text-2xl font-bold p-3 mb-3">
+        <div class="flex items-center w-1/6">
+          <span
+            class="flex items-center justify-center sm:cursor-pointer rounded-full h-7 w-7 sm:h-9 sm:w-9 border hover:border-gray-900"
+            @click.prevent="router.go(-1)"
+          >
+            <fa :icon="['fa', 'arrow-left']" class="text-sm sm:text-lg text-gray-900"> </fa>
+          </span>
+        </div>
+        <div class="flex items-center justify-center w-4/6 ">Categories</div>
+        <div class="w-1/6"></div>
+      </section>
 
       <!-- Add Category -->
       <div class="flex items-center justify-end mb-2">
@@ -66,6 +76,7 @@ import AlertScreen from "@/components/common/AlertScreen.vue";
 import useToast from "@/hooks/useToast";
 import { onMounted, ref } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
   name: "Categories",
@@ -73,6 +84,7 @@ export default {
 
   setup() {
     const store = useStore();
+    const router = useRouter();
     const categories = ref([]);
     const is_alert = ref(false);
     const item_id = ref("");
@@ -111,6 +123,7 @@ export default {
     });
 
     return {
+      router,
       is_alert,
       openAlert,
       confirmAlert,

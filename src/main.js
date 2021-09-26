@@ -23,6 +23,7 @@ import {
   faShoppingBag,
   faCheck,
   faExclamation,
+  faArrowLeft,
   
 } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp, faInstagram } from "@fortawesome/free-brands-svg-icons";
@@ -57,8 +58,8 @@ library.add(
   faShoppingBasket,
   faShoppingBag,
   faCheck,
-  faExclamation
-  
+  faExclamation,
+  faArrowLeft
 );
 
 const app = createApp(App);
