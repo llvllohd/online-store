@@ -6,10 +6,12 @@ export default {
   state: {
     orderDetail: [],
     myOrders: [],
+    orderStatuses: [],
   },
   getters: {
     orderDetail: (state) => state.orderDetail,
     myOrders: (state) => state.myOrders,
+    orderStatuses: (state) => state.orderStatuses,
   },
   mutations: {
     setOrderDetail(state, data) {
@@ -17,6 +19,9 @@ export default {
     },
     setMyOrders(state, data) {
       state.myOrders = data;
+    },
+    setOrderStatuses(state, data) {
+      state.orderStatuses = data;
     },
   },
   actions: {
@@ -34,6 +39,7 @@ export default {
           });
       });
     },
+
     getMyOrders({ commit }) {
       return new Promise((resolve, reject) => {
         HTTP.get(`${process.env.VUE_APP_API_URL}orders`)
@@ -41,6 +47,21 @@ export default {
             resolve(response);
             if (response.data.status) {
               commit("setMyOrders", response.data.data);
+            }
+          })
+          .catch((e) => {
+            reject(e);
+          });
+      });
+    },
+
+    getOrderStatuses({ commit }) {
+      return new Promise((resolve, reject) => {
+        HTTP.get(`${process.env.VUE_APP_API_URL}track-order`)
+          .then((response) => {
+            resolve(response);
+            if (response.data.status) {
+              commit("setOrderStatuses", response.data.data);
             }
           })
           .catch((e) => {

@@ -125,6 +125,16 @@ const routes = [
     },
   },
 
+  {
+    path: "/track-order",
+    name: "Track Order",
+    component: () => import(/* webpackChunkName: "Track Order" */ "@/components/orders/TrackOrder.vue"),
+    meta: {
+      title: "Track Order" + siteName,
+      requiresAuth: false,
+    },
+  },
+
   // Categories
   {
     path: "/categories",

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full md:w-1/2 fixed bottom-0 flex items-center text-sm md:text-base p-3 px-3 rounded-t bg-gray-900 text-white cursor-pointer"
+    class="w-full md:w-1/2 fixed bottom-0 flex items-center text-sm md:text-base p-3 px-3 rounded-t bg-gray-900 text-white sm:cursor-pointer"
     :class="route.name != 'Checkout' ? 'justify-between' : 'justify-center'"
     @click.prevent="gotoSelectedScreen()"
     v-if="totalCartCount > 0"

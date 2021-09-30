@@ -65,6 +65,14 @@
             Manage Address
           </router-link>
         </li>
+        <li>
+          <router-link
+            :to="{ name: 'Track Order' }"
+            class="dropdown border-b bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
+          >
+            Track Order
+          </router-link>
+        </li>
         <li v-if="isUserLoggedIn">
           <router-link
             :to="{ name: 'My Orders' }"
@@ -116,7 +124,7 @@
     leave-active-class="animate__animated animate__slideOutLeft"
   >
     <div v-if="isToggle" class="side-menu sidebar-custom-height bg-gray-900 w-3/6 sm:w-1/3 fixed md:hidden z-50">
-      <div class="h-40 flex flex-col items-center justify-center space-y-2">
+      <div class="h-1/4 flex flex-col items-center justify-center space-y-2">
         <!-- Image -->
         <div class="side-menu w-20 h-20">
           <img class="rounded-full mx-auto my-auto" src="@/assets/images/user.jpg" alt="" />
@@ -128,7 +136,7 @@
       </div>
 
       <!-- Nav Items -->
-      <ul class="w-full h-full flex flex-col items-center justify-start mt-10">
+      <ul class="w-full h-3/4 flex flex-col items-center justify-start mt-10 overflow-y-auto">
         <li v-for="item in navigation" :key="item.name" class="nav text-white flex w-full items-center justify-center">
           <router-link
             exact
@@ -144,6 +152,7 @@
                 (isUserLoggedIn && userType == 'admin' && item.name == 'Products') ||
                 (isUserLoggedIn && item.name == 'Logout') ||
                 item.name == 'Menu' ||
+                item.name == 'Track Order' ||
                 (!isUserLoggedIn && item.name == 'Login')
             "
           >
@@ -177,6 +186,7 @@ const navigation = [
   { name: "Menu", icon: "home", path: "/", current: true },
   { name: "Edit Profile", icon: "pencil-alt", path: "/edit-profile", current: false },
   { name: "Manage Address", icon: "cog", path: "/manage-address", current: false },
+  { name: "Track Order", icon: "globe", path: "/track-order", current: false },
   { name: "My Orders", icon: "shopping-cart", path: "/orders", current: false },
   { name: "Categories", icon: "shopping-bag", path: "categories", current: false },
   { name: "Products", icon: "shopping-basket", path: "products", current: false },
