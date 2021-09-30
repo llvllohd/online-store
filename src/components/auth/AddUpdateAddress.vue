@@ -58,7 +58,7 @@
           </span>
         </div>
 
-        <!-- House Name -->
+        <!-- Land mark -->
         <div class="mb-4">
           <label class="block text-sm font-bold mb-2">
             Landmark

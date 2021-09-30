@@ -53,14 +53,14 @@
       </div>
       <ul class="absolute top-16 pt-1 right-1 w-36 text-sm font-medium cursor-pointer" v-if="isSideMiniCard">
         <li v-if="isUserLoggedIn">
-          <div class="dropdown rounded-t border-b bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap">
+          <div class="dropdown border-b rounded bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap">
             Edit Profile
           </div>
         </li>
         <li v-if="isUserLoggedIn">
           <router-link
             :to="{ name: 'Manage Address' }"
-            class="dropdown border-b bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
+            class="dropdown border-b rounded bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
           >
             Manage Address
           </router-link>
@@ -68,7 +68,7 @@
         <li>
           <router-link
             :to="{ name: 'Track Order' }"
-            class="dropdown border-b bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
+            class="dropdown border-b  rounded bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
           >
             Track Order
           </router-link>
@@ -76,7 +76,7 @@
         <li v-if="isUserLoggedIn">
           <router-link
             :to="{ name: 'My Orders' }"
-            class="dropdown border-b bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
+            class="dropdown border-b rounded bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
           >
             My Orders
           </router-link>
@@ -84,7 +84,7 @@
         <li v-if="isUserLoggedIn && userType == 'admin'">
           <router-link
             :to="{ name: 'Categories' }"
-            class="dropdown border-b bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
+            class="dropdown border-b rounded bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
           >
             Categories
           </router-link>
@@ -92,7 +92,7 @@
         <li v-if="isUserLoggedIn && userType == 'admin'">
           <router-link
             :to="{ name: 'Products' }"
-            class="dropdown border-b bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
+            class="dropdown border-b rounded bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
           >
             Products
           </router-link>
@@ -101,14 +101,14 @@
         <li v-if="!isUserLoggedIn">
           <router-link
             :to="{ name: 'Login' }"
-            class="dropdown rounded-b rounded-t bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
+            class="dropdown rounded bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
           >
             Login
           </router-link>
         </li>
         <li v-if="isUserLoggedIn">
           <div
-            class="dropdown rounded-b rounded-t bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
+            class="dropdown rounded bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
             @click.prevent="logout"
           >
             Logout

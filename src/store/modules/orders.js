@@ -55,9 +55,9 @@ export default {
       });
     },
 
-    getOrderStatuses({ commit }) {
+    getOrderStatuses({ commit }, orderId) {
       return new Promise((resolve, reject) => {
-        HTTP.get(`${process.env.VUE_APP_API_URL}track-order`)
+        HTTP.get(`${process.env.VUE_APP_API_URL}track-order/${orderId}`)
           .then((response) => {
             resolve(response);
             if (response.data.status) {

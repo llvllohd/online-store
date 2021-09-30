@@ -8,6 +8,17 @@ defineRule("required", (value) => {
   return "Field is Required";
 });
 
+defineRule("requiredMinMax", (value) => {
+  if (value) {
+    if (required(value) && min(value, { length: 10 }) && max(value, { length: 10 })) {
+      return true;
+    }
+    return "Invalid Order Number";
+  } else {
+    return "Field is Required";
+  }
+});
+
 defineRule("email", (value) => {
   if (value) {
     if (email(value) && required(value)) {
