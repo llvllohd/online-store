@@ -56,7 +56,17 @@
     :item-id="address_id"
     @confirm-alert="confirmAlert"
     :delete-Action="deleteAddress"
-  ></alert-screen>
+  >
+     <template v-slot:header>
+      <div class="flex items-center justify-center bg-red-500 rounded-full w-5 h-5 mr-2">
+      <fa :icon="['fa', 'exclamation']" class="text-white text-xs sm:text-sm"></fa>
+      </div>
+      Delete Alert
+    </template>
+    <template v-slot:content>
+      Do you want to Delete this ?
+    </template>
+  </alert-screen>
 </template>
 
 <script>

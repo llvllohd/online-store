@@ -7,11 +7,13 @@ export default {
     orderDetail: [],
     myOrders: [],
     orderStatuses: [],
+    allOrders: [],
   },
   getters: {
     orderDetail: (state) => state.orderDetail,
     myOrders: (state) => state.myOrders,
     orderStatuses: (state) => state.orderStatuses,
+    allOrders: (state) => state.allOrders,
   },
   mutations: {
     setOrderDetail(state, data) {
@@ -22,6 +24,9 @@ export default {
     },
     setOrderStatuses(state, data) {
       state.orderStatuses = data;
+    },
+    setAllOrders(state, data) {
+      state.allOrders = data;
     },
   },
   actions: {
@@ -62,6 +67,52 @@ export default {
             resolve(response);
             if (response.data.status) {
               commit("setOrderStatuses", response.data.data);
+            }
+          })
+          .catch((e) => {
+            reject(e);
+          });
+      });
+    },
+
+    // All Orders
+    getAllOrders({ commit }) {
+      return new Promise((resolve, reject) => {
+        HTTP.get(`${process.env.VUE_APP_API_URL}track-orders`)
+          .then((response) => {
+            resolve(response);
+            if (response.data.status) {
+              commit("setAllOrders", response.data.data);
+            }
+          })
+          .catch((e) => {
+            reject(e);
+          });
+      });
+    },
+
+    updateOrderStatus({ commit }, orderId) {
+      return new Promise((resolve, reject) => {
+        HTTP.put(`${process.env.VUE_APP_API_URL}track-orders/${orderId}`)
+          .then((response) => {
+            resolve(response);
+            if (response.data.status) {
+              commit("setAllOrders", response.data.data);
+            }
+          })
+          .catch((e) => {
+            reject(e);
+          });
+      });
+    },
+
+    rejectOrder({ commit }, orderId) {
+      return new Promise((resolve, reject) => {
+        HTTP.put(`${process.env.VUE_APP_API_URL}reject-order/${orderId}`)
+          .then((response) => {
+            resolve(response);
+            if (response.data.status) {
+              commit("setAllOrders", response.data.data);
             }
           })
           .catch((e) => {

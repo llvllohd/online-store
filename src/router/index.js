@@ -135,6 +135,16 @@ const routes = [
     },
   },
 
+  // All Orders
+  {
+    path: "/track-orders",
+    name: "Track Orders",
+    component: () => import(/* webpackChunkName: "Track Orders" */ "@/components/orders/AllOrders.vue"),
+    meta: {
+      title: "Track Orders" + siteName,
+      requiresAuth: true,
+    },
+  },
   // Categories
   {
     path: "/categories",

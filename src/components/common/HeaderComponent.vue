@@ -83,6 +83,14 @@
         </li>
         <li v-if="isUserLoggedIn && userType == 'admin'">
           <router-link
+            :to="{ name: 'Track Orders' }"
+            class="dropdown border-b rounded bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
+          >
+            All Orders
+          </router-link>
+        </li>
+        <li v-if="isUserLoggedIn && userType == 'admin'">
+          <router-link
             :to="{ name: 'Categories' }"
             class="dropdown border-b rounded bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
           >
