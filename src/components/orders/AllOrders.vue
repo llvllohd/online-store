@@ -52,7 +52,16 @@
       </section>
       <!-- Orders Table  -->
       <section class="w-full overflow-x-auto mt-3">
-        <table class="table-auto w-full">
+        <table
+          class="table-auto w-full"
+        >
+          <!-- v-if="
+            (selectedTab == 'new' && newOrders && newOrders.length > 0) ||
+              (selectedTab == 'accepted' && acceptedOrders && acceptedOrders.length > 0) ||
+              (selectedTab == 'dispatched' && dispatchedOrders && dispatchedOrders.length > 0) ||
+              (selectedTab == 'completed' && completedOrders && completedOrders.length > 0) ||
+              (selectedTab == 'rejected' && rejectedOrders && rejectedOrders.length > 0)
+          " -->
           <thead>
             <tr class="text-xs">
               <th class="text-left border border-gray-400 p-2">Order#</th>
@@ -84,7 +93,7 @@
               </td>
               <td class="border border-gray-400 p-2">{{ order.total_amount }}</td>
               <td class="border border-gray-400 p-2">{{ order.payment_status }}</td>
-              <td class="border border-gray-400 p-2">{{ order.status_user }}</td>
+              <td class="border border-gray-400 p-2">{{ order.status_admin }}</td>
               <td class="text-center border border-gray-400 p-2">
                 <div class="font-bold text-base cursor-pointer">
                   <router-link :to="{ name: 'Order Detail', query: { orderId: order.id } }">
@@ -173,7 +182,7 @@ export default {
     const updateOrdersData = (data) => {
       newOrders.value = data.new_orders;
       acceptedOrders.value = data.accepted_orders;
-      dispatchedOrders.value = data.out_for_delivery_orders;
+      dispatchedOrders.value = data.dispatched_orders;
       completedOrders.value = data.delivered_orders;
       rejectedOrders.value = data.rejected_orders;
       if (selectedTab.value == "new") {

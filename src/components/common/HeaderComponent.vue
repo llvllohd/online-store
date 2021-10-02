@@ -131,8 +131,11 @@
     enter-active-class="animate__animated animate__slideInLeft"
     leave-active-class="animate__animated animate__slideOutLeft"
   >
-    <div v-if="isToggle" class="side-menu sidebar-custom-height bg-gray-900 w-3/6 sm:w-1/3 fixed md:hidden z-50">
-      <div class="h-1/4 flex flex-col items-center justify-center space-y-2">
+    <div
+      v-if="isToggle"
+      class="flex flex-col items-center justify-center side-menu sidebar-custom-height bg-gray-900 w-3/6 sm:w-1/3 fixed md:hidden z-50"
+    >
+      <div class="h-1/3 flex flex-col items-center justify-center space-y-2 mt-3">
         <!-- Image -->
         <div class="side-menu w-20 h-20">
           <img class="rounded-full mx-auto my-auto" src="@/assets/images/user.jpg" alt="" />
@@ -144,7 +147,7 @@
       </div>
 
       <!-- Nav Items -->
-      <ul class="w-full h-3/4 flex flex-col items-center justify-start mt-10 overflow-y-auto">
+      <ul class="w-full h-full flex flex-col items-center justify-start mt-10 overflow-y-auto">
         <li v-for="item in navigation" :key="item.name" class="nav text-white flex w-full items-center justify-center">
           <router-link
             exact
@@ -156,6 +159,7 @@
               (isUserLoggedIn && item.name == 'Edit Profile') ||
                 (isUserLoggedIn && item.name == 'Manage Address') ||
                 (isUserLoggedIn && item.name == 'My Orders') ||
+                (isUserLoggedIn && item.name == 'All Orders') ||
                 (isUserLoggedIn && userType == 'admin' && item.name == 'Categories') ||
                 (isUserLoggedIn && userType == 'admin' && item.name == 'Products') ||
                 (isUserLoggedIn && item.name == 'Logout') ||
@@ -181,6 +185,7 @@
           </router-link>
         </li>
       </ul>
+      <div class="w-1/6"></div>
     </div>
   </transition>
 </template>
@@ -196,6 +201,7 @@ const navigation = [
   { name: "Manage Address", icon: "cog", path: "/manage-address", current: false },
   { name: "Track Order", icon: "globe", path: "/track-order", current: false },
   { name: "My Orders", icon: "shopping-cart", path: "/orders", current: false },
+  { name: "All Orders", icon: "shopping-basket", path: "/track-orders", current: false },
   { name: "Categories", icon: "shopping-bag", path: "categories", current: false },
   { name: "Products", icon: "shopping-basket", path: "products", current: false },
   { name: "Login", icon: "sign-in-alt", path: "login", current: false },
