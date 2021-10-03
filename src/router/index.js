@@ -142,7 +142,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "Track Orders" */ "@/components/orders/AllOrders.vue"),
     meta: {
       title: "Track Orders" + siteName,
-      requiresAuth: true,
+      requiresAdminAuth: true,
     },
   },
   // Categories
@@ -152,7 +152,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "Categories" */ "@/components/categories/ListCategories.vue"),
     meta: {
       title: "Categories" + siteName,
-      requiresAuth: true,
+      requiresAdminAuth: true,
     },
   },
   {
@@ -161,7 +161,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "Add Category" */ "@/components/categories/AddUpdateCategory.vue"),
     meta: {
       title: "Add Category" + siteName,
-      requiresAuth: true,
+      requiresAdminAuth: true,
     },
   },
   // Products
@@ -171,7 +171,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "Products" */ "@/components/products/ListProducts.vue"),
     meta: {
       title: "Products" + siteName,
-      requiresAuth: true,
+      requiresAdminAuth: true,
     },
   },
   {
@@ -180,7 +180,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "Add Product" */ "@/components/products/AddUpdateProduct.vue"),
     meta: {
       title: "Add Product" + siteName,
-      requiresAuth: true,
+      requiresAdminAuth: true,
     },
   },
   {
@@ -223,15 +223,19 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  var token = store.getters["auth/isUserLoggedIn"];
+  let token = store.getters["auth/isUserLoggedIn"];
+  let userType = store.getters["auth/userType"];
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (token) {
       next();
-    } else if (token == "") {
-      next({ name: "Login" });
-      return;
     } else {
-      next({ name: "Login" });
+      next({ name: "Menu Items" });
+    }
+  } else if (to.matched.some((record) => record.meta.requiresAdminAuth)) {
+    if (token && userType == "admin") {
+      next();
+    } else {
+      next({ name: "Menu Items" });
     }
   } else {
     next();

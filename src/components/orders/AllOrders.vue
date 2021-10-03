@@ -52,9 +52,7 @@
       </section>
       <!-- Orders Table  -->
       <section class="w-full overflow-x-auto mt-3">
-        <table
-          class="table-auto w-full"
-        >
+        <table class="table-auto w-full">
           <!-- v-if="
             (selectedTab == 'new' && newOrders && newOrders.length > 0) ||
               (selectedTab == 'accepted' && acceptedOrders && acceptedOrders.length > 0) ||
@@ -92,7 +90,32 @@
                 <div class="w-16">{{ order.created_at }}</div>
               </td>
               <td class="border border-gray-400 p-2">{{ order.total_amount }}</td>
-              <td class="border border-gray-400 p-2">{{ order.payment_status }}</td>
+              <!-- <td class="border border-gray-400 p-2">{{ order.payment_status }}</td> -->
+              <td class="border border-gray-400 p-2">
+                <div>
+                  <Toggle
+                    @change="updatePaymentStatus(order)"
+                    v-model="order.payment_status"
+                    on-label="Paid"
+                    off-label="Unpaid"
+                    :classes="{
+                      container: 'inline-block rounded-full outline-none focus:ring focus:ring-green-500 focus:ring-opacity-30',
+                      toggle:
+                        'flex items-center justify-start w-16 h-4 rounded-full relative cursor-pointer transition box-content border-2 text-xs leading-none',
+                      toggleOn: 'bg-green-500 border-green-500 text-white',
+                      toggleOff: 'bg-gray-200 border-gray-200 justify-end text-gray-700',
+                      toggleOnDisabled: 'bg-gray-300 border-gray-300 justify-start text-gray-400 cursor-not-allowed',
+                      toggleOffDisabled: 'bg-gray-200 border-gray-200 justify-end text-gray-400 cursor-not-allowed',
+                      handle: 'inline-block bg-white w-4 h-4 top-0 rounded-full absolute transition-all',
+                      handleOn: 'left-full transform -translate-x-full',
+                      handleOff: 'left-0',
+                      handleOnDisabled: 'bg-gray-100 left-full transform -translate-x-full',
+                      handleOffDisabled: 'bg-gray-100 left-0',
+                      label: 'text-center w-12 select-none',
+                    }"
+                  />
+                </div>
+              </td>
               <td class="border border-gray-400 p-2">{{ order.status_admin }}</td>
               <td class="text-center border border-gray-400 p-2">
                 <div class="font-bold text-base cursor-pointer">
@@ -144,12 +167,13 @@ import HeaderComponent from "@/components/common/HeaderComponent.vue";
 import RightHandSide from "@/components/common/RightHandSide";
 import useToast from "@/hooks/useToast";
 import AlertScreen from "@/components/common/AlertScreen.vue";
+import Toggle from "@vueform/toggle";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 export default {
   name: "Track Order",
-  components: { HeaderComponent, RightHandSide, AlertScreen },
+  components: { HeaderComponent, RightHandSide, AlertScreen, Toggle },
 
   setup() {
     const store = useStore();
@@ -172,6 +196,7 @@ export default {
     const selectedColumnName = ref("Accept");
     const isAlert = ref(false);
     const orderId = ref("");
+    const paymentStatus = ref("");
 
     const getOrders = (columnName, type, orders) => {
       selectedColumnName.value = columnName;
@@ -207,6 +232,23 @@ export default {
           useToast(res.data.message, "danger");
         }
       });
+    };
+
+    const updatePaymentStatus = (order) => {
+      store
+        .dispatch("orders/updatePaymentStatus", {
+          order_id: order.id,
+          payment_status: order.payment_status,
+        })
+        .then((res) => {
+          if (res.data.status) {
+            updateOrdersData(res.data.data);
+            useToast(res.data.message, "success");
+            isAlert.value = false;
+          } else {
+            useToast(res.data.message, "danger");
+          }
+        });
     };
 
     const openAlert = (id) => {
@@ -268,10 +310,14 @@ export default {
       isAlert,
       openAlert,
       confirmAlert,
+      paymentStatus,
+      updatePaymentStatus,
     };
   },
 };
 </script>
+
+<style src="@vueform/toggle/themes/default.css"></style>
 
 <style>
 .orders-tab {

@@ -120,5 +120,20 @@ export default {
           });
       });
     },
+
+    updatePaymentStatus({ commit }, params) {
+      return new Promise((resolve, reject) => {
+        HTTP.put(`${process.env.VUE_APP_API_URL}update-payment`, params)
+          .then((response) => {
+            resolve(response);
+            if (response.data.status) {
+              commit("setAllOrders", response.data.data);
+            }
+          })
+          .catch((e) => {
+            reject(e);
+          });
+      });
+    },
   },
 };
