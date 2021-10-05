@@ -8,7 +8,7 @@
     <template class="flex flex-col w-full">
       <!-- Banner Image for Mobile -->
       <section
-        class="w-full h-60 bg-cover bg-center flex sm:hidden"
+        class="w-full h-60 bg-contain bg-center flex sm:hidden"
         :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"
       ></section>
       <!-- Carousel -->
@@ -22,7 +22,7 @@
           :breakpoints="breakpoints"
           v-if="categories.value && categories.value.length > 0"
         >
-          <slide v-for="category in categories.value" :key="category.id" class="">
+          <slide v-for="category in categories.value" :key="category.id">
             <div
               @click.prevent="positionItemsSection(category)"
               @touchstart.prevent="positionItemsSection(category)"
@@ -52,7 +52,7 @@
             </h4>
           </div>
 
-          <div class="items flex flex-row items-center justify-between flex-wrap p-2 ">
+          <div class="items flex flex-row items-center flex-wrap p-2 ">
             <div class="w-1/2 lg:w-1/3 mb-5" v-for="item in category.menu_items" :key="item.id">
               <div class="card m-1 shadow-lg rounded-lg">
                 <div class="image">
@@ -85,7 +85,7 @@
                     class="rounded ml-1 w-1/2 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none py-1 font-medium text-xs sm:text-sm text-white"
                     @click.prevent="gotoItemDetail(item)"
                   >
-                    ADD
+                    View
                   </button>
                 </div>
               </div>
@@ -119,7 +119,8 @@ import HeaderComponent from "@/components/common//HeaderComponent.vue";
 import ItemDetail from "@/components/menu-items/ItemDetails.vue";
 import RightHandSide from "@/components/common/RightHandSide";
 import FloatingButton from "@/components/common/FloatingButton";
-import backgroundImage from "@/assets/images/crochet-background.jpg";
+// import backgroundImage from "@/assets/images/crochet-background.jpg";
+import backgroundImage from "@/assets/images/new-banner6.jpg";
 import "vue3-carousel/dist/carousel.css";
 import useToast from "@/hooks/useToast";
 import { Carousel, Slide } from "vue3-carousel";
@@ -233,13 +234,18 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .carousel__item {
   /* color: var(--carousel-color-white); */
 }
 
 .carousel__slide {
   padding: 1px;
+}
+
+.carousel__track {
+  align-items: center;
+  justify-content: center;
 }
 
 .w-48 {

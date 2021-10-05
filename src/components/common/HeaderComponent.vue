@@ -14,7 +14,7 @@
         ></div>
       </div>
 
-      <div class="flex items-center justify-end" @click.prevent="gotoCart()">
+      <div class="flex items-center justify-end" @click.prevent="gotoCart()" v-if="false">
         <fa :icon="['fa', 'shopping-cart']" class="text-3xl text-white"> </fa>
         <span class="text-xs font-bold border rounded-full px-2 py-1 bg-white"> {{ totalCartCount }} </span>
       </div>
@@ -32,12 +32,12 @@
     </div>
     <!-- Nav Items -->
     <ul class="w-1/3 h-full hidden md:flex items-center justify-center space-x-5 md:space-x-10 cursor-pointer">
-      <li class="nav text-white text-lg font-bold relative p-1">
+      <li class="nav text-white text-lg font-bold relative p-1" v-if="false">
         <router-link :to="{ name: 'Menu Items' }" class="nav-lg">
           Menu
         </router-link>
       </li>
-      <li class="nav text-white text-lg font-bold relative p-1">
+      <li class="nav text-white text-lg font-bold relative p-1" v-if="false">
         <div :to="{ name: 'Cart' }" class="nav-lg" @click.prevent="gotoCart()">
           <fa :icon="['fa', 'shopping-cart']" class="nav-lg  text-sm"> </fa> Cart
           <span class="text-xs border rounded-full px-1"> {{ totalCartCount }} </span>
@@ -52,43 +52,51 @@
         <fa :icon="['fa', 'caret-down']" class="text-white text-sm"> </fa>
       </div>
       <ul class="absolute top-16 pt-1 right-1 w-36 text-sm font-medium cursor-pointer" v-if="isSideMiniCard">
-        <li v-if="isUserLoggedIn">
+        <li>
+          <router-link
+            :to="{ name: 'Menu Items' }"
+            class="dropdown border-b rounded bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
+          >
+            Menu
+          </router-link>
+        </li>
+        <!-- <li v-if="isUserLoggedIn">
           <div class="dropdown border-b rounded bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap">
             Edit Profile
           </div>
-        </li>
-        <li v-if="isUserLoggedIn">
+        </li> -->
+        <!-- <li v-if="isUserLoggedIn">
           <router-link
             :to="{ name: 'Manage Address' }"
             class="dropdown border-b rounded bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
           >
             Manage Address
           </router-link>
-        </li>
-        <li>
+        </li> -->
+        <!-- <li>
           <router-link
             :to="{ name: 'Track Order' }"
             class="dropdown border-b  rounded bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
           >
             Track Order
           </router-link>
-        </li>
-        <li v-if="isUserLoggedIn">
+        </li> -->
+        <!-- <li v-if="isUserLoggedIn">
           <router-link
             :to="{ name: 'My Orders' }"
             class="dropdown border-b rounded bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
           >
             My Orders
           </router-link>
-        </li>
-        <li v-if="isUserLoggedIn && userType == 'admin'">
+        </li> -->
+        <!-- <li v-if="isUserLoggedIn && userType == 'admin'">
           <router-link
             :to="{ name: 'Track Orders' }"
             class="dropdown border-b rounded bg-gray-900 text-white hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap"
           >
             All Orders
           </router-link>
-        </li>
+        </li> -->
         <li v-if="isUserLoggedIn && userType == 'admin'">
           <router-link
             :to="{ name: 'Categories' }"
@@ -156,15 +164,15 @@
             class="w-full p-2 flex items-center justify-center border-b"
             :class="item.name == 'Menu' ? 'border-t' : ''"
             v-if="
-              (isUserLoggedIn && item.name == 'Edit Profile') ||
-                (isUserLoggedIn && item.name == 'Manage Address') ||
-                (isUserLoggedIn && item.name == 'My Orders') ||
-                (isUserLoggedIn && item.name == 'All Orders') ||
+              (isUserLoggedIn && item.name == 'Edit Profilee') ||
+                (isUserLoggedIn && item.name == 'Manage Addresss') ||
+                (isUserLoggedIn && item.name == 'My Orderss') ||
+                (isUserLoggedIn && item.name == 'All Orderss') ||
                 (isUserLoggedIn && userType == 'admin' && item.name == 'Categories') ||
                 (isUserLoggedIn && userType == 'admin' && item.name == 'Products') ||
                 (isUserLoggedIn && item.name == 'Logout') ||
                 item.name == 'Menu' ||
-                item.name == 'Track Order' ||
+                item.name == 'Track Orderr' ||
                 (!isUserLoggedIn && item.name == 'Login')
             "
           >

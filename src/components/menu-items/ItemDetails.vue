@@ -31,7 +31,7 @@
           <div class="text-xl font-bold" v-if="item_detail.on_offer">&#8377; {{ item_detail.offer_price }}</div>
         </div>
 
-        <div class="mt-2 flex items-center">
+        <!-- <div class="mt-2 flex items-center">
           <span class="text-lg font-bold mr-2"> To Buy Contact On: </span>
           <a :href="`https://api.whatsapp.com/send?phone=${+919731735035}`" target="_blank" class="mr-2">
             <fa :icon="['fab', 'whatsapp']" class="text-2xl text-gray-900"> </fa>
@@ -39,16 +39,32 @@
           <a href="https://www.instagram.com/creativity_storee/" target="_blank">
             <fa :icon="['fab', 'instagram']" class="text-2xl text-gray-900"> </fa>
           </a>
-        </div>
+        </div> -->
       </div>
 
-      <div class="mt-3 w-full">
-        <button
+      <div class="mt-3 w-full flex items-center justify-between">
+        <!-- <button
           class="rounded w-full bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none p-2 font-medium text-base sm:text-lg text-white"
           @click.prevent="addToCart(item_detail)"
         >
           Add to Cart
-        </button>
+        </button> -->
+        <div
+          class="rounded flex items-center justify-center w-2/4 mr-1 p-1 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none font-medium text-sm sm:text-base text-white"
+        >
+          <a :href="`https://api.whatsapp.com/send?phone=${+919731735035}`" target="_blank" class="ml-2">
+            Contact
+            <fa :icon="['fab', 'whatsapp']" class="text-sm sm:text-base text-white "> </fa>
+          </a>
+        </div>
+        <div
+          class="rounded flex items-center justify-center w-2/4 ml-1 p-1 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none font-medium text-sm sm:text-base text-white"
+        >
+          <a href="https://www.instagram.com/creativity_storee/" target="_blank" class="ml-2">
+            Contact
+            <fa :icon="['fab', 'instagram']" class="text-sm sm:text-basetext-white"> </fa>
+          </a>
+        </div>
       </div>
     </section>
   </section>
