@@ -50,7 +50,7 @@
           Add to Cart
         </button> -->
         <div
-          class="rounded flex items-center justify-center w-2/4 mr-1 p-1 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none font-medium text-sm sm:text-base text-white"
+          class="rounded flex items-center justify-center w-2/4 mr-1 p-2 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none font-medium text-sm sm:text-base text-white"
         >
           <a :href="`https://api.whatsapp.com/send?phone=${+919731735035}`" target="_blank" class="ml-2">
             Contact
@@ -58,7 +58,7 @@
           </a>
         </div>
         <div
-          class="rounded flex items-center justify-center w-2/4 ml-1 p-1 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none font-medium text-sm sm:text-base text-white"
+          class="rounded flex items-center justify-center w-2/4 ml-1 p-2 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none font-medium text-sm sm:text-base text-white"
         >
           <a href="https://www.instagram.com/creativity_storee/" target="_blank" class="ml-2">
             Contact
