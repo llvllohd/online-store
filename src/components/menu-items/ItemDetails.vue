@@ -4,7 +4,7 @@
       <div class=" w-full absolute flex items-center justify-end" style="top:-30px" @click.prevent="closeItemDetail()">
         <fa :icon="['fa', 'times-circle']" class="text-2xl text-gray-900"> </fa>
       </div>
-      <div class="w-full">
+      <div class="w-full h-full" style="height:45vh">
         <img
           :src="item_detail.image_file"
           class="w-full h-full rounded-t"
