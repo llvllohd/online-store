@@ -19,7 +19,6 @@ export default {
   setup() {
     const store = useStore();
     const sessionId = computed(() => store.getters["auth/sessionId"]);
-    // const isUserLoggedIn = computed(() => store.getters["auth/isUserLoggedIn"]);
     if (!sessionId.value) {
       let sessionId = `Guest:${new Date().getTime()}`;
       store.commit("auth/setSessionId", sessionId);

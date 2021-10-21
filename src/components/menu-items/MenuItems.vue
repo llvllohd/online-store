@@ -1,16 +1,10 @@
 <template>
   <header-component></header-component>
   <!-- LHS -->
-  <section
-    class="top min-h-no-header w-full md:w-1/2 flex flex-col items-center mb-10"
-    v-if="categories.value && categories.value.length > 0"
-  >
+  <section class="top min-h-no-header w-full md:w-1/2 flex flex-col items-center mb-10" v-if="categories.value && categories.value.length > 0">
     <template class="flex flex-col w-full">
       <!-- Banner Image for Mobile -->
-      <section
-        class="w-full h-60 bg-cover bg-center flex sm:hidden"
-        :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"
-      ></section>
+      <section class="w-full h-60 bg-cover bg-center flex sm:hidden" :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"></section>
       <!-- Carousel -->
       <div class="z-10 pt-3 pb-3 transition duration-1000 bg-white" id="carousel" :class="isFixed ? 'fixed w-full sm:w-1/2' : ''">
         <carousel
@@ -28,7 +22,7 @@
               @touchstart.prevent="positionItemsSection(category)"
               class="carousel__item tracking-wider flex w-full items-center justify-center rounded-lg h-8 sm:font-bold font-medium sm:text-sm text-xs text-white  bg-gray-900"
               :class="category_name == category.name ? 'text-yellow-400' : ''"
-              v-if="category.menu_items && category.menu_items.length > 0"
+              v-if="category.menu_items && category.menu_items.length > 0 && category.is_visible"
             >
               {{ category.name }}
             </div>
@@ -43,10 +37,7 @@
       <!-- Items Card -->
       <section class="transition duration-1000" :class="isFixed ? 'top' : ''" id="section">
         <div :id="category.name" v-for="category in categories.value" :key="category.name">
-          <div
-            class="flex items-center justify-center p-3 text-2xl font-bold"
-            v-if="category.menu_items && category.menu_items.length > 0"
-          >
+          <div class="flex items-center justify-center p-3 text-2xl font-bold" v-if="category.menu_items && category.menu_items.length > 0">
             <h4 class="category-name relative uppercase text-lg sm:text-2xl">
               {{ category.name }}
             </h4>
@@ -56,19 +47,8 @@
             <div class="w-1/2 lg:w-1/3 mb-5" v-for="item in category.menu_items" :key="item.id">
               <div class="card m-1 shadow-lg rounded-lg">
                 <div class="image">
-                  <img
-                    :src="item.image_file"
-                    class="rounded-t-lg w-full"
-                    alt=""
-                    v-if="item.image_file && item.image_file.length > 0"
-                  />
-                  <img
-                    :src="require(`@/assets/images/no-image.png`)"
-                    class="rounded-t-lg border"
-                    style="width: 500px"
-                    alt=""
-                    v-else
-                  />
+                  <img :src="item.image_file" class="rounded-t-lg w-full" alt="" v-if="item.image_file && item.image_file.length > 0" />
+                  <img :src="require(`@/assets/images/no-image.png`)" class="rounded-t-lg border" style="width: 500px" alt="" v-else />
                 </div>
                 <div class="details flex flex-col items-start justify-around p-2">
                   <div class="item-name">
