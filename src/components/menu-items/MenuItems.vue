@@ -16,7 +16,7 @@
           :breakpoints="breakpoints"
           v-if="categories.value && categories.value.length > 0"
         >
-          <slide v-for="category in categories.value" :key="category.id" class="">
+          <slide v-for="category in categories.value" :key="category.id">
             <div
               @click.prevent="positionItemsSection(category)"
               @touchstart.prevent="positionItemsSection(category)"
@@ -45,10 +45,13 @@
 
           <div class="items flex flex-row items-center justify-between flex-wrap p-2 ">
             <div class="w-1/2 lg:w-1/3 mb-5" v-for="item in category.menu_items" :key="item.id">
-              <div class="card m-1 shadow-lg rounded-lg">
-                <div class="image">
+              <div class="card m-1 shadow-lg rounded-lg" v-if="item.is_visible">
+                <div class="image relative">
                   <img :src="item.image_file" class="rounded-t-lg w-full" alt="" v-if="item.image_file && item.image_file.length > 0" />
                   <img :src="require(`@/assets/images/no-image.png`)" class="rounded-t-lg border" style="width: 500px" alt="" v-else />
+                  <div class="text-xs font-bold absolute bottom-1 left-1 bg-red-500 text-white rounded-full p-2" v-if="!item.is_available">
+                    Out of stock
+                  </div>
                 </div>
                 <div class="details flex flex-col items-start justify-around p-2">
                   <div class="item-name">
@@ -62,8 +65,10 @@
                     &#8377; {{ item.on_offer ? item.offer_price : item.price }}
                   </button>
                   <button
-                    class="rounded ml-1 w-1/2 bg-gray-900 hover:bg-gray-800 focus:outline-none hover:outline-none py-1 font-medium text-xs sm:text-sm text-white"
+                    class="rounded ml-1 w-1/2 focus:outline-none hover:outline-none py-1 font-medium text-xs sm:text-sm text-white"
+                    :class="!item.is_available ? 'bg-gray-500 hover:bg-gray-500 cursor-not-allowed' : 'bg-gray-900 hover:bg-gray-800'"
                     @click.prevent="gotoItemDetail(item)"
+                    :disabled="!item.is_available"
                   >
                     ADD
                   </button>
@@ -213,17 +218,19 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+.carousel__track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .carousel__item {
   /* color: var(--carousel-color-white); */
 }
 
 .carousel__slide {
   padding: 1px;
-}
-
-.w-48 {
-  width: calc(50% - 2%);
 }
 
 /* .carousel__prev,
