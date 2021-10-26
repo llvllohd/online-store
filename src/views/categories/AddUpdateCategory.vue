@@ -34,16 +34,7 @@
         </div>
 
         <!-- Add Category -->
-        <div
-          @click="submitForm"
-          class="w-full flex items-center justify-center text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          :class="[
-            formMeta.touched && !formMeta.valid ? 'bg-gray-500 hover:bg-gray-500' : 'bg-gray-900 hover:bg-gray-800',
-            isSubmitting ? 'cursor-not-allowed' : 'sm:cursor-pointer',
-          ]"
-        >
-          {{ categoryId ? "Update" : "ADD" }}
-        </div>
+        <BaseButton :label="categoryId ? 'Update' : 'ADD'" :clickMethod="submitForm" :formMeta="formMeta" :isSubmitting="isSubmitting" />
       </form>
 
       <p class="text-center text-gray-500 text-xs p-3">
@@ -66,7 +57,7 @@ import { useForm, useField } from "vee-validate";
 
 export default {
   name: "Add Category",
-  components: { },
+  components: {},
   setup() {
     const store = useStore();
     const router = useRouter();

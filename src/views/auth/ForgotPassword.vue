@@ -8,41 +8,13 @@
       </div>
       <form @submit="submitForm" class="shadow-md rounded px-5 p-5">
         <!-- Email -->
-        <div class="mb-4">
-          <label class="block text-sm font-bold mb-2" for="email">
-            Enter An Email
-          </label>
-
-          <input
-            type="email"
-            placeholder="Email"
-            @input="emailField.handleChange"
-            @blur="emailField.handleBlur"
-            v-model="emailField.value"
-            class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            :class="emailField.meta.touched && !emailField.meta.valid ? 'border border-red-500' : ''"
-          />
-          <span v-if="emailField.meta.touched && !emailField.meta.valid" class=" text-red-500 text-xs italic">
-            {{ emailField.errorMessage || "Field is required" }}
-          </span>
+        <div class="mb-3">
+          <BaseInput type="email" label="Enter An Email" v-model="emailField.value" :error="emailField.errorMessage" />
         </div>
 
         <!-- Login Btn -->
-        <div class="flex items-center justify-center">
-          <button
-            :disabled="isSubmitting ? true : false"
-            type="submit"
-            class="w-full text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            :class="[
-              formMeta.valid ? 'bg-gray-900 hover:bg-gray-800' : 'bg-gray-500 hover:bg-gray-500',
-              isSubmitting ? 'cursor-not-allowed' : 'cursor-pointer',
-            ]"
-          >
-            <fa :icon="['fa', 'circle-notch']" class="text-white text-xs animate-spin mr-2" v-if="isSubmitting"> </fa>
+        <BaseButton label="Send Link" :clickMethod="submitForm" :formMeta="formMeta" :isSubmitting="isSubmitting" />
 
-            Send Link
-          </button>
-        </div>
         <div class="text-xs sm:text-sm font-bold flex justify-center p-3">
           Already Have An Account?
           <router-link :to="{ name: 'Login' }" class="ml-2 text-blue-500 hover:text-blue-800">

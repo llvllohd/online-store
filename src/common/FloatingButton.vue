@@ -5,10 +5,7 @@
     @click.prevent="gotoSelectedScreen()"
     v-if="totalCartCount > 0"
   >
-    <div
-      class="flex items-center justify-center rounded-full border h-6 md:h-7 w-6 md:w-7 text-sm"
-      v-if="route.name != 'Checkout'"
-    >
+    <div class="flex items-center justify-center rounded-full border h-6 md:h-7 w-6 md:w-7 text-sm" v-if="route.name != 'Checkout'">
       {{ totalCartCount }}
     </div>
     <div class="flex items-center justify-center font-semibold">{{ floatingButtonText }}</div>
@@ -20,7 +17,6 @@
 import { computed } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
-// import { onMounted, ref, watch } from "vue";
 
 export default {
   name: "Floating Button",
@@ -29,7 +25,6 @@ export default {
     floatingButtonText: {
       type: String,
       required: true,
-      // default: "Review Order",
     },
     isLink: {
       type: Boolean,
@@ -41,7 +36,6 @@ export default {
     },
     clickMethod: {
       type: Function,
-      // default: () => 1,
     },
   },
   setup(props) {

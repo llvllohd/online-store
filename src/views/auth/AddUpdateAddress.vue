@@ -19,80 +19,22 @@
 
       <form @submit="submitForm" class="shadow-md rounded px-5 p-5">
         <!-- Address -->
-        <div class="mb-4">
-          <label class="block text-sm font-bold mb-2">
-            Address
-          </label>
-          <input
-            type="text"
-            placeholder="Address"
-            @input="address.handleChange"
-            @blur="address.handleBlur"
-            v-model="address.value"
-            class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            :class="address.meta.touched && !address.meta.valid ? 'border border-red-500' : ''"
-            id="name"
-          />
-          <span v-if="address.meta.touched && !address.meta.valid" class="text-red-500 text-xs italic">
-            {{ address.errorMessage || "Field is required" }}
-          </span>
+        <div class="mb-3">
+          <BaseInput type="text" label="Address" v-model="address.value" :error="address.errorMessage" />
         </div>
 
         <!-- House Name -->
-        <div class="mb-4">
-          <label class="block text-sm font-bold mb-2">
-            House Name
-          </label>
-
-          <input
-            type="text"
-            placeholder="House Name"
-            @input="house_name.handleChange"
-            @blur="house_name.handleBlur"
-            v-model="house_name.value"
-            class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            :class="house_name.meta.touched && !house_name.meta.valid ? 'border border-red-500' : ''"
-          />
-          <span v-if="house_name.meta.touched && !house_name.meta.valid" class=" text-red-500 text-xs italic">
-            {{ house_name.errorMessage || "Field is required" }}
-          </span>
+        <div class="mb-3">
+          <BaseInput type="text" label="House Name" v-model="house_name.value" :error="house_name.errorMessage" />
         </div>
 
         <!-- Land mark -->
-        <div class="mb-4">
-          <label class="block text-sm font-bold mb-2">
-            Landmark
-          </label>
-
-          <input
-            type="text"
-            placeholder="Landmark"
-            @input="landmark.handleChange"
-            @blur="landmark.handleBlur"
-            v-model="landmark.value"
-            class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            :class="landmark.meta.touched && !landmark.meta.valid ? 'border border-red-500' : ''"
-          />
-          <span v-if="landmark.meta.touched && !landmark.meta.valid" class=" text-red-500 text-xs italic">
-            {{ landmark.errorMessage || "Field is required" }}
-          </span>
+        <div class="mb-3">
+          <BaseInput type="text" label="Landmark" v-model="landmark.value" :error="landmark.errorMessage" />
         </div>
 
         <!-- Add Address -->
-        <div class="flex items-center">
-          <button
-            :disabled="isSubmitting ? true : false"
-            type="submit"
-            class="w-full text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            :class="[
-              formMeta.valid ? 'bg-gray-900 hover:bg-gray-800' : 'bg-gray-500 hover:bg-gray-500',
-              isSubmitting ? 'cursor-not-allowed' : 'cursor-pointer',
-            ]"
-          >
-            <fa :icon="['fa', 'circle-notch']" class="text-white text-xs animate-spin mr-2" v-if="isSubmitting"> </fa>
-            {{ addressId ? "Update" : "ADD" }}
-          </button>
-        </div>
+        <BaseButton :label="addressId ? 'Update' : 'ADD'" :clickMethod="submitForm" :formMeta="formMeta" :isSubmitting="isSubmitting" />
       </form>
 
       <p class="text-center text-gray-500 text-xs p-3">

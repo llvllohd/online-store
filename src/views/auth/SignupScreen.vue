@@ -9,94 +9,27 @@
 
       <form @submit="submitForm" class="shadow-md rounded px-5 p-5">
         <!-- Name -->
-        <div class="mb-4">
-          <label class="block text-sm font-bold mb-2" for="name">
-            Name
-          </label>
-          <input
-            type="text"
-            placeholder="Name"
-            @input="nameField.handleChange"
-            @blur="nameField.handleBlur"
-            v-model="nameField.value"
-            class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            :class="nameField.meta.touched && !nameField.meta.valid ? 'border border-red-500' : ''"
-          />
-          <span v-if="nameField.meta.touched && !nameField.meta.valid" class="text-red-500 text-xs italic">
-            {{ nameField.errorMessage || "Field is required" }}
-          </span>
+        <div class="mb-3">
+          <BaseInput type="text" label="Name" v-model="nameField.value" :error="nameField.errorMessage" />
         </div>
-        <!-- Email -->
-        <div class="mb-4">
-          <label class="block text-sm font-bold mb-2" for="email">
-            Email
-          </label>
 
-          <input
-            type="email"
-            placeholder="Email"
-            @input="emailField.handleChange"
-            @blur="emailField.handleBlur"
-            v-model="emailField.value"
-            class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            :class="emailField.meta.touched && !emailField.meta.valid ? 'border border-red-500' : ''"
-          />
-          <span v-if="emailField.meta.touched && !emailField.meta.valid" class=" text-red-500 text-xs italic">
-            {{ emailField.errorMessage || "Field is required" }}
-          </span>
+        <!-- Email -->
+        <div class="mb-3">
+          <BaseInput type="text" label="Email" v-model="emailField.value" :error="emailField.errorMessage" />
         </div>
 
         <!-- Password -->
-        <div class="mb-4">
-          <label class="block text-sm font-bold mb-2" for="password">
-            Password
-          </label>
-          <input
-            type="password"
-            placeholder="Password"
-            @input="passwordField.handleChange"
-            @blur="passwordField.handleBlur"
-            v-model="passwordField.value"
-            class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            :class="passwordField.meta.touched && !passwordField.meta.valid ? 'border border-red-500' : ''"
-          />
-          <span v-if="passwordField.meta.touched && !passwordField.meta.valid" class="text-red-500 text-xs italic">
-            {{ passwordField.errorMessage || "Field is required" }}
-          </span>
+        <div class="mb-3">
+          <BaseInput type="password" label="Password" v-model="passwordField.value" :error="passwordField.errorMessage" />
         </div>
+
         <!-- Confirm Password -->
-        <div class="mb-4">
-          <label class="block text-sm font-bold mb-2" for="confirmPassword">
-            Confirm Password
-          </label>
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            @input="confirmPasswordField.handleChange"
-            @blur="confirmPasswordField.handleBlur"
-            v-model="confirmPasswordField.value"
-            class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            :class="confirmPasswordField.meta.touched && !confirmPasswordField.meta.valid ? 'border border-red-500' : ''"
-          />
-          <span v-if="confirmPasswordField.meta.touched && !confirmPasswordField.meta.valid" class="text-red-500 text-xs italic">
-            {{ confirmPasswordField.errorMessage || "Field is required" }}
-          </span>
+        <div class="mb-3">
+          <BaseInput type="password" label="Confirm Password" v-model="confirmPasswordField.value" :error="confirmPasswordField.errorMessage" />
         </div>
+
         <!-- Signup Btn -->
-        <div class="flex items-center">
-          <button
-            :disabled="isSubmitting ? true : false"
-            type="submit"
-            class="w-full text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            :class="[
-              formMeta.valid ? 'bg-gray-900 hover:bg-gray-800' : 'bg-gray-500 hover:bg-gray-500',
-              isSubmitting ? 'cursor-not-allowed' : 'cursor-pointer',
-            ]"
-          >
-            <fa :icon="['fa', 'circle-notch']" class="text-white text-xs animate-spin mr-2" v-if="isSubmitting"> </fa>
-            Register
-          </button>
-        </div>
+        <BaseButton label="Register" :clickMethod="submitForm" :formMeta="formMeta" :isSubmitting="isSubmitting" />
 
         <div class="text-xs sm:text-sm font-bold flex justify-center p-3">
           Already Have An Account?
