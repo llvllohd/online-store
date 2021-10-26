@@ -1,32 +1,15 @@
 <template>
   <header-component></header-component>
   <!-- LHS -->
-  <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
-    <section class="flex flex-col items-center justify-center p-2 sm:p-3 w-full">
-      <!-- Back button & title -->
-      <section class="w-full flex items-center justify-between text-xl sm:text-2xl font-bold p-3 mb-3">
-        <div class="flex items-center w-1/6">
-          <span
-            class="flex items-center justify-center sm:cursor-pointer rounded-full h-7 w-7 sm:h-9 sm:w-9 border hover:border-gray-900"
-            @click.prevent="router.go(-1)"
-          >
-            <fa :icon="['fa', 'arrow-left']" class="text-sm sm:text-lg text-gray-900"> </fa>
-          </span>
-        </div>
-        <div class="flex items-center justify-center w-4/6 ">Order Detail</div>
-        <div class="w-1/6"></div>
-      </section>
-    </section>
-
+  <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-center p-3 sm:p-0">
     <div class="w-full md:w-2/3 shadow">
       <div class="flex flex-col items-center justify-center text-3xl font-bold p-3">
-        <div class="flex items-center justify-center border rounded-full w-12 h-12 md:w-16 md:h-16 mt-2">
+        <div class="flex items-center  justify-center border rounded-full w-12 h-12 md:w-16 md:h-16">
           <fa :icon="['fa', 'check']" class="text-2xl md:text-4xl"> </fa>
         </div>
-        <div class="text-sm md:text-base mt-2 " :class="orderDetail.status_id == 5 ? 'text-red-500' : 'text-green-500'">
-          {{ orderDetail.order_status }}
-        </div>
-        <div class="text-sm md:text-base mt-2">Order #{{ orderDetail.transaction_id }}</div>
+        <div class="text-lg md:text-2xl text-green-500 mt-3">Congratulations!</div>
+        <div class="text-sm md:text-base text-gray-500 mt-1">You Have Successfully Placed Your Order!</div>
+        <div class="text-sm md:text-base mt-1">Order #{{ orderDetail.transaction_id }}</div>
       </div>
 
       <div class="overflow-x-auto p-3">
@@ -81,6 +64,22 @@
         </div>
       </div>
     </div>
+    <div class="w-full md:w-2/3 flex items-center justify-between mt-3">
+      <router-link
+        :to="{ name: 'Menu Items' }"
+        class="flex items-center justify-center w-full bg-gray-900 hover:bg-gray-800 text-white font-bold mr-1 py-2 px-4
+        rounded focus:outline-none focus:shadow-outline text-sm sm:text-base"
+      >
+        Go To Menu
+      </router-link>
+      <router-link
+        :to="{ name: 'Order Detail', query: { orderId: orderDetail.id } }"
+        class="flex items-center justify-center w-full bg-gray-900 hover:bg-gray-800 text-white font-bold mr-1 py-2 px-4 
+        rounded focus:outline-none focus:shadow-outline text-sm sm:text-base"
+      >
+        Order Detail
+      </router-link>
+    </div>
   </section>
   <!-- RHS -->
   <section>
@@ -89,8 +88,6 @@
 </template>
 
 <script>
-import HeaderComponent from "@/components/common/HeaderComponent.vue";
-import RightHandSide from "@/components/common/RightHandSide";
 import useToast from "@/hooks/useToast";
 import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
@@ -98,7 +95,7 @@ import { useRoute } from "vue-router";
 
 export default {
   name: "Cart",
-  components: { HeaderComponent, RightHandSide },
+  components: { },
 
   setup() {
     const store = useStore();

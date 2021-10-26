@@ -6,7 +6,7 @@ const routes = [
   {
     path: "/register",
     name: "Register",
-    component: () => import(/* webpackChunkName: "Signup" */ "@/components/auth/SignupScreen.vue"),
+    component: () => import(/* webpackChunkName: "Signup" */ "@/views/auth/SignupScreen.vue"),
     meta: {
       title: "Registration" + siteName,
       requiresAuth: false,
@@ -15,7 +15,7 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: () => import(/* webpackChunkName: "Login" */ "@/components/auth/LoginScreen.vue"),
+    component: () => import(/* webpackChunkName: "Login" */ "@/views/auth/LoginScreen.vue"),
     meta: {
       title: "Login" + siteName,
       requiresAuth: false,
@@ -24,7 +24,7 @@ const routes = [
   {
     path: "/forgot-password",
     name: "Forgot Password",
-    component: () => import(/* webpackChunkName: "Forgot Password" */ "@/components/auth/ForgotPassword.vue"),
+    component: () => import(/* webpackChunkName: "Forgot Password" */ "@/views/auth/ForgotPassword.vue"),
     meta: {
       title: "Forgot Password" + siteName,
       requiresAuth: false,
@@ -33,7 +33,7 @@ const routes = [
   {
     path: "/change-password",
     name: "Change Password",
-    component: () => import(/* webpackChunkName: "Change Password" */ "@/components/auth/ChangePassword.vue"),
+    component: () => import(/* webpackChunkName: "Change Password" */ "@/views/auth/ChangePassword.vue"),
     meta: {
       title: "Change Password" + siteName,
       requiresAuth: false,
@@ -43,7 +43,7 @@ const routes = [
   {
     path: "/",
     name: "Menu Items",
-    component: () => import(/* webpackChunkName: "Menu Items" */ "@/components/menu-items/MenuItems.vue"),
+    component: () => import(/* webpackChunkName: "Menu Items" */ "@/views/menu-items/MenuItems.vue"),
     meta: {
       title: "Menu Items" + siteName,
       requiresAuth: false,
@@ -52,7 +52,7 @@ const routes = [
   {
     path: "/item-detail",
     name: "Item Detail",
-    component: () => import(/* webpackChunkName: "Item Details" */ "@/components/menu-items/ItemDetails.vue"),
+    component: () => import(/* webpackChunkName: "Item Details" */ "@/views/menu-items/ItemDetails.vue"),
     meta: {
       title: "Item Detail" + siteName,
       requiresAuth: false,
@@ -62,7 +62,7 @@ const routes = [
   {
     path: "/cart",
     name: "Cart",
-    component: () => import(/* webpackChunkName: "Cart" */ "@/components/cart/CartScreen.vue"),
+    component: () => import(/* webpackChunkName: "Cart" */ "@/views/cart/CartScreen.vue"),
     meta: {
       title: "Cart" + siteName,
       requiresAuth: false,
@@ -80,7 +80,7 @@ const routes = [
   {
     path: "/checkout",
     name: "Checkout",
-    component: () => import(/* webpackChunkName: "Checkout" */ "@/components/checkout/CheckoutScreen.vue"),
+    component: () => import(/* webpackChunkName: "Checkout" */ "@/views/checkout/CheckoutScreen.vue"),
     meta: {
       title: "Checkout" + siteName,
       requiresAuth: false,
@@ -98,7 +98,7 @@ const routes = [
   {
     path: "/confirmation",
     name: "Confirmation",
-    component: () => import(/* webpackChunkName: "Confirmation" */ "@/components/orders/ConfirmationScreen.vue"),
+    component: () => import(/* webpackChunkName: "Confirmation" */ "@/views/orders/ConfirmationScreen.vue"),
     meta: {
       title: "Confirmation" + siteName,
       requiresAuth: false,
@@ -108,7 +108,7 @@ const routes = [
   {
     path: "/orders",
     name: "My Orders",
-    component: () => import(/* webpackChunkName: "My Orders" */ "@/components/orders/MyOrders.vue"),
+    component: () => import(/* webpackChunkName: "My Orders" */ "@/views/orders/MyOrders.vue"),
     meta: {
       title: "My Orders" + siteName,
       requiresAuth: true,
@@ -118,7 +118,7 @@ const routes = [
   {
     path: "/order-detail",
     name: "Order Detail",
-    component: () => import(/* webpackChunkName: "Order Detail" */ "@/components/orders/OrderDetail.vue"),
+    component: () => import(/* webpackChunkName: "Order Detail" */ "@/views/orders/OrderDetail.vue"),
     meta: {
       title: "Order Detail" + siteName,
       requiresAuth: false,
@@ -128,7 +128,7 @@ const routes = [
   {
     path: "/track-order",
     name: "Track Order",
-    component: () => import(/* webpackChunkName: "Track Order" */ "@/components/orders/TrackOrder.vue"),
+    component: () => import(/* webpackChunkName: "Track Order" */ "@/views/orders/TrackOrder.vue"),
     meta: {
       title: "Track Order" + siteName,
       requiresAuth: false,
@@ -139,7 +139,7 @@ const routes = [
   {
     path: "/track-orders",
     name: "Track Orders",
-    component: () => import(/* webpackChunkName: "Track Orders" */ "@/components/orders/AllOrders.vue"),
+    component: () => import(/* webpackChunkName: "Track Orders" */ "@/views/orders/AllOrders.vue"),
     meta: {
       title: "Track Orders" + siteName,
       requiresAdminAuth: true,
@@ -149,7 +149,7 @@ const routes = [
   {
     path: "/categories",
     name: "Categories",
-    component: () => import(/* webpackChunkName: "Categories" */ "@/components/categories/ListCategories.vue"),
+    component: () => import(/* webpackChunkName: "Categories" */ "@/views/categories/ListCategories.vue"),
     meta: {
       title: "Categories" + siteName,
       requiresAdminAuth: true,
@@ -158,7 +158,7 @@ const routes = [
   {
     path: "/add-category",
     name: "Add Category",
-    component: () => import(/* webpackChunkName: "Add Category" */ "@/components/categories/AddUpdateCategory.vue"),
+    component: () => import(/* webpackChunkName: "Add Category" */ "@/views/categories/AddUpdateCategory.vue"),
     meta: {
       title: "Add Category" + siteName,
       requiresAdminAuth: true,
@@ -168,7 +168,7 @@ const routes = [
   {
     path: "/products",
     name: "Products",
-    component: () => import(/* webpackChunkName: "Products" */ "@/components/products/ListProducts.vue"),
+    component: () => import(/* webpackChunkName: "Products" */ "@/views/products/ListProducts.vue"),
     meta: {
       title: "Products" + siteName,
       requiresAdminAuth: true,
@@ -177,7 +177,7 @@ const routes = [
   {
     path: "/add-product",
     name: "Add Product",
-    component: () => import(/* webpackChunkName: "Add Product" */ "@/components/products/AddUpdateProduct.vue"),
+    component: () => import(/* webpackChunkName: "Add Product" */ "@/views/products/AddUpdateProduct.vue"),
     meta: {
       title: "Add Product" + siteName,
       requiresAdminAuth: true,
@@ -186,7 +186,7 @@ const routes = [
   {
     path: "/manage-address",
     name: "Manage Address",
-    component: () => import(/* webpackChunkName: "Manage Address" */ "@/components/auth/ManageAddress.vue"),
+    component: () => import(/* webpackChunkName: "Manage Address" */ "@/views/auth/ManageAddress.vue"),
     meta: {
       title: "Manage Address" + siteName,
       requiresAuth: true,
@@ -195,7 +195,7 @@ const routes = [
   {
     path: "/add-address",
     name: "Add Address",
-    component: () => import(/* webpackChunkName: "Add Address" */ "@/components/auth/AddUpdateAddress.vue"),
+    component: () => import(/* webpackChunkName: "Add Address" */ "@/views/auth/AddUpdateAddress.vue"),
     meta: {
       title: "Add Address" + siteName,
       requiresAuth: true,
@@ -205,7 +205,7 @@ const routes = [
   {
     path: "/:pathMatch(.*)*",
     name: "Page Not Found",
-    component: () => import("@/components/common/PageNotFound.vue"),
+    component: () => import("@/common/PageNotFound.vue"),
     meta: {
       title: "Page Not Found" + siteName,
       requiresAuth: false,

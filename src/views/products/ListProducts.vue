@@ -79,9 +79,7 @@
 </template>
 
 <script>
-import HeaderComponent from "@/components/common/HeaderComponent.vue";
-import RightHandSide from "@/components/common/RightHandSide";
-import AlertScreen from "@/components/common/AlertScreen.vue";
+import AlertScreen from "@/common/AlertScreen.vue";
 import useToast from "@/hooks/useToast";
 import { onMounted, ref } from "vue";
 import { useStore } from "vuex";
@@ -89,7 +87,7 @@ import { useRouter } from "vue-router";
 
 export default {
   name: "Products",
-  components: { HeaderComponent, RightHandSide, AlertScreen },
+  components: { AlertScreen },
 
   setup() {
     const store = useStore();

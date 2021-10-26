@@ -163,17 +163,15 @@
 </template>
 
 <script>
-import HeaderComponent from "@/components/common/HeaderComponent.vue";
-import RightHandSide from "@/components/common/RightHandSide";
 import useToast from "@/hooks/useToast";
-import AlertScreen from "@/components/common/AlertScreen.vue";
+import AlertScreen from "@/common/AlertScreen.vue";
 import Toggle from "@vueform/toggle";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 export default {
   name: "Track Order",
-  components: { HeaderComponent, RightHandSide, AlertScreen, Toggle },
+  components: {AlertScreen, Toggle },
 
   setup() {
     const store = useStore();

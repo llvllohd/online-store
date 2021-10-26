@@ -99,8 +99,6 @@
 </template>
 
 <script>
-import HeaderComponent from "@/components/common/HeaderComponent.vue";
-import RightHandSide from "@/components/common/RightHandSide";
 import useToast from "@/hooks/useToast";
 import { onMounted, reactive, ref } from "vue";
 // import { useStore } from "vuex";
@@ -110,7 +108,7 @@ import { useField, useForm } from "vee-validate";
 
 export default {
   name: "Track Order",
-  components: { HeaderComponent, RightHandSide },
+  components: { },
 
   setup() {
     const store = useStore();

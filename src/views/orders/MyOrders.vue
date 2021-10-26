@@ -36,11 +36,7 @@
         </div>
       </div>
       <!-- Active Orders -->
-      <div
-        class="w-full shadow rounded mt-2 flex"
-        :class="activeOrders && activeOrders.length > 0 ? '' : 'h-96'"
-        v-if="is_active_orders"
-      >
+      <div class="w-full shadow rounded mt-2 flex" :class="activeOrders && activeOrders.length > 0 ? '' : 'h-96'" v-if="is_active_orders">
         <section v-if="activeOrders && activeOrders.length > 0">
           <div v-for="(activeOrder, index) in activeOrders" :key="index">
             <div class="card flex flex-wrap shadow p-2" v-for="order in activeOrder.orders" :key="order.id">
@@ -65,9 +61,7 @@
         <section class="w-full flex flex-col items-center justify-center" v-else>
           <div class="w-full md:w-2/3 shadow">
             <div class="flex flex-col items-center justify-center text-3xl font-bold p-3">
-              <div
-                class="flex items-center  justify-center border border-red-500 text-red-500 rounded-full w-12 h-12 md:w-16 md:h-16"
-              >
+              <div class="flex items-center  justify-center border border-red-500 text-red-500 rounded-full w-12 h-12 md:w-16 md:h-16">
                 <fa :icon="['fa', 'exclamation']" class="text-2xl md:text-4xl"> </fa>
               </div>
               <div class="text-lg md:text-2xl text-red-500 mt-3">No Orders Found!</div>
@@ -114,9 +108,7 @@
         <section class="w-full flex flex-col items-center justify-center" v-else>
           <div class="w-full md:w-2/3 shadow">
             <div class="flex flex-col items-center justify-center text-3xl font-bold p-3">
-              <div
-                class="flex items-center  justify-center border border-red-500 text-red-500 rounded-full w-12 h-12 md:w-16 md:h-16"
-              >
+              <div class="flex items-center  justify-center border border-red-500 text-red-500 rounded-full w-12 h-12 md:w-16 md:h-16">
                 <fa :icon="['fa', 'exclamation']" class="text-2xl md:text-4xl"> </fa>
               </div>
               <div class="text-lg md:text-2xl text-red-500 mt-3">No Orders Found!</div>
@@ -139,9 +131,7 @@
     <section class="w-full flex flex-col items-center justify-center" v-else>
       <div class="w-full md:w-2/3 shadow">
         <div class="flex flex-col items-center justify-center text-3xl font-bold p-3">
-          <div
-            class="flex items-center  justify-center border border-red-500 text-red-500 rounded-full w-12 h-12 md:w-16 md:h-16"
-          >
+          <div class="flex items-center  justify-center border border-red-500 text-red-500 rounded-full w-12 h-12 md:w-16 md:h-16">
             <fa :icon="['fa', 'exclamation']" class="text-2xl md:text-4xl"> </fa>
           </div>
           <div class="text-lg md:text-2xl text-red-500 mt-3">No Orders Found!</div>
@@ -165,8 +155,6 @@
 </template>
 
 <script>
-import HeaderComponent from "@/components/common/HeaderComponent.vue";
-import RightHandSide from "@/components/common/RightHandSide";
 import useToast from "@/hooks/useToast";
 import { onMounted, ref } from "vue";
 import { useStore } from "vuex";
@@ -174,7 +162,7 @@ import { useRouter } from "vue-router";
 
 export default {
   name: "My Orders",
-  components: { HeaderComponent, RightHandSide },
+  components: {},
 
   setup() {
     const store = useStore();

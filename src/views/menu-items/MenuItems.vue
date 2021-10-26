@@ -100,10 +100,8 @@
 </template>
 
 <script>
-import HeaderComponent from "@/components/common//HeaderComponent.vue";
-import ItemDetail from "@/components/menu-items/ItemDetails.vue";
-import RightHandSide from "@/components/common/RightHandSide";
-import FloatingButton from "@/components/common/FloatingButton";
+import ItemDetail from "@/views/menu-items/ItemDetails.vue";
+import FloatingButton from "@/common/FloatingButton";
 import backgroundImage from "@/assets/images/crochet-background.jpg";
 import "vue3-carousel/dist/carousel.css";
 import useToast from "@/hooks/useToast";
@@ -115,9 +113,7 @@ import ItemDetails from "./ItemDetails.vue";
 export default {
   name: "Menu Items",
   components: {
-    HeaderComponent,
     ItemDetail,
-    RightHandSide,
     FloatingButton,
     Carousel,
     Slide,

@@ -51,15 +51,10 @@
   </section>
 
   <!-- Alert Modal -->
-  <alert-screen
-    :is-alert="is_alert"
-    :item-id="address_id"
-    @confirm-alert="confirmAlert"
-    :delete-Action="deleteAddress"
-  >
-     <template v-slot:header>
+  <alert-screen :is-alert="is_alert" :item-id="address_id" @confirm-alert="confirmAlert" :delete-Action="deleteAddress">
+    <template v-slot:header>
       <div class="flex items-center justify-center bg-red-500 rounded-full w-5 h-5 mr-2">
-      <fa :icon="['fa', 'exclamation']" class="text-white text-xs sm:text-sm"></fa>
+        <fa :icon="['fa', 'exclamation']" class="text-white text-xs sm:text-sm"></fa>
       </div>
       Delete Alert
     </template>
@@ -70,9 +65,7 @@
 </template>
 
 <script>
-import HeaderComponent from "@/components/common/HeaderComponent.vue";
-import RightHandSide from "@/components/common/RightHandSide";
-import AlertScreen from "@/components/common/AlertScreen.vue";
+import AlertScreen from "@/common/AlertScreen.vue";
 import useToast from "@/hooks/useToast";
 import { onMounted, ref } from "vue";
 import { useStore } from "vuex";
@@ -80,7 +73,7 @@ import { useRouter } from "vue-router";
 
 export default {
   name: "Categories",
-  components: { HeaderComponent, RightHandSide, AlertScreen },
+  components: { AlertScreen },
 
   setup() {
     const store = useStore();

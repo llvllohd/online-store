@@ -223,9 +223,7 @@
 </template>
 
 <script>
-import HeaderComponent from "@/components/common/HeaderComponent.vue";
-import RightHandSide from "@/components/common/RightHandSide";
-import FloatingButton from "@/components/common/FloatingButton";
+import FloatingButton from "@/common/FloatingButton";
 import useToast from "@/hooks/useToast";
 import { computed, onMounted, reactive, ref } from "vue";
 import { useStore } from "vuex";
@@ -235,7 +233,7 @@ import { useRouter } from "vue-router";
 
 export default {
   name: "Checkout",
-  components: { HeaderComponent, RightHandSide, FloatingButton },
+  components: { FloatingButton },
 
   setup() {
     const router = useRouter();

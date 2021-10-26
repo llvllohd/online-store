@@ -8,7 +8,7 @@
 
 <script>
 import { computed } from "vue";
-import Loader from "@/components/common/LoaderScreen.vue";
+import Loader from "@/common/LoaderScreen.vue";
 import { useStore } from "vuex";
 
 export default {

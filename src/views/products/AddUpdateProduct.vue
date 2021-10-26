@@ -116,8 +116,6 @@
 </template>
 
 <script>
-import HeaderComponent from "@/components/common/HeaderComponent.vue";
-import RightHandSide from "@/components/common/RightHandSide";
 import useToast from "@/hooks/useToast";
 import { computed, onMounted, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -126,7 +124,7 @@ import { useForm, useField } from "vee-validate";
 
 export default {
   name: "Register",
-  components: { HeaderComponent, RightHandSide },
+  components: {  },
   setup() {
     const store = useStore();
     const router = useRouter();
