@@ -15,7 +15,6 @@ HTTP.interceptors.request.use(
     store.commit("loader/updateLoader", true);
     const token = store.getters["auth/token"];
     const sessionId = store.getters["auth/sessionId"];
-    // window.axios.defaults.headers.common["sessionId"] = sessionId;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

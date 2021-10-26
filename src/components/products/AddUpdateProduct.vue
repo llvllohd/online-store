@@ -19,128 +19,44 @@
 
       <form @submit="submitForm" class="shadow-md rounded px-5 p-5">
         <!-- Name -->
-        <div class="mb-4">
-          <label class="block text-sm font-bold mb-2">
-            Name
-          </label>
-          <input
-            type="text"
-            placeholder="Name"
-            @input="name.handleChange"
-            @blur="name.handleBlur"
-            v-model="name.value"
-            class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            :class="name.meta.touched && !name.meta.valid ? 'border border-red-500' : ''"
-            id="name"
-          />
-          <span v-if="name.meta.touched && !name.meta.valid" class="text-red-500 text-xs italic">
-            {{ name.errorMessage || "Field is required" }}
-          </span>
+        <div class="mb-3">
+          <BaseInput type="text" label="Name" v-model="name.value" :error="name.errorMessage" />
         </div>
 
         <!-- Description -->
-        <div class="mb-4">
-          <label class="block text-sm font-bold mb-2">
-            Description
-          </label>
-          <input
-            type="text"
-            placeholder="Description"
-            @input="description.handleChange"
-            @blur="description.handleBlur"
-            v-model="description.value"
-            class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            :class="description.meta.touched && !description.meta.valid ? 'border border-red-500' : ''"
-          />
-          <span v-if="description.meta.touched && !description.meta.valid" class=" text-red-500 text-xs italic">
-            {{ description.errorMessage || "Field is required" }}
-          </span>
+        <div class="mb-3">
+          <BaseInput type="text" label="Description" v-model="description.value" :error="description.errorMessage" />
         </div>
 
         <!-- Select Category -->
-        <div class="mb-4">
-          <label class="block text-sm font-bold mb-2">
-            Select Category
-          </label>
-          <select
-            v-model="category_id.value"
-            class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            :class="category_id.meta.touched && !category_id.meta.valid ? 'border border-red-500' : ''"
-          >
-            <option class="py-1" :value="category.value" v-for="category in category_options.value" :key="category.value">
-              {{ category.text }}</option
-            >
-          </select>
-          <span v-if="category_id.meta.touched && !category_id.meta.valid" class=" text-red-500 text-xs italic">
-            {{ category_id.errorMessage || "Field is required" }}
-          </span>
+        <div class="mb-3">
+          <BaseSelect label="Select Category" v-model="category_id.value" :options="category_options.value" :error="category_id.errorMessage" />
         </div>
 
-        <!-- Is Visible -->
-        <div class="flex items-center mb-4">
-          <div class="flex w-1/2">
-            <label class="flex items-center">
-              <input type="checkbox" v-model="is_visible.value" class="form-checkbox rounded" />
-              <span class="ml-2">Visible</span>
-            </label>
+        <!-- Is Visible & Available -->
+        <div class="flex items-center mb-3">
+          <div class="flex items-center w-1/2">
+            <BaseCheckbox label="Visible" v-model="is_visible.value" />
           </div>
 
-          <!-- Is Available -->
-          <div class="flex w-1/2">
-            <label class="flex items-center">
-              <input type="checkbox" v-model="is_available.value" class="form-checkbox rounded" />
-              <span class="ml-2">Available</span>
-            </label>
+          <div class="flex items-center w-1/2">
+            <BaseCheckbox label="Available" v-model="is_available.value" />
           </div>
         </div>
 
         <!-- Price -->
-        <div class="mb-4">
-          <label class="block text-sm font-bold mb-2">
-            Price
-          </label>
-          <input
-            type="number"
-            placeholder="Price"
-            @input="price.handleChange"
-            @blur="price.handleBlur"
-            v-model="price.value"
-            class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            :class="price.meta.touched && !price.meta.valid ? 'border border-red-500' : ''"
-            id="name"
-          />
-          <span v-if="price.meta.touched && !price.meta.valid" class="text-red-500 text-xs italic">
-            {{ price.errorMessage || "Field is required" }}
-          </span>
+        <div class="mb-3">
+          <BaseInput type="number" label="Price" v-model="price.value" :error="price.errorMessage" />
         </div>
 
         <!-- On Offer -->
-        <div class="flex mb-4">
-          <label class="flex items-center">
-            <input type="checkbox" v-model="on_offer.value" class="form-checkbox rounded" />
-            <span class="ml-2">On Offer</span>
-          </label>
+        <div class="flex items-center mb-3">
+          <BaseCheckbox label="On Offer" v-model="on_offer.value" />
         </div>
 
         <!-- Offer Price -->
-        <div class="mb-4">
-          <label class="block text-sm font-bold mb-2">
-            Offer Price
-          </label>
-
-          <input
-            type="number"
-            placeholder="Offer Price"
-            @input="offer_price.handleChange"
-            @blur="offer_price.handleBlur"
-            v-model="offer_price.value"
-            class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            :class="offer_price.meta.touched && !offer_price.meta.valid ? 'border border-red-500' : ''"
-            id="name"
-          />
-          <span v-if="offer_price.meta.touched && !offer_price.meta.valid" class="text-red-500 text-xs italic">
-            {{ offer_price.errorMessage || "Field is required" }}
-          </span>
+        <div class="mb-3">
+          <BaseInput type="number" label="Offer Price" v-model="offer_price.value" :error="offer_price.errorMessage" />
         </div>
 
         <!-- Image -->
@@ -152,11 +68,7 @@
           <div class="shadow rounded" v-if="selected_image_file && selected_image_file.length > 0">
             <img class="h-40 w-full object-contain rounded" :src="selected_image_file" alt="image" />
           </div>
-          <div
-            :class="image_file.meta.touched && !image_file.meta.valid ? 'border border-red-500' : ''"
-            class="shadow rounded"
-            v-else
-          >
+          <div :class="image_file.meta.touched && !image_file.meta.valid ? 'border border-red-500' : ''" class="shadow rounded" v-else>
             <img class="h-40 w-full object-contain rounded" src="@/assets/images/no-photos.png" alt="image" />
           </div>
           <span v-if="image_file.meta.touched && !image_file.meta.valid" class="text-red-500 text-xs italic">
@@ -178,18 +90,16 @@
 
         <!-- Add Product -->
         <div class="flex items-center">
-          <button
-            :disabled="isSubmitting ? true : false"
-            type="submit"
-            class="w-full text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          <div
+            @click="submitForm"
+            class="flex items-center justify-center w-full text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             :class="[
-              formMeta.valid ? 'bg-gray-900 hover:bg-gray-800' : 'bg-gray-500 hover:bg-gray-500',
-              isSubmitting ? 'cursor-not-allowed' : 'cursor-pointer',
+              formMeta.touched && !formMeta.valid ? 'bg-gray-500 hover:bg-gray-500' : 'bg-gray-900 hover:bg-gray-800',
+              isSubmitting ? 'cursor-not-allowed' : 'sm:cursor-pointer',
             ]"
           >
-            <fa :icon="['fa', 'circle-notch']" class="text-white text-xs animate-spin mr-2" v-if="isSubmitting"> </fa>
             {{ productId ? "Update" : "ADD" }}
-          </button>
+          </div>
         </div>
       </form>
 

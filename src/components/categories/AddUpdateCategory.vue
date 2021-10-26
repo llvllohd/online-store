@@ -19,67 +19,30 @@
 
       <form @submit="submitForm" class="shadow-md rounded px-5 p-5">
         <!-- Name -->
-        <div class="mb-4">
-          <label class="block text-sm font-bold mb-2">
-            Name
-          </label>
-          <input
-            type="text"
-            placeholder="Name"
-            @input="name.handleChange"
-            @blur="name.handleBlur"
-            v-model="name.value"
-            class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            :class="name.meta.touched && !name.meta.valid ? 'border border-red-500' : ''"
-            id="name"
-          />
-          <span v-if="name.meta.touched && !name.meta.valid" class="text-red-500 text-xs italic">
-            {{ name.errorMessage || "Field is required" }}
-          </span>
+        <div class="mb-3">
+          <BaseInput type="text" label="Name" v-model="name.value" :error="name.errorMessage" />
         </div>
 
         <!-- Description -->
-        <div class="mb-4">
-          <label class="block text-sm font-bold mb-2">
-            Description
-          </label>
-
-          <input
-            type="text"
-            placeholder="Description"
-            @input="description.handleChange"
-            @blur="description.handleBlur"
-            v-model="description.value"
-            class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            :class="description.meta.touched && !description.meta.valid ? 'border border-red-500' : ''"
-          />
-          <span v-if="description.meta.touched && !description.meta.valid" class=" text-red-500 text-xs italic">
-            {{ description.errorMessage || "Field is required" }}
-          </span>
+        <div class="mb-3">
+          <BaseInput type="text" label="Description" v-model="description.value" :error="description.errorMessage" />
         </div>
 
         <!-- Is Visible -->
-        <div class="flex mb-4">
-          <label class="flex items-center">
-            <input type="checkbox" v-model="is_visible.value" class="form-checkbox rounded" />
-            <span class="ml-2">Visible</span>
-          </label>
+        <div class="flex items-center mb-3">
+          <BaseCheckbox label="Visible" v-model="is_visible.value" />
         </div>
 
         <!-- Add Category -->
-        <div class="flex items-center">
-          <button
-            :disabled="isSubmitting ? true : false"
-            type="submit"
-            class="w-full text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            :class="[
-              formMeta.valid ? 'bg-gray-900 hover:bg-gray-800' : 'bg-gray-500 hover:bg-gray-500',
-              isSubmitting ? 'cursor-not-allowed' : 'cursor-pointer',
-            ]"
-          >
-            <fa :icon="['fa', 'circle-notch']" class="text-white text-xs animate-spin mr-2" v-if="isSubmitting"> </fa>
-            {{ categoryId ? "Update" : "ADD" }}
-          </button>
+        <div
+          @click="submitForm"
+          class="w-full flex items-center justify-center text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          :class="[
+            formMeta.touched && !formMeta.valid ? 'bg-gray-500 hover:bg-gray-500' : 'bg-gray-900 hover:bg-gray-800',
+            isSubmitting ? 'cursor-not-allowed' : 'sm:cursor-pointer',
+          ]"
+        >
+          {{ categoryId ? "Update" : "ADD" }}
         </div>
       </form>
 
