@@ -4,18 +4,7 @@
   <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
     <section class="flex flex-col items-center justify-center p-2 sm:p-3 w-full">
       <!-- Back button & title -->
-      <section class="w-full flex items-center justify-between text-xl sm:text-2xl font-bold p-3 mb-3">
-        <div class="flex items-center w-1/6">
-          <span
-            class="flex items-center justify-center sm:cursor-pointer rounded-full h-7 w-7 sm:h-9 sm:w-9 border hover:border-gray-900"
-            @click.prevent="router.go(-1)"
-          >
-            <fa :icon="['fa', 'arrow-left']" class="text-sm sm:text-lg text-gray-900"> </fa>
-          </span>
-        </div>
-        <div class="flex items-center justify-center w-4/6 ">Track Order</div>
-        <div class="w-1/6"></div>
-      </section>
+      <TitleScreen title="Track Order" />
     </section>
     <!-- Form -->
     <div class="h-full p-3 w-full sm:max-w-lg flex flex-col justify-center">
@@ -74,11 +63,7 @@
       </div>
       <div v-else>
         <!-- <section class="flex items-center justify-center rounded text-white bg-gray-900 p-5 mt-5"></section> -->
-        <section
-          class="w-full h-50 flex flex-col items-center justify-center border-r border-l"
-          v-for="status in 4"
-          :key="status.status_id"
-        >
+        <section class="w-full h-50 flex flex-col items-center justify-center border-r border-l" v-for="status in 4" :key="status.status_id">
           <div class="border border-gray-200 bg-gray-200 h-10 sm:h-16 w-1"></div>
           <div class="w-full flex items-center justify-center">
             <div class="w-2/5 flex items-center justify-end text-sm sm:text-base"></div>
@@ -108,7 +93,7 @@ import { useField, useForm } from "vee-validate";
 
 export default {
   name: "Track Order",
-  components: { },
+  components: {},
 
   setup() {
     const store = useStore();

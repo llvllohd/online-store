@@ -1,5 +1,5 @@
 <template>
-  <label class="block text-sm font-bold mb-2" v-if="label"> {{ label }}</label>
+  <label class="block text-sm font-bold mb-2" v-if="isLabel && label"> {{ label }}</label>
   <input
     :class="[error ? 'border-red-500' : '', 'w-full rounded']"
     :placeholder="label"
@@ -22,6 +22,9 @@ export default {
     label: {
       type: String,
       default: "",
+    },
+    isLabel: {
+      type: Boolean,
     },
     modelValue: {
       type: [String, Number],

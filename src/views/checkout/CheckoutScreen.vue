@@ -4,18 +4,7 @@
   <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start mb-10">
     <div class="p-1 sm:p-3 w-full">
       <!-- Back button & title -->
-      <section class="w-full flex items-center justify-between text-xl sm:text-2xl font-bold p-3 mb-3">
-        <div class="flex items-center w-1/6">
-          <span
-            class="flex items-center justify-center sm:cursor-pointer rounded-full h-7 w-7 sm:h-9 sm:w-9 border hover:border-gray-900"
-            @click.prevent="router.go(-1)"
-          >
-            <fa :icon="['fa', 'arrow-left']" class="text-sm sm:text-lg text-gray-900"> </fa>
-          </span>
-        </div>
-        <div class="flex items-center justify-center w-4/6 ">Checkout</div>
-        <div class="w-1/6"></div>
-      </section>
+      <TitleScreen title="Checkout" />
 
       <form @submit="submitForm" class="shadow rounded px-5 p-3">
         <!-- Personal Information -->
@@ -36,10 +25,7 @@
                 :class="user_name.meta.touched && !user_name.meta.valid ? 'border border-red-500' : ''"
                 id="user_name"
               />
-              <span
-                class="text-red-500 text-xs italic"
-                :class="user_name.meta.touched && !user_name.meta.valid ? 'opacity-1' : 'opacity-0'"
-              >
+              <span class="text-red-500 text-xs italic" :class="user_name.meta.touched && !user_name.meta.valid ? 'opacity-1' : 'opacity-0'">
                 {{ user_name.errorMessage || "Field is required" }}
               </span>
             </div>
@@ -58,10 +44,7 @@
                   id="name"
                 />
               </div>
-              <span
-                class="text-red-500 text-xs italic"
-                :class="phone.meta.touched && !phone.meta.valid ? 'opacity-1' : 'opacity-0'"
-              >
+              <span class="text-red-500 text-xs italic" :class="phone.meta.touched && !phone.meta.valid ? 'opacity-1' : 'opacity-0'">
                 {{ phone.errorMessage || "Field is required" }}
               </span>
             </div>
@@ -70,18 +53,7 @@
           <div class="flex flex-col md:flex-row items-center justify-between md:mb-1 md:space-x-2">
             <!-- Email -->
             <div class="w-full md:w-1/2 mb-0 md:mb-0">
-              <input
-                type="email"
-                placeholder="Email"
-                @input="email.handleChange"
-                @blur="email.handleBlur"
-                v-model="email.value"
-                class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                :class="email.meta.touched && !email.meta.valid ? 'border border-red-500' : ''"
-              />
-              <span v-if="email.meta.touched && !email.meta.valid" class=" text-red-500 text-xs italic">
-                {{ email.errorMessage || "Field is required" }}
-              </span>
+              <BaseInput type="email" label="Email" :isLabel="false" v-model="email.value" :error="email.errorMessage" />
             </div>
             <!-- Empty -->
             <div class="w-full md:w-1/2 mb-0 md:mb-0"></div>
@@ -96,59 +68,18 @@
           <!--For Guest User -->
           <section v-if="!isUserLoggedIn">
             <!-- Address -->
-            <div class="mb-4">
-              <input
-                type="text"
-                placeholder="Address"
-                @input="address.handleChange"
-                @blur="address.handleBlur"
-                v-model="address.value"
-                class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                :class="address.meta.touched && !address.meta.valid ? 'border border-red-500' : ''"
-                id="name"
-              />
-
-              <span v-if="address.meta.touched && !address.meta.valid" class="text-red-500 text-xs italic">
-                {{ address.errorMessage || "Field is required" }}
-              </span>
+            <div class="mb-3">
+              <BaseInput type="text" label="Address" :isLabel="false" v-model="address.value" :error="address.errorMessage" />
             </div>
 
             <!-- House Name & Landmark -->
-            <div class="flex flex-col md:flex-row items-center justify-between md:mb-4 md:space-x-2">
-              <div class="w-full md:w-1/2 mb-4 md:mb-0">
-                <input
-                  type="text"
-                  placeholder="House Name"
-                  @input="house_name.handleChange"
-                  @blur="house_name.handleBlur"
-                  v-model="house_name.value"
-                  class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                  :class="house_name.meta.touched && !house_name.meta.valid ? 'border border-red-500' : ''"
-                />
-                <span
-                  class=" text-red-500 text-xs italic"
-                  :class="house_name.meta.touched && !house_name.meta.valid ? 'opacity-1' : 'opacity-0'"
-                >
-                  {{ house_name.errorMessage || "Field is required" }}
-                </span>
+            <div class="flex flex-col md:flex-row items-start justify-center md:mb-3 md:space-x-2">
+              <div class="w-full md:w-1/2 mb-3 md:mb-0">
+                <BaseInput type="text" label="House Name" :isLabel="false" v-model="house_name.value" :error="house_name.errorMessage" />
               </div>
 
-              <div class="w-full md:w-1/2 mb-0 md:mb-0">
-                <input
-                  type="text"
-                  placeholder="Landmark"
-                  @input="landmark.handleChange"
-                  @blur="landmark.handleBlur"
-                  v-model="landmark.value"
-                  class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                  :class="landmark.meta.touched && !landmark.meta.valid ? 'border border-red-500' : ''"
-                />
-                <span
-                  class=" text-red-500 text-xs italic"
-                  :class="landmark.meta.touched && !landmark.meta.valid ? 'opacity-1' : 'opacity-0'"
-                >
-                  {{ landmark.errorMessage || "Field is required" }}
-                </span>
+              <div class="w-full md:w-1/2">
+                <BaseInput type="text" label="Landmark" :isLabel="false" v-model="landmark.value" :error="landmark.errorMessage" />
               </div>
             </div>
           </section>
@@ -166,9 +97,7 @@
                 :class="user_address_id.meta.touched && !user_address_id.meta.valid ? 'border border-red-500' : ''"
               >
                 <option class="py-1" value="">Select Address</option>
-                <option class="py-1" :value="address.id" v-for="address in user_addresses" :key="address.id">
-                  {{ address.house_name }}</option
-                >
+                <option class="py-1" :value="address.id" v-for="address in user_addresses" :key="address.id"> {{ address.house_name }}</option>
               </select>
               <span v-if="user_address_id.meta.touched && !user_address_id.meta.valid" class=" text-red-500 text-xs italic">
                 {{ user_address_id.errorMessage || "Field is required" }}
@@ -179,9 +108,7 @@
               <div class="flex flex-col px-3 py-2 border-b">
                 <div class="text-base md:text-lg font-medium">{{ selected_address.house_name }}</div>
                 <div class="text-sm md:text-base">{{ selected_address.address }}</div>
-                <div class="text-sm md:text-base">
-                  <span class="font-medium"> Landmark:</span> {{ selected_address.landmark }}
-                </div>
+                <div class="text-sm md:text-base"><span class="font-medium"> Landmark:</span> {{ selected_address.landmark }}</div>
               </div>
               <div class="flex items-center justify-end cursor-pointer text-sm px-3 py-2">
                 <router-link :to="{ name: 'Add Address', query: { addressId: selected_address.id } }">
@@ -244,7 +171,7 @@ export default {
     const { meta: formMeta, handleSubmit } = useForm();
     const user_address_id = reactive(useField("user_address_id", requiredFieldsForRegistered, { initialValue: "" }));
     const user_name = reactive(useField("user_name", "required"));
-    const email = reactive(useField("email", "email"));
+    const email = reactive(useField("email", "email", { initialValue: "" }));
     const phone = reactive(useField("phone", "phone"));
     const address = reactive(useField("address", requiredForGuest, { initialValue: "" }));
     const house_name = reactive(useField("house_name", requiredForGuest, { initialValue: "" }));
@@ -259,12 +186,7 @@ export default {
     function requiredForGuest(address, house_name, landmark) {
       if (
         isUserLoggedIn.value ||
-        (!isUserLoggedIn.value &&
-          address != "" &&
-          !isUserLoggedIn.value &&
-          house_name != "" &&
-          !isUserLoggedIn.value &&
-          landmark != "")
+        (!isUserLoggedIn.value && address != "" && !isUserLoggedIn.value && house_name != "" && !isUserLoggedIn.value && landmark != "")
       ) {
         return true;
       }

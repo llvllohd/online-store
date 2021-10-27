@@ -4,28 +4,14 @@
   <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
     <section class="flex flex-col items-center justify-center p-2 sm:p-3 w-full">
       <!-- Back button & title -->
-      <section class="w-full flex items-center justify-between text-xl sm:text-2xl font-bold p-3 mb-3">
-        <div class="flex items-center w-1/6">
-          <span
-            class="flex items-center justify-center sm:cursor-pointer rounded-full h-7 w-7 sm:h-9 sm:w-9 border hover:border-gray-900"
-            @click.prevent="router.go(-1)"
-          >
-            <fa :icon="['fa', 'arrow-left']" class="text-sm sm:text-lg text-gray-900"> </fa>
-          </span>
-        </div>
-        <div class="flex items-center justify-center w-4/6 ">Track Orders</div>
-        <div class="w-1/6"></div>
-      </section>
+      <TitleScreen title="Track Orders" />
 
       <!-- All Orders -->
       <section class="w-full flex flex-wrap items-center justify-between text-sm sm:text-base font-semibold">
         <div :class="['orders-tab', selectedTab == 'new' ? 'selected-tab' : '']" @click="getOrders('Accept', 'new', newOrders)">
           New
         </div>
-        <div
-          :class="['orders-tab', selectedTab == 'accepted' ? 'selected-tab' : '']"
-          @click="getOrders('Dispatch', 'accepted', acceptedOrders)"
-        >
+        <div :class="['orders-tab', selectedTab == 'accepted' ? 'selected-tab' : '']" @click="getOrders('Dispatch', 'accepted', acceptedOrders)">
           Accepted
         </div>
         <div
@@ -40,10 +26,7 @@
         >
           Completed
         </div>
-        <div
-          :class="['orders-tab', selectedTab == 'rejected' ? 'selected-tab' : '']"
-          @click.prevent="getOrders('', 'rejected', rejectedOrders)"
-        >
+        <div :class="['orders-tab', selectedTab == 'rejected' ? 'selected-tab' : '']" @click.prevent="getOrders('', 'rejected', rejectedOrders)">
           Rejected
         </div>
         <div :class="['orders-tab', selectedTab == 'search' ? 'selected-tab' : '']" @click.prevent="getOrders('', 'search', [])">
@@ -73,10 +56,7 @@
               <th class="text-center border border-gray-400 p-2" v-if="selectedColumnName != ''">
                 {{ selectedColumnName }}
               </th>
-              <th
-                class="text-center border border-gray-400 p-2"
-                v-if="selectedColumnName != '' && selectedColumnName != 'Complete'"
-              >
+              <th class="text-center border border-gray-400 p-2" v-if="selectedColumnName != '' && selectedColumnName != 'Complete'">
                 Reject
               </th>
             </tr>
@@ -129,10 +109,7 @@
                   <fa :icon="['fa', 'check']" class="text-green-500" @click.prevent="updateOrderStatus(order.id)"> </fa>
                 </div>
               </td>
-              <td
-                class="text-center border border-gray-400 p-2"
-                v-if="selectedColumnName != '' && selectedColumnName != 'Complete'"
-              >
+              <td class="text-center border border-gray-400 p-2" v-if="selectedColumnName != '' && selectedColumnName != 'Complete'">
                 <div class="font-bold text-base cursor-pointer">
                   <fa :icon="['fa', 'times']" class="text-red-500" @click.prevent="openAlert(order.id)"> </fa>
                 </div>
@@ -171,7 +148,7 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 export default {
   name: "Track Order",
-  components: {AlertScreen, Toggle },
+  components: { AlertScreen, Toggle },
 
   setup() {
     const store = useStore();

@@ -3,9 +3,8 @@
   <!-- LHS -->
   <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-center">
     <div class="h-full p-3 w-full sm:max-w-md flex flex-col justify-center">
-      <div class="flex justify-center text-3xl font-bold p-5">
-        Login
-      </div>
+      <!-- Back button & title -->
+      <TitleScreen title="Login" />
       <form @submit="submitForm" class="shadow-md rounded px-5 p-5">
         <!-- Email -->
         <div class="mb-3">
