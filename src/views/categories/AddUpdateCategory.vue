@@ -1,40 +1,36 @@
 <template>
-  <header-component></header-component>
-  <!-- LHS -->
-  <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
-    <div class="p-3 w-full sm:max-w-md">
-      <!-- Back button & title -->
-      <TitleScreen :title="categoryId ? 'Update Category' : 'Add Category'" />
+  <div>
+    <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
+      <div class="p-3 w-full sm:max-w-md">
+        <!-- Back button & title -->
+        <TitleScreen :title="categoryId ? 'Update Category' : 'Add Category'" />
 
-      <form @submit="submitForm" class="shadow-md rounded px-5 p-5">
-        <!-- Name -->
-        <div class="mb-3">
-          <BaseInput type="text" label="Name" v-model="name.value" :error="name.errorMessage" />
-        </div>
+        <form @submit="submitForm" class="shadow-md rounded px-5 p-5">
+          <!-- Name -->
+          <div class="mb-3">
+            <BaseInput type="text" label="Name" v-model="name.value" :error="name.errorMessage" />
+          </div>
 
-        <!-- Description -->
-        <div class="mb-3">
-          <BaseInput type="text" label="Description" v-model="description.value" :error="description.errorMessage" />
-        </div>
+          <!-- Description -->
+          <div class="mb-3">
+            <BaseInput type="text" label="Description" v-model="description.value" :error="description.errorMessage" />
+          </div>
 
-        <!-- Is Visible -->
-        <div class="flex items-center mb-3">
-          <BaseCheckbox label="Visible" v-model="is_visible.value" />
-        </div>
+          <!-- Is Visible -->
+          <div class="flex items-center mb-3">
+            <BaseCheckbox label="Visible" v-model="is_visible.value" />
+          </div>
 
-        <!-- Add Category -->
-        <BaseButton :label="categoryId ? 'Update' : 'ADD'" :clickMethod="submitForm" :formMeta="formMeta" :isSubmitting="isSubmitting" />
-      </form>
+          <!-- Add Category -->
+          <BaseButton :label="categoryId ? 'Update' : 'ADD'" :clickMethod="submitForm" :formMeta="formMeta" :isSubmitting="isSubmitting" />
+        </form>
 
-      <p class="text-center text-gray-500 text-xs p-3">
-        &copy;2021 Fatimas. All rights reserved.
-      </p>
-    </div>
-  </section>
-  <!-- RHS -->
-  <section>
-    <right-hand-side></right-hand-side>
-  </section>
+        <p class="text-center text-gray-500 text-xs p-3">
+          &copy;2021 Fatimas. All rights reserved.
+        </p>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>

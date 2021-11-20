@@ -6,6 +6,8 @@ import HeaderComponent from "@/common/HeaderComponent.vue";
 import RightHandSide from "@/common/RightHandSide";
 import TitleScreen from "@/common/TitleScreen.vue";
 import { FontAwesomeIcon, FontAwesomeLayers } from "./icons/icons.js";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import "./assets/css/tailwind.css";
 import "animate.css";
 import "@/global-validator/validator.js";
@@ -20,6 +22,7 @@ requireComponent.keys().forEach((fileName) => {
 });
 app.use(store);
 app.use(router);
+app.use(AOS.init());
 app.component("HeaderComponent", HeaderComponent);
 app.component("RightHandSide", RightHandSide);
 app.component("TitleScreen", TitleScreen);

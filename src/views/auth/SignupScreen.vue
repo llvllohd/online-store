@@ -1,52 +1,53 @@
 <template>
-  <header-component></header-component>
-  <!-- LHS -->
-  <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-center">
-    <div class="h-full p-3 w-full sm:max-w-md">
-      <!-- Back button & title -->
-      <TitleScreen title="Register" />
+  <div>
+    <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-center">
+      <div class="h-full p-3 w-full sm:max-w-md">
+        <!-- Back button & title -->
+        <TitleScreen title="Register" />
 
-      <form @submit="submitForm" class="shadow-md rounded px-5 p-5">
-        <!-- Name -->
-        <div class="mb-3">
-          <BaseInput type="text" label="Name" v-model="nameField.value" :error="nameField.errorMessage" />
-        </div>
+        <form @submit="submitForm" class="shadow-md rounded px-5 p-5">
+          <!-- Name -->
+          <div class="mb-3">
+            <BaseInput type="text" label="Name" v-model="nameField.value" :error="nameField.errorMessage" />
+          </div>
 
-        <!-- Email -->
-        <div class="mb-3">
-          <BaseInput type="text" label="Email" v-model="emailField.value" :error="emailField.errorMessage" />
-        </div>
+          <!-- Email -->
+          <div class="mb-3">
+            <BaseInput type="text" label="Email" v-model="emailField.value" :error="emailField.errorMessage" />
+          </div>
 
-        <!-- Password -->
-        <div class="mb-3">
-          <BaseInput type="password" label="Password" v-model="passwordField.value" :error="passwordField.errorMessage" />
-        </div>
+          <!-- Password -->
+          <div class="mb-3">
+            <BaseInput type="password" label="Password" v-model="passwordField.value" :error="passwordField.errorMessage" />
+          </div>
 
-        <!-- Confirm Password -->
-        <div class="mb-3">
-          <BaseInput type="password" label="Confirm Password" v-model="confirmPasswordField.value" :error="confirmPasswordField.errorMessage" />
-        </div>
+          <!-- Confirm Password -->
+          <div class="mb-3">
+            <BaseInput
+              type="password"
+              label="Confirm Password"
+              v-model="confirmPasswordField.value"
+              :error="confirmPasswordField.errorMessage"
+            />
+          </div>
 
-        <!-- Signup Btn -->
-        <BaseButton label="Register" :clickMethod="submitForm" :formMeta="formMeta" :isSubmitting="isSubmitting" />
+          <!-- Signup Btn -->
+          <BaseButton label="Register" :clickMethod="submitForm" :formMeta="formMeta" :isSubmitting="isSubmitting" />
 
-        <div class="text-xs sm:text-sm font-bold flex justify-center p-3">
-          Already Have An Account?
-          <router-link :to="{ name: 'Login' }" class="ml-2 text-blue-500 hover:text-blue-800">
-            Sign In
-          </router-link>
-        </div>
-      </form>
+          <div class="text-xs sm:text-sm font-bold flex justify-center p-3">
+            Already Have An Account?
+            <router-link :to="{ name: 'Login' }" class="ml-2 text-blue-500 hover:text-blue-800">
+              Sign In
+            </router-link>
+          </div>
+        </form>
 
-      <p class="text-center text-gray-500 text-xs p-3">
-        &copy;2021 Fatimas. All rights reserved.
-      </p>
-    </div>
-  </section>
-  <!-- RHS -->
-  <section>
-    <right-hand-side></right-hand-side>
-  </section>
+        <p class="text-center text-gray-500 text-xs p-3">
+          &copy;2021 Fatimas. All rights reserved.
+        </p>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>

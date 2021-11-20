@@ -1,142 +1,138 @@
 <template>
-  <header-component></header-component>
-  <!-- LHS -->
-  <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
-    <section class="flex flex-col items-center justify-center p-2 sm:p-3 w-full">
-      <!-- Back button & title -->
-      <TitleScreen title="Track Orders" />
+  <div>
+    <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
+      <section class="flex flex-col items-center justify-center p-2 sm:p-3 w-full">
+        <!-- Back button & title -->
+        <TitleScreen title="Track Orders" />
 
-      <!-- All Orders -->
-      <section class="w-full flex flex-wrap items-center justify-between text-sm sm:text-base font-semibold">
-        <div :class="['orders-tab', selectedTab == 'new' ? 'selected-tab' : '']" @click="getOrders('Accept', 'new', newOrders)">
-          New
-        </div>
-        <div :class="['orders-tab', selectedTab == 'accepted' ? 'selected-tab' : '']" @click="getOrders('Dispatch', 'accepted', acceptedOrders)">
-          Accepted
-        </div>
-        <div
-          :class="['orders-tab', selectedTab == 'dispatched' ? 'selected-tab' : '']"
-          @click.prevent="getOrders('Complete', 'dispatched', dispatchedOrders)"
-        >
-          Dispatched
-        </div>
-        <div
-          :class="['orders-tab', selectedTab == 'completed' ? 'selected-tab' : '']"
-          @click.prevent="getOrders('', 'completed', completedOrders)"
-        >
-          Completed
-        </div>
-        <div :class="['orders-tab', selectedTab == 'rejected' ? 'selected-tab' : '']" @click.prevent="getOrders('', 'rejected', rejectedOrders)">
-          Rejected
-        </div>
-        <div :class="['orders-tab', selectedTab == 'search' ? 'selected-tab' : '']" @click.prevent="getOrders('', 'search', [])">
-          Search
-        </div>
-      </section>
-      <!-- Orders Table  -->
-      <section class="w-full overflow-x-auto mt-3">
-        <table class="table-auto w-full">
-          <!-- v-if="
-            (selectedTab == 'new' && newOrders && newOrders.length > 0) ||
-              (selectedTab == 'accepted' && acceptedOrders && acceptedOrders.length > 0) ||
-              (selectedTab == 'dispatched' && dispatchedOrders && dispatchedOrders.length > 0) ||
-              (selectedTab == 'completed' && completedOrders && completedOrders.length > 0) ||
-              (selectedTab == 'rejected' && rejectedOrders && rejectedOrders.length > 0)
-          " -->
-          <thead>
-            <tr class="text-xs">
-              <th class="text-left border border-gray-400 p-2">Order#</th>
-              <th class="text-left border border-gray-400 p-2">Customer</th>
-              <th class="text-left border border-gray-400 p-2">Mobile</th>
-              <th class="text-left border border-gray-400 p-2">Order Time</th>
-              <th class="text-center border border-gray-400 p-2">Amount</th>
-              <th class="text-center border border-gray-400 p-2">Payment</th>
-              <th class="text-center border border-gray-400 p-2">Status</th>
-              <th class="text-center border border-gray-400 p-2">View</th>
-              <th class="text-center border border-gray-400 p-2" v-if="selectedColumnName != ''">
-                {{ selectedColumnName }}
-              </th>
-              <th class="text-center border border-gray-400 p-2" v-if="selectedColumnName != '' && selectedColumnName != 'Complete'">
-                Reject
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="text-xs" v-for="order in selectedOrders" :key="order.id">
-              <td class="border border-gray-400 p-2">{{ order.transaction_id }}</td>
-              <td class="border border-gray-400 p-2">{{ order.user_name }}</td>
-              <td class="border border-gray-400 p-2 ">{{ order.user_phone }}</td>
-              <td class="border border-gray-400 p-2">
-                <div class="w-16">{{ order.created_at }}</div>
-              </td>
-              <td class="border border-gray-400 p-2">{{ order.total_amount }}</td>
-              <!-- <td class="border border-gray-400 p-2">{{ order.payment_status }}</td> -->
-              <td class="border border-gray-400 p-2">
-                <div>
-                  <Toggle
-                    @change="updatePaymentStatus(order)"
-                    v-model="order.payment_status"
-                    on-label="Paid"
-                    off-label="Unpaid"
-                    :classes="{
-                      container: 'inline-block rounded-full outline-none focus:ring focus:ring-green-500 focus:ring-opacity-30',
-                      toggle:
-                        'flex items-center justify-start w-16 h-4 rounded-full relative cursor-pointer transition box-content border-2 text-xs leading-none',
-                      toggleOn: 'bg-green-500 border-green-500 text-white',
-                      toggleOff: 'bg-gray-200 border-gray-200 justify-end text-gray-700',
-                      toggleOnDisabled: 'bg-gray-300 border-gray-300 justify-start text-gray-400 cursor-not-allowed',
-                      toggleOffDisabled: 'bg-gray-200 border-gray-200 justify-end text-gray-400 cursor-not-allowed',
-                      handle: 'inline-block bg-white w-4 h-4 top-0 rounded-full absolute transition-all',
-                      handleOn: 'left-full transform -translate-x-full',
-                      handleOff: 'left-0',
-                      handleOnDisabled: 'bg-gray-100 left-full transform -translate-x-full',
-                      handleOffDisabled: 'bg-gray-100 left-0',
-                      label: 'text-center w-12 select-none',
-                    }"
-                  />
-                </div>
-              </td>
-              <td class="border border-gray-400 p-2">{{ order.status_admin }}</td>
-              <td class="text-center border border-gray-400 p-2">
-                <div class="font-bold text-base cursor-pointer">
-                  <router-link :to="{ name: 'Order Detail', query: { orderId: order.id } }">
-                    <fa :icon="['fa', 'eye']" class="text-gray-900"> </fa>
-                  </router-link>
-                </div>
-              </td>
-              <td class="text-center border border-gray-400 p-2" v-if="selectedColumnName != ''">
-                <div class="font-bold text-base cursor-pointer">
-                  <fa :icon="['fa', 'check']" class="text-green-500" @click.prevent="updateOrderStatus(order.id)"> </fa>
-                </div>
-              </td>
-              <td class="text-center border border-gray-400 p-2" v-if="selectedColumnName != '' && selectedColumnName != 'Complete'">
-                <div class="font-bold text-base cursor-pointer">
-                  <fa :icon="['fa', 'times']" class="text-red-500" @click.prevent="openAlert(order.id)"> </fa>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <!-- All Orders -->
+        <section class="w-full flex flex-wrap items-center justify-between text-sm sm:text-base font-semibold">
+          <div :class="['orders-tab', selectedTab == 'new' ? 'selected-tab' : '']" @click="getOrders('Accept', 'new', newOrders)">
+            New
+          </div>
+          <div
+            :class="['orders-tab', selectedTab == 'accepted' ? 'selected-tab' : '']"
+            @click="getOrders('Dispatch', 'accepted', acceptedOrders)"
+          >
+            Accepted
+          </div>
+          <div
+            :class="['orders-tab', selectedTab == 'dispatched' ? 'selected-tab' : '']"
+            @click.prevent="getOrders('Complete', 'dispatched', dispatchedOrders)"
+          >
+            Dispatched
+          </div>
+          <div
+            :class="['orders-tab', selectedTab == 'completed' ? 'selected-tab' : '']"
+            @click.prevent="getOrders('', 'completed', completedOrders)"
+          >
+            Completed
+          </div>
+          <div
+            :class="['orders-tab', selectedTab == 'rejected' ? 'selected-tab' : '']"
+            @click.prevent="getOrders('', 'rejected', rejectedOrders)"
+          >
+            Rejected
+          </div>
+          <div :class="['orders-tab', selectedTab == 'search' ? 'selected-tab' : '']" @click.prevent="getOrders('', 'search', [])">
+            Search
+          </div>
+        </section>
+        <!-- Orders Table  -->
+        <section class="w-full overflow-x-auto mt-3">
+          <table class="table-auto w-full">
+            <thead>
+              <tr class="text-xs">
+                <th class="text-left border border-gray-400 p-2">Order#</th>
+                <th class="text-left border border-gray-400 p-2">Customer</th>
+                <th class="text-left border border-gray-400 p-2">Mobile</th>
+                <th class="text-left border border-gray-400 p-2">Order Time</th>
+                <th class="text-center border border-gray-400 p-2">Amount</th>
+                <th class="text-center border border-gray-400 p-2">Payment</th>
+                <th class="text-center border border-gray-400 p-2">Status</th>
+                <th class="text-center border border-gray-400 p-2">View</th>
+                <th class="text-center border border-gray-400 p-2" v-if="selectedColumnName != ''">
+                  {{ selectedColumnName }}
+                </th>
+                <th class="text-center border border-gray-400 p-2" v-if="selectedColumnName != '' && selectedColumnName != 'Complete'">
+                  Reject
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <transition-group mode="out-in" enter-active-class="animate__animated animate__fadeInDown">
+                <tr class="text-xs" v-for="order in selectedOrders" :key="order.id">
+                  <td class="border border-gray-400 p-2">{{ order.transaction_id }}</td>
+                  <td class="border border-gray-400 p-2">{{ order.user_name }}</td>
+                  <td class="border border-gray-400 p-2 ">{{ order.user_phone }}</td>
+                  <td class="border border-gray-400 p-2">
+                    <div class="w-16">{{ order.created_at }}</div>
+                  </td>
+                  <td class="border border-gray-400 p-2">{{ order.total_amount }}</td>
+                  <td class="border border-gray-400 p-2">
+                    <div>
+                      <Toggle
+                        @change="updatePaymentStatus(order)"
+                        v-model="order.payment_status"
+                        on-label="Paid"
+                        off-label="Unpaid"
+                        :classes="{
+                          container: 'inline-block rounded-full outline-none focus:ring focus:ring-green-500 focus:ring-opacity-30',
+                          toggle:
+                            'flex items-center justify-start w-16 h-4 rounded-full relative cursor-pointer transition box-content border-2 text-xs leading-none',
+                          toggleOn: 'bg-green-500 border-green-500 text-white',
+                          toggleOff: 'bg-gray-200 border-gray-200 justify-end text-gray-700',
+                          toggleOnDisabled: 'bg-gray-300 border-gray-300 justify-start text-gray-400 cursor-not-allowed',
+                          toggleOffDisabled: 'bg-gray-200 border-gray-200 justify-end text-gray-400 cursor-not-allowed',
+                          handle: 'inline-block bg-white w-4 h-4 top-0 rounded-full absolute transition-all',
+                          handleOn: 'left-full transform -translate-x-full',
+                          handleOff: 'left-0',
+                          handleOnDisabled: 'bg-gray-100 left-full transform -translate-x-full',
+                          handleOffDisabled: 'bg-gray-100 left-0',
+                          label: 'text-center w-12 select-none',
+                        }"
+                      />
+                    </div>
+                  </td>
+                  <td class="border border-gray-400 p-2">{{ order.status_admin }}</td>
+                  <td class="text-center border border-gray-400 p-2">
+                    <div class="font-bold text-base cursor-pointer">
+                      <router-link :to="{ name: 'Order Detail', query: { orderId: order.id } }">
+                        <fa :icon="['fa', 'eye']" class="text-gray-900"> </fa>
+                      </router-link>
+                    </div>
+                  </td>
+                  <td class="text-center border border-gray-400 p-2" v-if="selectedColumnName != ''">
+                    <div class="font-bold text-base cursor-pointer">
+                      <fa :icon="['fa', 'check']" class="text-green-500" @click.prevent="updateOrderStatus(order.id)"> </fa>
+                    </div>
+                  </td>
+                  <td class="text-center border border-gray-400 p-2" v-if="selectedColumnName != '' && selectedColumnName != 'Complete'">
+                    <div class="font-bold text-base cursor-pointer">
+                      <fa :icon="['fa', 'times']" class="text-red-500" @click.prevent="openAlert(order.id)"> </fa>
+                    </div>
+                  </td>
+                </tr>
+              </transition-group>
+            </tbody>
+          </table>
+        </section>
       </section>
     </section>
-  </section>
-  <!-- RHS -->
-  <section>
-    <right-hand-side></right-hand-side>
-  </section>
 
-  <!-- Alert Modal -->
-  <alert-screen :is-alert="isAlert" :item-id="orderId" @confirm-alert="confirmAlert" :delete-Action="rejectOrder">
-    <template v-slot:header>
-      <div class="flex items-center justify-center bg-red-500 rounded-full w-5 h-5 mr-2">
-        <fa :icon="['fa', 'exclamation']" class="text-white text-xs sm:text-sm"></fa>
-      </div>
-      Reject Alert
-    </template>
-    <template v-slot:content>
-      Do you want to Reject this Order ?
-    </template>
-  </alert-screen>
+    <!-- Alert Modal -->
+    <alert-screen :is-alert="isAlert" :item-id="orderId" @confirm-alert="confirmAlert" :delete-Action="rejectOrder">
+      <template v-slot:header>
+        <div class="flex items-center justify-center bg-red-500 rounded-full w-5 h-5 mr-2">
+          <fa :icon="['fa', 'exclamation']" class="text-white text-xs sm:text-sm"></fa>
+        </div>
+        Reject Alert
+      </template>
+      <template v-slot:content>
+        Do you want to Reject this Order ?
+      </template>
+    </alert-screen>
+  </div>
 </template>
 
 <script>

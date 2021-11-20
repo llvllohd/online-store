@@ -1,8 +1,14 @@
 <template>
-  <router-view> </router-view>
-  <!-- <transition>
+  <!-- HEADER -->
+  <header-component></header-component>
+  <router-view v-slot="{ Component }">
+    <transition mode="out-in" enter-active-class="animate__animated animate__zoomIn">
       <component :is="Component" />
-    </transition> -->
+    </transition>
+  </router-view>
+  <!-- RHS -->
+  <right-hand-side></right-hand-side>
+  <!-- LOADER -->
   <Loader> </Loader>
 </template>
 

@@ -1,86 +1,82 @@
 <template>
-  <header-component></header-component>
-  <!-- LHS -->
-  <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
-    <section class="flex flex-col items-center justify-center p-2 sm:p-3 w-full">
-      <!-- Back button & title -->
-      <TitleScreen title="Track Order" />
-    </section>
-    <!-- Form -->
-    <div class="h-full p-3 w-full sm:max-w-lg flex flex-col justify-center">
-      <form @submit="submitForm" class="flex items-start justify-between w-full shadow rounded-top p-3">
-        <!-- OrderId -->
-        <div class="flex flex-col items-start mr-1 w-2/3">
-          <input
-            type="text"
-            placeholder="Enter Order ID"
-            @input="orderIdField.handleChange"
-            @blur="orderIdField.handleBlur"
-            v-model="orderIdField.value"
-            class="shadow appearance-none text-sm sm:text-base border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            :class="orderIdField.meta.touched && !orderIdField.meta.valid ? 'border border-red-500' : ''"
-          />
-          <span v-if="orderIdField.meta.touched && !orderIdField.meta.valid" class="text-red-500 text-xs italic mt-1">
-            {{ orderIdField.errorMessage || "Field is required" }}
-          </span>
-        </div>
+  <div>
+    <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
+      <section class="flex flex-col items-center justify-center p-2 sm:p-3 w-full">
+        <!-- Back button & title -->
+        <TitleScreen title="Track Order" />
+      </section>
+      <!-- Form -->
+      <div class="h-full p-3 w-full sm:max-w-lg flex flex-col justify-center">
+        <form @submit="submitForm" class="flex items-start justify-between w-full shadow rounded-top p-3">
+          <!-- OrderId -->
+          <div class="flex flex-col items-start mr-1 w-2/3">
+            <input
+              type="text"
+              placeholder="Enter Order ID"
+              @input="orderIdField.handleChange"
+              @blur="orderIdField.handleBlur"
+              v-model="orderIdField.value"
+              class="shadow appearance-none text-sm sm:text-base border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+              :class="orderIdField.meta.touched && !orderIdField.meta.valid ? 'border border-red-500' : ''"
+            />
+            <span v-if="orderIdField.meta.touched && !orderIdField.meta.valid" class="text-red-500 text-xs italic mt-1">
+              {{ orderIdField.errorMessage || "Field is required" }}
+            </span>
+          </div>
 
-        <!-- Track Btn -->
-        <div class="flex items-center ml-1 w-1/3">
-          <button
-            :disabled="isSubmitting ? true : false"
-            type="submit"
-            class="w-full text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline text-sm sm:text-base"
-            :class="[formMeta.valid ? 'bg-gray-900 hover:bg-gray-800' : 'bg-gray-500 hover:bg-gray-500']"
+          <!-- Track Btn -->
+          <div class="flex items-center ml-1 w-1/3">
+            <button
+              :disabled="isSubmitting ? true : false"
+              type="submit"
+              class="w-full text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline text-sm sm:text-base"
+              :class="[formMeta.valid ? 'bg-gray-900 hover:bg-gray-800' : 'bg-gray-500 hover:bg-gray-500']"
+            >
+              Track
+            </button>
+          </div>
+        </form>
+        <!-- Order Statuses Detail IF -->
+        <div v-if="myOrderDetail && myOrderDetail.transaction_id">
+          <section class="flex items-center justify-center rounded text-white bg-gray-900 p-3 mt-5">
+            Order #{{ myOrderDetail.transaction_id }}
+          </section>
+          <section
+            class="w-full h-50 flex flex-col items-center justify-center border-r border-l"
+            v-for="status in myOrderStatuses"
+            :key="status.status_id"
           >
-            Track
-          </button>
-        </div>
-      </form>
-      <!-- Order Statuses Detail IF -->
-      <div v-if="myOrderDetail && myOrderDetail.transaction_id">
-        <section class="flex items-center justify-center rounded text-white bg-gray-900 p-3 mt-5">
-          Order #{{ myOrderDetail.transaction_id }}
-        </section>
-        <section
-          class="w-full h-50 flex flex-col items-center justify-center border-r border-l"
-          v-for="status in myOrderStatuses"
-          :key="status.status_id"
-        >
-          <div class="border border-gray-200 bg-gray-200 h-10 sm:h-16 w-1"></div>
-          <div class="w-full flex items-center justify-center">
-            <div class="w-2/5 flex items-center justify-end text-sm sm:text-base">
-              <div class="mr-2">{{ status.date }}</div>
-              <small>{{ status.time }}</small>
+            <div class="border border-gray-200 bg-gray-200 h-10 sm:h-16 w-1"></div>
+            <div class="w-full flex items-center justify-center">
+              <div class="w-2/5 flex items-center justify-end text-sm sm:text-base">
+                <div class="mr-2">{{ status.date }}</div>
+                <small>{{ status.time }}</small>
+              </div>
+              <div
+                class="h-7 w-7 rounded-full border-2 mx-3"
+                :class="status.status == 'Order Rejected' ? 'border-red-500' : 'border-green-300'"
+              ></div>
+              <div class="w-2/5 flex items-center justify-start text-sm sm:text-base">{{ status.status }}</div>
             </div>
-            <div
-              class="h-7 w-7 rounded-full border-2 mx-3"
-              :class="status.status == 'Order Rejected' ? 'border-red-500' : 'border-green-300'"
-            ></div>
-            <div class="w-2/5 flex items-center justify-start text-sm sm:text-base">{{ status.status }}</div>
-          </div>
-        </section>
+          </section>
+        </div>
+        <div v-else>
+          <!-- <section class="flex items-center justify-center rounded text-white bg-gray-900 p-5 mt-5"></section> -->
+          <section class="w-full h-50 flex flex-col items-center justify-center border-r border-l" v-for="status in 4" :key="status.status_id">
+            <div class="border border-gray-200 bg-gray-200 h-10 sm:h-16 w-1"></div>
+            <div class="w-full flex items-center justify-center">
+              <div class="w-2/5 flex items-center justify-end text-sm sm:text-base"></div>
+              <div
+                class="h-7 w-7 rounded-full border-2 mx-3"
+                :class="status.status == 'Order Rejected' ? 'border-red-500' : 'border-green-300'"
+              ></div>
+              <div class="w-2/5 flex items-center justify-start text-sm sm:text-base"></div>
+            </div>
+          </section>
+        </div>
       </div>
-      <div v-else>
-        <!-- <section class="flex items-center justify-center rounded text-white bg-gray-900 p-5 mt-5"></section> -->
-        <section class="w-full h-50 flex flex-col items-center justify-center border-r border-l" v-for="status in 4" :key="status.status_id">
-          <div class="border border-gray-200 bg-gray-200 h-10 sm:h-16 w-1"></div>
-          <div class="w-full flex items-center justify-center">
-            <div class="w-2/5 flex items-center justify-end text-sm sm:text-base"></div>
-            <div
-              class="h-7 w-7 rounded-full border-2 mx-3"
-              :class="status.status == 'Order Rejected' ? 'border-red-500' : 'border-green-300'"
-            ></div>
-            <div class="w-2/5 flex items-center justify-start text-sm sm:text-base"></div>
-          </div>
-        </section>
-      </div>
-    </div>
-  </section>
-  <!-- RHS -->
-  <section>
-    <right-hand-side></right-hand-side>
-  </section>
+    </section>
+  </div>
 </template>
 
 <script>

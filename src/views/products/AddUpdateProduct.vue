@@ -1,96 +1,96 @@
 <template>
-  <header-component></header-component>
-  <!-- LHS -->
-  <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
-    <div class="p-3 w-full sm:max-w-md">
-      <!-- Back button & title -->
-      <TitleScreen :title="productId ? 'Update Product' : 'Add Product'" />
+  <div>
+    <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
+      <div class="p-3 w-full sm:max-w-md">
+        <!-- Back button & title -->
+        <TitleScreen :title="productId ? 'Update Product' : 'Add Product'" />
 
-      <form @submit="submitForm" class="shadow-md rounded px-5 p-5">
-        <!-- Name -->
-        <div class="mb-3">
-          <BaseInput type="text" label="Name" v-model="name.value" :error="name.errorMessage" />
-        </div>
-
-        <!-- Description -->
-        <div class="mb-3">
-          <BaseInput type="text" label="Description" v-model="description.value" :error="description.errorMessage" />
-        </div>
-
-        <!-- Select Category -->
-        <div class="mb-3">
-          <BaseSelect label="Select Category" v-model="category_id.value" :options="category_options.value" :error="category_id.errorMessage" />
-        </div>
-
-        <!-- Is Visible & Available -->
-        <div class="flex items-center mb-3">
-          <div class="flex items-center w-1/2">
-            <BaseCheckbox label="Visible" v-model="is_visible.value" />
+        <form @submit="submitForm" class="shadow-md rounded px-5 p-5">
+          <!-- Name -->
+          <div class="mb-3">
+            <BaseInput type="text" label="Name" v-model="name.value" :error="name.errorMessage" />
           </div>
 
-          <div class="flex items-center w-1/2">
-            <BaseCheckbox label="Available" v-model="is_available.value" />
+          <!-- Description -->
+          <div class="mb-3">
+            <BaseInput type="text" label="Description" v-model="description.value" :error="description.errorMessage" />
           </div>
-        </div>
 
-        <!-- Price -->
-        <div class="mb-3">
-          <BaseInput type="number" label="Price" v-model="price.value" :error="price.errorMessage" />
-        </div>
-
-        <!-- On Offer -->
-        <div class="flex items-center mb-3">
-          <BaseCheckbox label="On Offer" v-model="on_offer.value" />
-        </div>
-
-        <!-- Offer Price -->
-        <div class="mb-3">
-          <BaseInput type="number" label="Offer Price" v-model="offer_price.value" :error="offer_price.errorMessage" />
-        </div>
-
-        <!-- Image -->
-        <div class="mb-4">
-          <label class="block text-sm font-bold mb-2">
-            Select Image
-          </label>
-
-          <div class="shadow rounded" v-if="selected_image_file && selected_image_file.length > 0">
-            <img class="h-40 w-full object-contain rounded" :src="selected_image_file" alt="image" />
+          <!-- Select Category -->
+          <div class="mb-3">
+            <BaseSelect
+              label="Select Category"
+              v-model="category_id.value"
+              :options="category_options.value"
+              :error="category_id.errorMessage"
+            />
           </div>
-          <div :class="image_file.meta.touched && !image_file.meta.valid ? 'border border-red-500' : ''" class="shadow rounded" v-else>
-            <img class="h-40 w-full object-contain rounded" src="@/assets/images/no-photos.png" alt="image" />
-          </div>
-          <span v-if="image_file.meta.touched && !image_file.meta.valid" class="text-red-500 text-xs italic">
-            {{ image_file.errorMessage || "Field is required" }}
-          </span>
-          <!-- Upload Button -->
-          <div
-            class="flex items-center justify-center mt-2 mb-4 border border-gray-400 shadow appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
-          >
-            <div class="absolute">
-              <div class="flex items-center justify-center">
-                <fa :icon="['fa', 'upload']" class="text-gray-400 mr-3"> </fa>
-                <span class=" text-gray-400 font-medium">{{ image_file && image_file.length > 0 ? "Change" : "Browse" }}</span>
-              </div>
+
+          <!-- Is Visible & Available -->
+          <div class="flex items-center mb-3">
+            <div class="flex items-center w-1/2">
+              <BaseCheckbox label="Visible" v-model="is_visible.value" />
             </div>
-            <input @change="onFileChange" type="file" class="h-full w-full opacity-0" name="" />
+
+            <div class="flex items-center w-1/2">
+              <BaseCheckbox label="Available" v-model="is_available.value" />
+            </div>
           </div>
-        </div>
 
-        <!-- Add Product -->
-        <BaseButton :label="productId ? 'Update' : 'ADD'" :clickMethod="submitForm" :formMeta="formMeta" :isSubmitting="isSubmitting" />
-      </form>
+          <!-- Price -->
+          <div class="mb-3">
+            <BaseInput type="number" label="Price" v-model="price.value" :error="price.errorMessage" />
+          </div>
 
-      <p class="text-center text-gray-500 text-xs p-3">
-        &copy;2021 Fatimas. All rights reserved.
-      </p>
-    </div>
-  </section>
-  <!-- RHS -->
+          <!-- On Offer -->
+          <div class="flex items-center mb-3">
+            <BaseCheckbox label="On Offer" v-model="on_offer.value" />
+          </div>
 
-  <section>
-    <right-hand-side></right-hand-side>
-  </section>
+          <!-- Offer Price -->
+          <div class="mb-3">
+            <BaseInput type="number" label="Offer Price" v-model="offer_price.value" :error="offer_price.errorMessage" />
+          </div>
+
+          <!-- Image -->
+          <div class="mb-4">
+            <label class="block text-sm font-bold mb-2">
+              Select Image
+            </label>
+
+            <div class="shadow rounded" v-if="selected_image_file && selected_image_file.length > 0">
+              <img class="h-40 w-full object-contain rounded" :src="selected_image_file" alt="image" />
+            </div>
+            <div :class="image_file.meta.touched && !image_file.meta.valid ? 'border border-red-500' : ''" class="shadow rounded" v-else>
+              <img class="h-40 w-full object-contain rounded" src="@/assets/images/no-photos.png" alt="image" />
+            </div>
+            <span v-if="image_file.meta.touched && !image_file.meta.valid" class="text-red-500 text-xs italic">
+              {{ image_file.errorMessage || "Field is required" }}
+            </span>
+            <!-- Upload Button -->
+            <div
+              class="flex items-center justify-center mt-2 mb-4 border border-gray-400 shadow appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
+            >
+              <div class="absolute">
+                <div class="flex items-center justify-center">
+                  <fa :icon="['fa', 'upload']" class="text-gray-400 mr-3"> </fa>
+                  <span class=" text-gray-400 font-medium">{{ image_file && image_file.length > 0 ? "Change" : "Browse" }}</span>
+                </div>
+              </div>
+              <input @change="onFileChange" type="file" class="h-full w-full opacity-0" name="" />
+            </div>
+          </div>
+
+          <!-- Add Product -->
+          <BaseButton :label="productId ? 'Update' : 'ADD'" :clickMethod="submitForm" :formMeta="formMeta" :isSubmitting="isSubmitting" />
+        </form>
+
+        <p class="text-center text-gray-500 text-xs p-3">
+          &copy;2021 Fatimas. All rights reserved.
+        </p>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>

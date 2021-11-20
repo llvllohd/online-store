@@ -1,147 +1,143 @@
 <template>
-  <header-component></header-component>
-  <!-- LHS -->
-  <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
-    <section class="flex flex-col items-center justify-center p-2 sm:p-3 w-full" v-if="myOrders">
-      <!-- Back button & title -->
-      <TitleScreen title="My Orders" />
+  <div>
+    <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
+      <section class="flex flex-col items-center justify-center p-2 sm:p-3 w-full" v-if="myOrders">
+        <!-- Back button & title -->
+        <TitleScreen title="My Orders" />
 
-      <!-- Buttons -->
-      <div class="w-full flex items-center justify-between">
-        <div
-          @click.prevent="getOrders('active')"
-          class="flex items-center justify-center w-full font-bold mr-1 py-2 shadow border
+        <!-- Buttons -->
+        <div class="w-full flex items-center justify-between">
+          <div
+            @click.prevent="getOrders('active')"
+            class="flex items-center justify-center w-full font-bold mr-1 py-2 shadow border
         rounded text-sm sm:text-base"
-          :class="is_active_orders ? 'bg-gray-900 hover:bg-gray-800 text-white' : 'bg-white hover:bg-gray-50 text-gray-900 '"
-        >
-          Active Orders
-        </div>
-        <div
-          @click.prevent="getOrders('historical')"
-          class="flex items-center justify-center w-full font-bold ml-1 py-2 shadow border
-        rounded text-sm sm:text-base"
-          :class="is_historical_orders ? 'bg-gray-900 hover:bg-gray-800 text-white' : 'bg-white hover:bg-gray-50 text-gray-900 '"
-        >
-          Historical Orders
-        </div>
-      </div>
-      <!-- Active Orders -->
-      <div class="w-full shadow rounded mt-2 flex" :class="activeOrders && activeOrders.length > 0 ? '' : 'h-96'" v-if="is_active_orders">
-        <section v-if="activeOrders && activeOrders.length > 0">
-          <div v-for="(activeOrder, index) in activeOrders" :key="index">
-            <div class="card flex flex-wrap shadow p-2" v-for="order in activeOrder.orders" :key="order.id">
-              <div class="w-1/2 font-semibold">Order ID</div>
-              <div class="w-1/2">{{ order.transaction_id }}</div>
-              <div class="w-1/2 font-semibold">Order Date/Time</div>
-              <div class="w-1/2">{{ order.created_at }}</div>
-              <div class="w-1/2 font-semibold">Order Total</div>
-              <div class="w-1/2">&#8377; {{ order.total_amount }}</div>
-              <div class="w-1/2 font-semibold">Status</div>
-              <div class="w-1/2">{{ order.order_status }}</div>
-              <router-link
-                :to="{ name: 'Order Detail', query: { orderId: order.id } }"
-                class="flex items-center justify-center w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 mt-3 
-        rounded focus:outline-none focus:shadow-outline text-sm sm:text-base"
-              >
-                Order Detail
-              </router-link>
-            </div>
+            :class="is_active_orders ? 'bg-gray-900 hover:bg-gray-800 text-white' : 'bg-white hover:bg-gray-50 text-gray-900 '"
+          >
+            Active Orders
           </div>
-        </section>
-        <section class="w-full flex flex-col items-center justify-center" v-else>
-          <div class="w-full md:w-2/3 shadow">
-            <div class="flex flex-col items-center justify-center text-3xl font-bold p-3">
-              <div class="flex items-center  justify-center border border-red-500 text-red-500 rounded-full w-12 h-12 md:w-16 md:h-16">
-                <fa :icon="['fa', 'exclamation']" class="text-2xl md:text-4xl"> </fa>
+          <div
+            @click.prevent="getOrders('historical')"
+            class="flex items-center justify-center w-full font-bold ml-1 py-2 shadow border
+        rounded text-sm sm:text-base"
+            :class="is_historical_orders ? 'bg-gray-900 hover:bg-gray-800 text-white' : 'bg-white hover:bg-gray-50 text-gray-900 '"
+          >
+            Historical Orders
+          </div>
+        </div>
+        <!-- Active Orders -->
+        <div class="w-full shadow rounded mt-2 flex" :class="activeOrders && activeOrders.length > 0 ? '' : 'h-96'" v-if="is_active_orders">
+          <section v-if="activeOrders && activeOrders.length > 0">
+            <div v-for="(activeOrder, index) in activeOrders" :key="index">
+              <div class="card flex flex-wrap shadow p-2" v-for="order in activeOrder.orders" :key="order.id">
+                <div class="w-1/2 font-semibold">Order ID</div>
+                <div class="w-1/2">{{ order.transaction_id }}</div>
+                <div class="w-1/2 font-semibold">Order Date/Time</div>
+                <div class="w-1/2">{{ order.created_at }}</div>
+                <div class="w-1/2 font-semibold">Order Total</div>
+                <div class="w-1/2">&#8377; {{ order.total_amount }}</div>
+                <div class="w-1/2 font-semibold">Status</div>
+                <div class="w-1/2">{{ order.order_status }}</div>
+                <router-link
+                  :to="{ name: 'Order Detail', query: { orderId: order.id } }"
+                  class="flex items-center justify-center w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 mt-3 
+        rounded focus:outline-none focus:shadow-outline text-sm sm:text-base"
+                >
+                  Order Detail
+                </router-link>
               </div>
-              <div class="text-lg md:text-2xl text-red-500 mt-3">No Orders Found!</div>
             </div>
-          </div>
-          <div class="w-full md:w-2/3 flex items-center justify-between mt-3">
-            <router-link
-              :to="{ name: 'Menu Items' }"
-              class="flex items-center justify-center w-full bg-gray-900 hover:bg-gray-800 text-white font-bold mr-1 py-2 px-4 
-        rounded focus:outline-none focus:shadow-outline text-sm sm:text-base"
-            >
-              Go To Menu
-            </router-link>
-          </div>
-        </section>
-      </div>
-      <!-- Historical Orders -->
-      <div
-        class="w-full shadow rounded mt-2 flex"
-        :class="historicalOrders && historicalOrders.length > 0 ? '' : 'h-96'"
-        v-if="is_historical_orders"
-      >
-        <section v-if="historicalOrders && historicalOrders.length > 0">
-          <div v-for="(historicalOrder, index) in historicalOrders" :key="index">
-            <div class="card flex flex-wrap shadow p-2" v-for="order in historicalOrder.orders" :key="order.id">
-              <div class="w-1/2 font-semibold">Order ID</div>
-              <div class="w-1/2">{{ order.transaction_id }}</div>
-              <div class="w-1/2 font-semibold">Order Date/Time</div>
-              <div class="w-1/2">{{ order.created_at }}</div>
-              <div class="w-1/2 font-semibold">Order Total</div>
-              <div class="w-1/2">&#8377; {{ order.total_amount }}</div>
-              <div class="w-1/2 font-semibold">Status</div>
-              <div class="w-1/2">{{ order.order_status }}</div>
+          </section>
+          <section class="w-full flex flex-col items-center justify-center" v-else>
+            <div class="w-full md:w-2/3 shadow">
+              <div class="flex flex-col items-center justify-center text-3xl font-bold p-3">
+                <div class="flex items-center  justify-center border border-red-500 text-red-500 rounded-full w-12 h-12 md:w-16 md:h-16">
+                  <fa :icon="['fa', 'exclamation']" class="text-2xl md:text-4xl"> </fa>
+                </div>
+                <div class="text-lg md:text-2xl text-red-500 mt-3">No Orders Found!</div>
+              </div>
+            </div>
+            <div class="w-full md:w-2/3 flex items-center justify-between mt-3">
               <router-link
                 :to="{ name: 'Menu Items' }"
-                class="flex items-center justify-center w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 mt-3 
+                class="flex items-center justify-center w-full bg-gray-900 hover:bg-gray-800 text-white font-bold mr-1 py-2 px-4 
         rounded focus:outline-none focus:shadow-outline text-sm sm:text-base"
               >
-                Order Detail
+                Go To Menu
               </router-link>
             </div>
-          </div>
-        </section>
-        <section class="w-full flex flex-col items-center justify-center" v-else>
-          <div class="w-full md:w-2/3 shadow">
-            <div class="flex flex-col items-center justify-center text-3xl font-bold p-3">
-              <div class="flex items-center  justify-center border border-red-500 text-red-500 rounded-full w-12 h-12 md:w-16 md:h-16">
-                <fa :icon="['fa', 'exclamation']" class="text-2xl md:text-4xl"> </fa>
-              </div>
-              <div class="text-lg md:text-2xl text-red-500 mt-3">No Orders Found!</div>
-            </div>
-          </div>
-          <div class="w-full md:w-2/3 flex items-center justify-between mt-3">
-            <router-link
-              :to="{ name: 'Menu Items' }"
-              class="flex items-center justify-center w-full bg-gray-900 hover:bg-gray-800 text-white font-bold mr-1 py-2 px-4 
-        rounded focus:outline-none focus:shadow-outline text-sm sm:text-base"
-            >
-              Go To Menu
-            </router-link>
-          </div>
-        </section>
-      </div>
-    </section>
-
-    <!-- If No Orders -->
-    <section class="w-full flex flex-col items-center justify-center" v-else>
-      <div class="w-full md:w-2/3 shadow">
-        <div class="flex flex-col items-center justify-center text-3xl font-bold p-3">
-          <div class="flex items-center  justify-center border border-red-500 text-red-500 rounded-full w-12 h-12 md:w-16 md:h-16">
-            <fa :icon="['fa', 'exclamation']" class="text-2xl md:text-4xl"> </fa>
-          </div>
-          <div class="text-lg md:text-2xl text-red-500 mt-3">No Orders Found!</div>
+          </section>
         </div>
-      </div>
-      <div class="w-full md:w-2/3 flex items-center justify-between mt-3">
-        <router-link
-          :to="{ name: 'Menu Items' }"
-          class="flex items-center justify-center w-full bg-gray-900 hover:bg-gray-800 text-white font-bold mr-1 py-2 px-4 
-        rounded focus:outline-none focus:shadow-outline text-sm sm:text-base"
+        <!-- Historical Orders -->
+        <div
+          class="w-full shadow rounded mt-2 flex"
+          :class="historicalOrders && historicalOrders.length > 0 ? '' : 'h-96'"
+          v-if="is_historical_orders"
         >
-          Go To Menu
-        </router-link>
-      </div>
+          <section v-if="historicalOrders && historicalOrders.length > 0">
+            <div v-for="(historicalOrder, index) in historicalOrders" :key="index">
+              <div class="card flex flex-wrap shadow p-2" v-for="order in historicalOrder.orders" :key="order.id">
+                <div class="w-1/2 font-semibold">Order ID</div>
+                <div class="w-1/2">{{ order.transaction_id }}</div>
+                <div class="w-1/2 font-semibold">Order Date/Time</div>
+                <div class="w-1/2">{{ order.created_at }}</div>
+                <div class="w-1/2 font-semibold">Order Total</div>
+                <div class="w-1/2">&#8377; {{ order.total_amount }}</div>
+                <div class="w-1/2 font-semibold">Status</div>
+                <div class="w-1/2">{{ order.order_status }}</div>
+                <router-link
+                  :to="{ name: 'Menu Items' }"
+                  class="flex items-center justify-center w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 mt-3 
+        rounded focus:outline-none focus:shadow-outline text-sm sm:text-base"
+                >
+                  Order Detail
+                </router-link>
+              </div>
+            </div>
+          </section>
+          <section class="w-full flex flex-col items-center justify-center" v-else>
+            <div class="w-full md:w-2/3 shadow">
+              <div class="flex flex-col items-center justify-center text-3xl font-bold p-3">
+                <div class="flex items-center  justify-center border border-red-500 text-red-500 rounded-full w-12 h-12 md:w-16 md:h-16">
+                  <fa :icon="['fa', 'exclamation']" class="text-2xl md:text-4xl"> </fa>
+                </div>
+                <div class="text-lg md:text-2xl text-red-500 mt-3">No Orders Found!</div>
+              </div>
+            </div>
+            <div class="w-full md:w-2/3 flex items-center justify-between mt-3">
+              <router-link
+                :to="{ name: 'Menu Items' }"
+                class="flex items-center justify-center w-full bg-gray-900 hover:bg-gray-800 text-white font-bold mr-1 py-2 px-4 
+        rounded focus:outline-none focus:shadow-outline text-sm sm:text-base"
+              >
+                Go To Menu
+              </router-link>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- If No Orders -->
+      <section class="w-full flex flex-col items-center justify-center" v-else>
+        <div class="w-full md:w-2/3 shadow">
+          <div class="flex flex-col items-center justify-center text-3xl font-bold p-3">
+            <div class="flex items-center  justify-center border border-red-500 text-red-500 rounded-full w-12 h-12 md:w-16 md:h-16">
+              <fa :icon="['fa', 'exclamation']" class="text-2xl md:text-4xl"> </fa>
+            </div>
+            <div class="text-lg md:text-2xl text-red-500 mt-3">No Orders Found!</div>
+          </div>
+        </div>
+        <div class="w-full md:w-2/3 flex items-center justify-between mt-3">
+          <router-link
+            :to="{ name: 'Menu Items' }"
+            class="flex items-center justify-center w-full bg-gray-900 hover:bg-gray-800 text-white font-bold mr-1 py-2 px-4 
+        rounded focus:outline-none focus:shadow-outline text-sm sm:text-base"
+          >
+            Go To Menu
+          </router-link>
+        </div>
+      </section>
     </section>
-  </section>
-  <!-- RHS -->
-  <section>
-    <right-hand-side></right-hand-side>
-  </section>
+  </div>
 </template>
 
 <script>

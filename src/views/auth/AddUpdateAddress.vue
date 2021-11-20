@@ -1,40 +1,36 @@
 <template>
-  <header-component></header-component>
-  <!-- LHS -->
-  <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
-    <div class="p-3 w-full sm:max-w-md">
-      <!-- Back button & title -->
-      <TitleScreen :title="addressId ? 'Update Address' : 'Add Address'" />
+  <div>
+    <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
+      <div class="p-3 w-full sm:max-w-md">
+        <!-- Back button & title -->
+        <TitleScreen :title="addressId ? 'Update Address' : 'Add Address'" />
 
-      <form @submit="submitForm" class="shadow-md rounded px-5 p-5">
-        <!-- Address -->
-        <div class="mb-3">
-          <BaseInput type="text" label="Address" v-model="address.value" :error="address.errorMessage" />
-        </div>
+        <form @submit="submitForm" class="shadow-md rounded px-5 p-5">
+          <!-- Address -->
+          <div class="mb-3">
+            <BaseInput type="text" label="Address" v-model="address.value" :error="address.errorMessage" />
+          </div>
 
-        <!-- House Name -->
-        <div class="mb-3">
-          <BaseInput type="text" label="House Name" v-model="house_name.value" :error="house_name.errorMessage" />
-        </div>
+          <!-- House Name -->
+          <div class="mb-3">
+            <BaseInput type="text" label="House Name" v-model="house_name.value" :error="house_name.errorMessage" />
+          </div>
 
-        <!-- Land mark -->
-        <div class="mb-3">
-          <BaseInput type="text" label="Landmark" v-model="landmark.value" :error="landmark.errorMessage" />
-        </div>
+          <!-- Land mark -->
+          <div class="mb-3">
+            <BaseInput type="text" label="Landmark" v-model="landmark.value" :error="landmark.errorMessage" />
+          </div>
 
-        <!-- Add Address -->
-        <BaseButton :label="addressId ? 'Update' : 'ADD'" :clickMethod="submitForm" :formMeta="formMeta" :isSubmitting="isSubmitting" />
-      </form>
+          <!-- Add Address -->
+          <BaseButton :label="addressId ? 'Update' : 'ADD'" :clickMethod="submitForm" :formMeta="formMeta" :isSubmitting="isSubmitting" />
+        </form>
 
-      <p class="text-center text-gray-500 text-xs p-3">
-        &copy;2021 Fatimas. All rights reserved.
-      </p>
-    </div>
-  </section>
-  <!-- RHS -->
-  <section>
-    <right-hand-side></right-hand-side>
-  </section>
+        <p class="text-center text-gray-500 text-xs p-3">
+          &copy;2021 Fatimas. All rights reserved.
+        </p>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>

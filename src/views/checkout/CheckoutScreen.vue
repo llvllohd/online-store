@@ -1,152 +1,148 @@
 <template>
-  <header-component></header-component>
-  <!-- LHS -->
-  <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start mb-10">
-    <div class="p-1 sm:p-3 w-full">
-      <!-- Back button & title -->
-      <TitleScreen title="Checkout" />
+  <div>
+    <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start mb-10">
+      <div class="p-1 sm:p-3 w-full">
+        <!-- Back button & title -->
+        <TitleScreen title="Checkout" />
 
-      <form @submit="submitForm" class="shadow rounded px-5 p-3">
-        <!-- Personal Information -->
-        <section class="mb-7">
-          <div class="md:text-lg font-medium mb-3">
-            Personal Information
-          </div>
-          <div class="flex flex-col md:flex-row items-center justify-between md:mb-1 md:space-x-2">
-            <!-- Name -->
-            <div class="w-full md:w-1/2 mb-1 md:mb-0">
-              <input
-                type="text"
-                placeholder="Name"
-                @input="user_name.handleChange"
-                @blur="user_name.handleBlur"
-                v-model="user_name.value"
-                class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                :class="user_name.meta.touched && !user_name.meta.valid ? 'border border-red-500' : ''"
-                id="user_name"
-              />
-              <span class="text-red-500 text-xs italic" :class="user_name.meta.touched && !user_name.meta.valid ? 'opacity-1' : 'opacity-0'">
-                {{ user_name.errorMessage || "Field is required" }}
-              </span>
+        <form @submit="submitForm" class="shadow rounded px-5 p-3">
+          <!-- Personal Information -->
+          <section class="mb-7">
+            <div class="md:text-lg font-medium mb-3">
+              Personal Information
             </div>
-            <!-- Phone-->
-            <div class="w-full md:w-1/2 mb-1 md:mb-0">
-              <div class="flex items-center relative">
-                <div class="absolute left-2 border-r border-gray-500 pr-2">+91</div>
+            <div class="flex flex-col md:flex-row items-center justify-between md:mb-1 md:space-x-2">
+              <!-- Name -->
+              <div class="w-full md:w-1/2 mb-1 md:mb-0">
                 <input
                   type="text"
-                  placeholder="Phone Number"
-                  @input="phone.handleChange"
-                  @blur="phone.handleBlur"
-                  v-model="phone.value"
-                  class="pl-14 shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                  :class="phone.meta.touched && !phone.meta.valid ? 'border border-red-500' : ''"
-                  id="name"
+                  placeholder="Name"
+                  @input="user_name.handleChange"
+                  @blur="user_name.handleBlur"
+                  v-model="user_name.value"
+                  class="shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                  :class="user_name.meta.touched && !user_name.meta.valid ? 'border border-red-500' : ''"
+                  id="user_name"
                 />
+                <span class="text-red-500 text-xs italic" :class="user_name.meta.touched && !user_name.meta.valid ? 'opacity-1' : 'opacity-0'">
+                  {{ user_name.errorMessage || "Field is required" }}
+                </span>
               </div>
-              <span class="text-red-500 text-xs italic" :class="phone.meta.touched && !phone.meta.valid ? 'opacity-1' : 'opacity-0'">
-                {{ phone.errorMessage || "Field is required" }}
-              </span>
-            </div>
-          </div>
-
-          <div class="flex flex-col md:flex-row items-center justify-between md:mb-1 md:space-x-2">
-            <!-- Email -->
-            <div class="w-full md:w-1/2 mb-0 md:mb-0">
-              <BaseInput type="email" label="Email" :isLabel="false" v-model="email.value" :error="email.errorMessage" />
-            </div>
-            <!-- Empty -->
-            <div class="w-full md:w-1/2 mb-0 md:mb-0"></div>
-          </div>
-        </section>
-
-        <!-- Address Information -->
-        <section class="mb-7">
-          <div class="md:text-lg font-medium mb-3">
-            Address Information
-          </div>
-          <!--For Guest User -->
-          <section v-if="!isUserLoggedIn">
-            <!-- Address -->
-            <div class="mb-3">
-              <BaseInput type="text" label="Address" :isLabel="false" v-model="address.value" :error="address.errorMessage" />
+              <!-- Phone-->
+              <div class="w-full md:w-1/2 mb-1 md:mb-0">
+                <div class="flex items-center relative">
+                  <div class="absolute left-2 border-r border-gray-500 pr-2">+91</div>
+                  <input
+                    type="text"
+                    placeholder="Phone Number"
+                    @input="phone.handleChange"
+                    @blur="phone.handleBlur"
+                    v-model="phone.value"
+                    class="pl-14 shadow appearance-none border rounded w-full h-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                    :class="phone.meta.touched && !phone.meta.valid ? 'border border-red-500' : ''"
+                    id="name"
+                  />
+                </div>
+                <span class="text-red-500 text-xs italic" :class="phone.meta.touched && !phone.meta.valid ? 'opacity-1' : 'opacity-0'">
+                  {{ phone.errorMessage || "Field is required" }}
+                </span>
+              </div>
             </div>
 
-            <!-- House Name & Landmark -->
-            <div class="flex flex-col md:flex-row items-start justify-center md:mb-3 md:space-x-2">
-              <div class="w-full md:w-1/2 mb-3 md:mb-0">
-                <BaseInput type="text" label="House Name" :isLabel="false" v-model="house_name.value" :error="house_name.errorMessage" />
+            <div class="flex flex-col md:flex-row items-center justify-between md:mb-1 md:space-x-2">
+              <!-- Email -->
+              <div class="w-full md:w-1/2 mb-0 md:mb-0">
+                <BaseInput type="email" label="Email" :isLabel="false" v-model="email.value" :error="email.errorMessage" />
               </div>
-
-              <div class="w-full md:w-1/2">
-                <BaseInput type="text" label="Landmark" :isLabel="false" v-model="landmark.value" :error="landmark.errorMessage" />
-              </div>
+              <!-- Empty -->
+              <div class="w-full md:w-1/2 mb-0 md:mb-0"></div>
             </div>
           </section>
-          <!-- For Registered User -->
-          <section v-if="isUserLoggedIn">
-            <!-- Select Address -->
-            <div class="mb-3">
-              <label class="block text-base font-medium mb-2">
-                Select Address
-              </label>
-              <select
-                v-model="user_address_id.value"
-                @change="addressChangeEvent($event)"
-                class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                :class="user_address_id.meta.touched && !user_address_id.meta.valid ? 'border border-red-500' : ''"
-              >
-                <option class="py-1" value="">Select Address</option>
-                <option class="py-1" :value="address.id" v-for="address in user_addresses" :key="address.id"> {{ address.house_name }}</option>
-              </select>
-              <span v-if="user_address_id.meta.touched && !user_address_id.meta.valid" class=" text-red-500 text-xs italic">
-                {{ user_address_id.errorMessage || "Field is required" }}
-              </span>
+
+          <!-- Address Information -->
+          <section class="mb-7">
+            <div class="md:text-lg font-medium mb-3">
+              Address Information
             </div>
-            <!-- Show Selected Address -->
-            <div class="w-full rounded shadow" v-if="user_address_id.value">
-              <div class="flex flex-col px-3 py-2 border-b">
-                <div class="text-base md:text-lg font-medium">{{ selected_address.house_name }}</div>
-                <div class="text-sm md:text-base">{{ selected_address.address }}</div>
-                <div class="text-sm md:text-base"><span class="font-medium"> Landmark:</span> {{ selected_address.landmark }}</div>
+            <!--For Guest User -->
+            <section v-if="!isUserLoggedIn">
+              <!-- Address -->
+              <div class="mb-3">
+                <BaseInput type="text" label="Address" :isLabel="false" v-model="address.value" :error="address.errorMessage" />
               </div>
-              <div class="flex items-center justify-end cursor-pointer text-sm px-3 py-2">
-                <router-link :to="{ name: 'Add Address', query: { addressId: selected_address.id } }">
-                  <fa :icon="['fa', 'edit']" class="text-gray-900 mr-1"></fa> EDIT
-                </router-link>
+
+              <!-- House Name & Landmark -->
+              <div class="flex flex-col md:flex-row items-start justify-center md:mb-3 md:space-x-2">
+                <div class="w-full md:w-1/2 mb-3 md:mb-0">
+                  <BaseInput type="text" label="House Name" :isLabel="false" v-model="house_name.value" :error="house_name.errorMessage" />
+                </div>
+
+                <div class="w-full md:w-1/2">
+                  <BaseInput type="text" label="Landmark" :isLabel="false" v-model="landmark.value" :error="landmark.errorMessage" />
+                </div>
               </div>
-            </div>
+            </section>
+            <!-- For Registered User -->
+            <section v-if="isUserLoggedIn">
+              <!-- Select Address -->
+              <div class="mb-3">
+                <label class="block text-base font-medium mb-2">
+                  Select Address
+                </label>
+                <select
+                  v-model="user_address_id.value"
+                  @change="addressChangeEvent($event)"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                  :class="user_address_id.meta.touched && !user_address_id.meta.valid ? 'border border-red-500' : ''"
+                >
+                  <option class="py-1" value="">Select Address</option>
+                  <option class="py-1" :value="address.id" v-for="address in user_addresses" :key="address.id"> {{ address.house_name }}</option>
+                </select>
+                <span v-if="user_address_id.meta.touched && !user_address_id.meta.valid" class=" text-red-500 text-xs italic">
+                  {{ user_address_id.errorMessage || "Field is required" }}
+                </span>
+              </div>
+              <!-- Show Selected Address -->
+              <div class="w-full rounded shadow" v-if="user_address_id.value">
+                <div class="flex flex-col px-3 py-2 border-b">
+                  <div class="text-base md:text-lg font-medium">{{ selected_address.house_name }}</div>
+                  <div class="text-sm md:text-base">{{ selected_address.address }}</div>
+                  <div class="text-sm md:text-base"><span class="font-medium"> Landmark:</span> {{ selected_address.landmark }}</div>
+                </div>
+                <div class="flex items-center justify-end cursor-pointer text-sm px-3 py-2">
+                  <router-link :to="{ name: 'Add Address', query: { addressId: selected_address.id } }">
+                    <fa :icon="['fa', 'edit']" class="text-gray-900 mr-1"></fa> EDIT
+                  </router-link>
+                </div>
+              </div>
+            </section>
           </section>
-        </section>
 
-        <!-- Payment Method -->
-        <section>
-          <div class="md:text-lg font-medium mb-3">
-            Payment Method
-          </div>
+          <!-- Payment Method -->
+          <section>
+            <div class="md:text-lg font-medium mb-3">
+              Payment Method
+            </div>
 
-          <div class="mb-4">
-            <div class="mt-2">
-              <label class="inline-flex items-center">
-                <input type="radio" class="form-radio" v-model="payment_method.value" name="paymentType" value="1" />
-                <span class="ml-2">Cash</span>
-              </label>
-              <!-- <label class="inline-flex items-center ml-6">
+            <div class="mb-4">
+              <div class="mt-2">
+                <label class="inline-flex items-center">
+                  <input type="radio" class="form-radio" v-model="payment_method.value" name="paymentType" value="1" />
+                  <span class="ml-2">Cash</span>
+                </label>
+                <!-- <label class="inline-flex items-center ml-6">
                 <input type="radio" class="form-radio" name="accountType" value="busines" />
                 <span class="ml-2">Business</span>
               </label> -->
+              </div>
             </div>
-          </div>
-        </section>
-      </form>
-    </div>
-  </section>
-  <!-- Floating Button -->
-  <floating-button :floatingButtonText="'Proceed'" :isLink="false" :link="'Checkout'" :clickMethod="submitForm"></floating-button>
-  <!-- RHS -->
-  <section>
-    <right-hand-side></right-hand-side>
-  </section>
+          </section>
+        </form>
+      </div>
+    </section>
+    <!-- Floating Button -->
+    <floating-button :floatingButtonText="'Proceed'" :isLink="false" :link="'Checkout'" :clickMethod="submitForm"></floating-button>
+  </div>
 </template>
 
 <script>

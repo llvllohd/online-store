@@ -1,99 +1,95 @@
 <template>
-  <header-component></header-component>
-  <!-- LHS -->
-  <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
-    <div class="p-1 sm:p-3 w-full">
-      <!-- Back button & title -->
-      <TitleScreen title="Cart" />
+  <div>
+    <section class="top min-h-no-header w-full sm:w-1/2 flex flex-col items-center justify-start">
+      <div class="p-1 sm:p-3 w-full">
+        <!-- Back button & title -->
+        <TitleScreen title="Cart" />
 
-      <div class="overflow-x-auto">
-        <table class="table-auto w-full">
-          <tbody>
-            <tr v-for="item in cartDetail.cart_items" :key="item.id" class="border-t border-b">
-              <td class="p-2 h-20 w-20">
-                <img :src="item.item_image" class="w-full h-full" alt="" />
-              </td>
+        <div class="overflow-x-auto">
+          <table class="table-auto w-full">
+            <tbody>
+              <tr v-for="item in cartDetail.cart_items" :key="item.id" class="border-t border-b">
+                <td class="p-2 h-20 w-20">
+                  <img :src="item.item_image" class="w-full h-full" alt="" />
+                </td>
 
-              <td class="p-2">
-                <div class="">
-                  {{ item.menu_item_name }}
-                </div>
-              </td>
+                <td class="p-2">
+                  <div class="">
+                    {{ item.menu_item_name }}
+                  </div>
+                </td>
 
-              <td class="p-2 text-center">
-                <div class="">
-                  {{ item.quantity }}
-                </div>
-              </td>
+                <td class="p-2 text-center">
+                  <div class="">
+                    {{ item.quantity }}
+                  </div>
+                </td>
 
-              <td class="p-2 text-right">
-                <div class="">
-                  {{ item.total_price }}
-                </div>
-              </td>
+                <td class="p-2 text-right">
+                  <div class="">
+                    {{ item.total_price }}
+                  </div>
+                </td>
 
-              <td class="p-2 text-center" @click="removeCartItem(item)">
-                <div class="cursor-pointer">
-                  <fa :icon="['fa', 'times']" class="text-lg text-gray-900"> </fa>
-                </div>
-              </td>
-            </tr>
-            <!-- Sub Total -->
-            <tr class="border-b">
-              <th colspan="1"></th>
-              <th colspan="2" class="p-1">
-                <div class="p-1 text-left">
-                  Sub Total
-                </div>
-              </th>
-              <th colspan="1" class="p-1">
-                <div class="p-1 text-right">
-                  {{ cartDetail.sub_total }}
-                </div>
-              </th>
-              <th colspan="1"></th>
-            </tr>
-            <!-- Delivery Charge -->
-            <tr class="border-b">
-              <th colspan="1"></th>
-              <th colspan="2" class="p-1">
-                <div class="p-1 text-left">
-                  Delivery Charge
-                </div>
-              </th>
-              <th colspan="1" class="p-1">
-                <div class="p-1 text-right">
-                  {{ cartDetail.delivery_charges }}
-                </div>
-              </th>
-              <th colspan="1"></th>
-            </tr>
-            <!-- Total -->
-            <tr class="border-b">
-              <th colspan="1"></th>
-              <th colspan="2" class="p-1">
-                <div class="p-1 text-left">
-                  Total
-                </div>
-              </th>
-              <th colspan="1" class="p-1">
-                <div class="p-1 text-right">
-                  {{ cartDetail.total_amount }}
-                </div>
-              </th>
-              <th colspan="1"></th>
-            </tr>
-          </tbody>
-        </table>
+                <td class="p-2 text-center" @click="removeCartItem(item)">
+                  <div class="cursor-pointer">
+                    <fa :icon="['fa', 'times']" class="text-lg text-gray-900"> </fa>
+                  </div>
+                </td>
+              </tr>
+              <!-- Sub Total -->
+              <tr class="border-b">
+                <th colspan="1"></th>
+                <th colspan="2" class="p-1">
+                  <div class="p-1 text-left">
+                    Sub Total
+                  </div>
+                </th>
+                <th colspan="1" class="p-1">
+                  <div class="p-1 text-right">
+                    {{ cartDetail.sub_total }}
+                  </div>
+                </th>
+                <th colspan="1"></th>
+              </tr>
+              <!-- Delivery Charge -->
+              <tr class="border-b">
+                <th colspan="1"></th>
+                <th colspan="2" class="p-1">
+                  <div class="p-1 text-left">
+                    Delivery Charge
+                  </div>
+                </th>
+                <th colspan="1" class="p-1">
+                  <div class="p-1 text-right">
+                    {{ cartDetail.delivery_charges }}
+                  </div>
+                </th>
+                <th colspan="1"></th>
+              </tr>
+              <!-- Total -->
+              <tr class="border-b">
+                <th colspan="1"></th>
+                <th colspan="2" class="p-1">
+                  <div class="p-1 text-left">
+                    Total
+                  </div>
+                </th>
+                <th colspan="1" class="p-1">
+                  <div class="p-1 text-right">
+                    {{ cartDetail.total_amount }}
+                  </div>
+                </th>
+                <th colspan="1"></th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-  </section>
-  <!-- Floating Button -->
-  <floating-button :floatingButtonText="'Checkout'" :isLink="true" :link="'Checkout'"></floating-button>
-  <!-- RHS -->
-  <section>
-    <right-hand-side></right-hand-side>
-  </section>
+    </section>
+    <!-- Floating Button -->
+    <floating-button :floatingButtonText="'Checkout'" :isLink="true" :link="'Checkout'"></floating-button>
+  </div>
 </template>
 
 <script>
