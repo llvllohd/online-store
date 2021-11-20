@@ -23,7 +23,8 @@
     <div class="w-1/3 h-full hidden md:flex">
       <!-- Image -->
       <div class="flex mx-3">
-        <img class="rounded-full h-11 w-11 mx-auto my-auto" src="@/assets/images/user.jpg" alt="" />
+        <!-- <img class="rounded-full h-11 w-11 mx-auto my-auto" src="@/assets/images/user.jpg" alt="" /> -->
+        <img class="rounded-full h-11 w-11 mx-auto my-auto bg-white bg-cover" src="@/assets/images/logo.png" alt="" />
       </div>
       <!-- Name -->
       <div class="flex mx-3">
